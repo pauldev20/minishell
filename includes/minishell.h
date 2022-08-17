@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/17 15:20:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/17 18:16:06 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@
 # include <readline/history.h>
 
 void	minishell(void);
+char	**arr_dup(char **enviroment);
 
 #endif
