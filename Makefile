@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: max <max@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/17 20:13:58 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/17 20:46:30 by max              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,9 @@ LDFLAGS = -lreadline -Llibft -lft
 # all the src/.c files that need to be compiled
 SRCS =	src/main.c \
 		src/minishell.c \
-		src/helpers.c
+		src/helpers.c \
+		src/bultins/builtin.c \
+		src/bultins/echo.c
 
 # replace .c with .o -> $(var:pattern=replacement)
 OBJS = $(SRCS:.c=.o)
