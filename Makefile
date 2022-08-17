@@ -6,7 +6,7 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/17 14:03:12 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/08/17 15:21:33 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ CFLAGS	= -Wall -Werror -Wextra
 CC	= cc
 
 # all the src/.c files that need to be compiled
-SRCS =	main.c
+SRCS =	main.c \
+		minishell.c
 
 # replace .c with .o -> $(var:pattern=replacement)
 OBJS = $(SRCS:.c=.o)

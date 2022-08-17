@@ -6,13 +6,13 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/17 15:08:47 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/17 15:21:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	minishell(char **argv)
+void	minishell(void)
 {
 	char	*input;
 
@@ -22,5 +22,4 @@ int	minishell(char **argv)
 		add_history(input);
 	}
 	free (input);
-	return (0);
 }

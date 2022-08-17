@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:31:47 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/17 15:07:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/17 15:21:11 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int main(int argc, char **argv)
 {
+	(void)argv;
 	if (argc != 1)
 		return (0);
 	else
-		minishell(argv);
+		minishell();
 	return (1);
 }
