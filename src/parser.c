@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 20:57:44 by max              ###   ########.fr       */
+/*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/17 20:54:56 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_parser(char **array)
+void	parse_input(char *input)
 {
-	while (*array)
-	{
-		if (ft_strncmp(*array, "echo", 5))
-			builtin_echo(*array, array);
-		array++;
-	}
-}
+	char	**array;
 
-void	builtin_env(char **envp)
-{
-	int	c;
-
-	c = 0;
-	while (envp[c] != NULL)
+	array = ft_split(input, ' ');
+	while (array)
 	{
-		printf("%s\n", envp[c]);
-		c++;
+		builtin_parser(array);
+		if (!*array)
+			array++;
 	}
 }

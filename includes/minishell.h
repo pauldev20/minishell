@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/17 20:44:44 by max              ###   ########.fr       */
+/*   Updated: 2022/08/17 20:57:36 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,14 @@
 # include <readline/history.h>
 # include "libft.h"
 
+char		**g_envp;
+
 void	minishell(void);
 char	**arr_dup(char **enviroment);
 void	builtin_env(char **envp);
+
+// BUILTINS
+void	builtin_parser(char **array);
+void	builtin_echo(char *str, char **arguments);
 
 #endif
