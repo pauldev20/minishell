@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: max <max@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/08/17 21:56:42 by pgeeser          ###   ########.fr        #
+=======
+#    Updated: 2022/08/17 20:46:30 by max              ###   ########.fr        #
+>>>>>>> 96083c1f02ffaa9d1fe396a6ede52b6fbd2dc837
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +39,6 @@ SRCS =	src/main.c \
 		src/builtins/exit.c	\
 		src/builtins/env.c	\
 		src/builtins/export.c
-
 
 # replace .c with .o -> $(var:pattern=replacement)
 OBJS = $(SRCS:.c=.o)

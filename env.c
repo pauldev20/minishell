@@ -3,19 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 22:21:41 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 22:33:51 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/17 20:29:37 by max               #+#    #+#             */
+/*   Updated: 2022/08/17 20:29:38 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	add_at_index(t_env el, int index)
-{
-	while (index--)
-	{
-		
-	}
-}
