@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_digits_of_hex.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 13:14:43 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 15:14:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/17 20:05:40 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
 int	ft_digits_of_hex(unsigned long long n)
 {

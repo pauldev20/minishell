@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_digits_of_int.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:32:14 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 15:14:47 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/17 20:05:37 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
 int	ft_digits_of_int(long n)
 {
