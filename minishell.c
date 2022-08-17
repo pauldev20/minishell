@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/17 18:30:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/17 20:15:33 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	minishell(void)
 	
 	while (1)
 	{
-		input = readline("minishell > ");
+		input = readline("➜ minishell: ");
 		add_history(input);
 		envp = arr_dup(environ);
 		for (int c = 0; envp[c] != NULL; c ++)
