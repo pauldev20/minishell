@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/17 20:13:58 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/17 21:56:42 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,14 @@ LDFLAGS = -lreadline -Llibft -lft
 # all the src/.c files that need to be compiled
 SRCS =	src/main.c \
 		src/minishell.c \
-		src/helpers.c
+		src/helpers.c	\
+		src/parser.c	\
+		src/builtins/builtin.c	\
+		src/builtins/echo.c	\
+		src/builtins/exit.c	\
+		src/builtins/env.c	\
+		src/builtins/export.c
+
 
 # replace .c with .o -> $(var:pattern=replacement)
 OBJS = $(SRCS:.c=.o)

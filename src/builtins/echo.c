@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 21:38:49 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/17 21:27:02 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_input(char *input)
+void	builtin_echo(char **str, int newline)
 {
-	char	**array;
+	int	first;
 
-	g_minishell.cmd_array = ft_split(input, ' ');
-	array = g_minishell.cmd_array;
-	while (*array)
+	first = 1;
+	if (!*str)
+		return ;
+	while (*str)
 	{
-		builtin_parser(array);
-		if (*array)
-			array++;
+		if (!first)
+			printf(" ");
+		first = 0;
+		printf("%s", *(str++));
 	}
+	if (newline)
+		printf("\n");
 }

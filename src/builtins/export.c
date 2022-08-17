@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 21:38:49 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/17 21:56:27 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_input(char *input)
+void	builtin_export(char	**arguments)
 {
-	char	**array;
-
-	g_minishell.cmd_array = ft_split(input, ' ');
-	array = g_minishell.cmd_array;
-	while (*array)
-	{
-		builtin_parser(array);
-		if (*array)
-			array++;
-	}
+	if (!*arguments)
+		builtin_env();
 }

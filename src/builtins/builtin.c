@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 21:38:49 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/17 21:54:52 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_input(char *input)
+void	builtin_parser(char **array)
 {
-	char	**array;
-
-	g_minishell.cmd_array = ft_split(input, ' ');
-	array = g_minishell.cmd_array;
 	while (*array)
 	{
-		builtin_parser(array);
-		if (*array)
-			array++;
+		if (ft_strncmp(*array, "echo\0", 5) == 0)
+		{
+			if (*(array + 1) && ft_strncmp(*(array + 1), "-n\0", 3) == 0)
+				builtin_echo(array + 2, 0);
+			else
+				builtin_echo(array + 1, 1);
+		}
+		if (ft_strncmp(*array, "exit\0", 5) == 0)
+			builtin_exit();
+		if (ft_strncmp(*array, "env\0", 4) == 0)
+			builtin_env();
+		if (ft_strncmp(*array, "export\0", 7) == 0)
+			builtin_env();
+		array++;
 	}
 }

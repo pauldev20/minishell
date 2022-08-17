@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 20:53:12 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/17 21:30:59 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/17 21:50:47 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_parser(char **array)
+void	builtin_exit(void)
 {
-	while (*array)
-	{
-		if (ft_strncmp(*array, "echo", 5))
-			builtin_echo(*array, array);
-		array++;
-	}
+	int	i;
+
+	i = 0;
+	while (g_minishell.cmd_array[i])
+		free(g_minishell.cmd_array[i++]);
+	free(g_minishell.cmd_array);
+	exit(0);
 }
