@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: max <max@student.42.fr>                    +#+  +:+       +#+         #
+#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/08/17 21:56:42 by pgeeser          ###   ########.fr        #
-=======
-#    Updated: 2022/08/17 20:46:30 by max              ###   ########.fr        #
->>>>>>> 96083c1f02ffaa9d1fe396a6ede52b6fbd2dc837
+#    Updated: 2022/08/18 10:31:35 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +30,14 @@ SRCS =	src/main.c \
 		src/minishell.c \
 		src/helpers.c	\
 		src/parser.c	\
+		src/env/env.c	\
+		src/env/helpers.c	\
 		src/builtins/builtin.c	\
 		src/builtins/echo.c	\
 		src/builtins/exit.c	\
 		src/builtins/env.c	\
-		src/builtins/export.c
+		src/builtins/export.c	\
+		src/builtins/unset.c
 
 # replace .c with .o -> $(var:pattern=replacement)
 OBJS = $(SRCS:.c=.o)
@@ -55,15 +54,20 @@ $(LIBFT):
 %.o : %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+debug:
+	$(MAKE) CFLAGS='-g' #re
+
 # remove the .o files
 clean:
+	$(MAKE) clean -C libft
 	rm -rf $(OBJS)
 
 # remove the .o and .a files
 fclean: clean
+	$(MAKE) fclean -C libft
 	rm -rf $(NAME)
 
 # remove all files and remake all
 re: fclean all
 	
-.PHONY:	all bonus clean fclean re
+.PHONY:	all bonus clean fclean re debug

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/17 22:22:36 by pgeeser          ###   ########.fr       */83c1f02ffaa9d1fe396a6ede52b6fbd2dc837
+/*   Updated: 2022/08/18 10:44:12 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 
 typedef struct s_env
 {
-	t_env	*next;
-	char	*key;
-	char	*value;
+	struct s_env	*next;
+	char			*key;
+	char			*value;
 }	t_env;
 
 typedef struct s_minishell
 {
-	char	**envp;
+	t_env	*envp;
 	char	**cmd_array;
 }	t_minishell;
 
@@ -42,7 +42,18 @@ void	builtin_parser(char **array);
 void	builtin_echo(char **str, int newline);
 void	builtin_exit(void);
 void	builtin_env(void);
+void	builtin_export(char	**arguments);
+void	builtin_unset(char *key);
 
 void	parse_input(char *input);
+
+// ENV
+void	add_back(t_env **env, t_env *new);
+t_env	*get_last(t_env *env);
+void	add_at_index(t_env **list, t_env *el, int index);
+void	remove_at_index(t_env **list, int index);
+void	free_array(char	**array);
+t_env	*parse_array_to_env(char	**env);
+void	print_env(t_env	*env);
 
 #endif

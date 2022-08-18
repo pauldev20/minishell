@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 21:54:52 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/18 10:44:40 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ void	builtin_parser(char **array)
 		if (ft_strncmp(*array, "env\0", 4) == 0)
 			builtin_env();
 		if (ft_strncmp(*array, "export\0", 7) == 0)
-			builtin_env();
+			builtin_export(array + 1);
+		if (ft_strncmp(*array, "unset\0", 6) == 0)
+			builtin_unset(*(array + 1));
 		array++;
 	}
 }

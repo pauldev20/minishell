@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/18 09:54:01 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/18 10:24:21 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/18 10:40:32 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	minishell(void)
+void	builtin_unset(char *key)
 {
-	extern char	**environ;
-	char		*input;
+	int		i;
+	t_env	*env;
 
-	g_minishell.envp = parse_array_to_env(environ);
-	while (1)
+	if (!key)
+		return ;
+	i = 0;
+	env = g_minishell.envp;
+	while (env)
 	{
-		input = readline("➜  minishell: ");
-		add_history(input);
-		parse_input(input);
+		if (ft_strncmp(env->key, key, ft_strlen(key) + 1) == 0)
+			remove_at_index(&g_minishell.envp, i);
+		env = env->next;
+		i++;
 	}
-	free (input);
 }

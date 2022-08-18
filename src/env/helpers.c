@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 22:21:41 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 22:33:51 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/18 10:08:48 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/18 10:09:02 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_at_index(t_env el, int index)
+t_env	*get_last(t_env *env)
 {
-	while (index--)
-	{
-		
-	}
+	if (!env)
+		return (NULL);
+	while (env->next)
+		env = env->next;
+	return (env);
+}
+
+void	add_back(t_env **env, t_env *new)
+{
+	if (!env || !new)
+		return ;
+	if (!(*env))
+		*env = new;
+	else
+		get_last(*env)->next = new;
 }
