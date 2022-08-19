@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/18 10:44:12 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/18 11:18:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <limits.h>
 # include "libft.h"
 
 typedef struct s_env
@@ -44,6 +45,7 @@ void	builtin_exit(void);
 void	builtin_env(void);
 void	builtin_export(char	**arguments);
 void	builtin_unset(char *key);
+void	builtin_pwd(void);
 
 void	parse_input(char *input);
 

@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/18 10:31:35 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/18 11:18:46 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS =	src/main.c \
 		src/builtins/exit.c	\
 		src/builtins/env.c	\
 		src/builtins/export.c	\
+		src/builtins/pwd.c	\
 		src/builtins/unset.c
 
 # replace .c with .o -> $(var:pattern=replacement)
