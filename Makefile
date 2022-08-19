@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/18 10:31:35 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/19 09:54:55 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ LDFLAGS = -lreadline -Llibft -lft
 SRCS =	src/main.c \
 		src/minishell.c \
 		src/helpers.c	\
-		src/parser.c	\
 		src/env/env.c	\
 		src/env/helpers.c	\
+		src/parser/parser.c	\
 		src/builtins/builtin.c	\
 		src/builtins/echo.c	\
 		src/builtins/exit.c	\
