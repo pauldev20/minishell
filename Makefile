@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/18 11:18:46 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/19 09:58:07 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ LDFLAGS = -lreadline -Llibft -lft
 SRCS =	src/main.c \
 		src/minishell.c \
 		src/helpers.c	\
-		src/parser.c	\
 		src/env/env.c	\
 		src/env/helpers.c	\
+		src/parser/parser.c	\
 		src/builtins/builtin.c	\
 		src/builtins/echo.c	\
 		src/builtins/exit.c	\
