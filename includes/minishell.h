@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/19 09:58:19 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/19 10:45:12 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	minishell(void);
 char	**arr_dup(char **enviroment);
 
 // BUILTINS
-void	builtin_parser(char **array);
-void	builtin_echo(char **str, int newline);
+void	builtin_parser(char **argv, int argc);
+void	builtin_echo(char **argv, int argc);
 void	builtin_exit(void);
 void	builtin_env(void);
-void	builtin_export(char	**arguments);
-void	builtin_unset(char *key);
+void	builtin_export(char	**argv, int argc);
+void	builtin_unset(char **argv, int argc);
 void	builtin_pwd(void);
 
 void	parse_input(char *input);

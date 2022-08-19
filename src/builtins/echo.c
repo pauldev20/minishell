@@ -6,26 +6,27 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/17 21:27:02 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/19 10:34:46 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_echo(char **str, int newline)
+void	builtin_echo(char **argv, int argc)
 {
-	int	first;
+	int		i;
+	char	**array;
 
-	first = 1;
-	if (!*str)
+	if (argc < 1)
 		return ;
-	while (*str)
+	array = argv + (argc > 1 && ft_strncmp(argv[0], "-n", 3) == 0);
+	i = 0;
+	while (array[i])
 	{
-		if (!first)
+		if (i > 0)
 			printf(" ");
-		first = 0;
-		printf("%s", *(str++));
+		printf("%s", array[i++]);
 	}
-	if (newline)
+	if (!(argc > 1 && ft_strncmp(argv[0], "-n", 3) == 0))
 		printf("\n");
 }
