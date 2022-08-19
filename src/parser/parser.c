@@ -6,116 +6,69 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/19 10:18:42 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/19 15:57:23 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-int		get_arr_words(char *input)
+char	*get_quotes_str(char *str, int *len)
 {
-	int	count;
-	int	current_word;
+	char	*ret;
 
-	count = 0;
-	current_word = 0;
-	while (*input)
-	{
-		if (*input != ' ' && current_word == 0)
-		{
-			count++;
-			current_word = 1;
-		}
-		if (*input == '\"' || *input == '\'')
-		{
-			input++;
-			while (*input != '\"' || *input == '\'')
-				input++;
-		}
-		else if (*input == ' ')
-			current_word = 0;
-		input++;
-	}
-	return (count);
+	str ++;
+	*len = get_len_quotes(str);
+	ret = ft_substr(str, 0, *len);
+	*len += 2;
+	return (ret);
 }
 
-int	get_len_normal(char *source)
-{
-	int c;
-
-	c = 0;
-	while (*source != ' ' && *source != '\0')
-	{
-		c ++;
-		source++;
-	}
-	return (c);
-}
-
-int	get_len_quotes(char *source)
-{
-	int c;
-	
-	c = 0;
-	while ((*source != '\'' && *source != '\"') && *source != '\0')
-	{
-		c ++;
-		source++;
-	}
-	// c++;
-	return (c);
-}
-char	**parse_cmds(char *input, int *argc)
+char	**split_cmds(char *input, int *argc)
 {
 	char	**arr;
-	char	*word_start;
 	int		arr_start;
 	int		len;
-	bool	quotes;
-	
+
 	*argc = get_arr_words(input);
 	arr = (char **)malloc(sizeof(char *) * (*argc + 1));
 	arr[*argc] = NULL;
 	arr_start = 0;
 	while (arr_start < *argc)
 	{
-		quotes = false;
 		while (*input == ' ')
 			input++;
-		word_start = input;
-		if (*word_start == '\"' || *word_start == '\'')
-		{
-			quotes = true;
-			word_start ++;
-		}
-		len = 0;
-		if (quotes == true)
-			len = get_len_quotes(word_start);
+		if (*input == '\"' || *input == '\'')
+			arr[arr_start++] = get_quotes_str(input, &len);
 		else
-			len = get_len_normal(word_start);
-		arr[arr_start++] = ft_substr(word_start, 0, len);
-		if (quotes == true)
-			len++;
-		input = word_start + len;
+		{
+			len = get_len_normal(input);
+			arr[arr_start++] = ft_substr(input, 0, len);
+		}
+		input = input + len;
 	}
 	return (arr);
 }
 
 void	parse_input(char *input)
 {
-	char	**array;
+	t_cmd	*array;
 	int		argc;
-	
-	g_minishell.cmd_array = parse_cmds(input, &argc);
+
+	g_minishell.cmd_array = split_cmds(input, &argc);
 	printf("ARGC: %d\n", argc);
-	array = g_minishell.cmd_array;
-	for(int i = 0; array[i] != NULL; i++)
-		printf("ARGV: %s\n", array[i]);
-	while (*array)
+	for(int i = 0; g_minishell.cmd_array[i] != NULL; i++)
+		printf("ARGV: %s\n", g_minishell.cmd_array[i]);
+	while (*g_minishell.cmd_array)
 	{
-		builtin_parser(array, argc);
-		if (*array)
-			array++;
+		array = init_token(*g_minishell.cmd_array, array);
+		builtin_parser(g_minishell.cmd_array);
+		if (*g_minishell.cmd_array)
+			g_minishell.cmd_array++;
+	}
+	while (array)
+	{
+		printf("%s, %u\n", array->cmd, array->e_token);
+		array = array->next;
 	}
 }
