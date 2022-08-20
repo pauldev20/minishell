@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/19 15:57:23 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/20 18:00:52 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_quotes_str(char *str, int *len)
 
 	str ++;
 	*len = get_len_quotes(str);
-	ret = ft_substr(str, 0, *len);
+	ret = ft_substr(str - 1, 0, *len + 1);
 	*len += 2;
 	return (ret);
 }
@@ -50,9 +50,22 @@ char	**split_cmds(char *input, int *argc)
 	return (arr);
 }
 
+void	init_tree(t_cmd *leaf, t_tree **tree)
+{
+	(void)tree;
+	while (leaf)
+	{
+		printf("%s\n", leaf->cmd);
+		leaf = leaf->next;
+	}
+	while (!is_delimiter(leaf->e_token))
+		leaf = leaf->next;
+}
+
 void	parse_input(char *input)
 {
 	t_cmd	*array;
+	t_tree	*tree;
 	int		argc;
 
 	g_minishell.cmd_array = split_cmds(input, &argc);
@@ -62,13 +75,9 @@ void	parse_input(char *input)
 	while (*g_minishell.cmd_array)
 	{
 		array = init_token(*g_minishell.cmd_array, array);
-		builtin_parser(g_minishell.cmd_array);
 		if (*g_minishell.cmd_array)
 			g_minishell.cmd_array++;
 	}
-	while (array)
-	{
-		printf("%s, %u\n", array->cmd, array->e_token);
-		array = array->next;
-	}
+	init_tree(array, &tree);
+	//builtin_parser(g_minishell.cmd_array, argc);
 }

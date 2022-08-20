@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 11:17:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/19 15:44:52 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/20 15:03:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ void	append_cmd(t_cmd **lst, t_cmd *cmd)
 	if (!(*lst))
 		*lst = cmd;
 	else
+	{
 		last_cmd(*lst)->next = cmd;
+	}
 }
 
 t_cmd	*ft_cmdnew(char *command, t_token token)
@@ -41,7 +43,6 @@ t_cmd	*ft_cmdnew(char *command, t_token token)
 		return (NULL);
 	cmd->cmd = command;
 	cmd->e_token = token;
-	cmd->next = NULL;
 	return (cmd);
 }
 
