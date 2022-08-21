@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/20 18:00:52 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/21 10:30:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,25 @@ char	**split_cmds(char *input, int *argc)
 void	init_tree(t_cmd *leaf, t_tree **tree)
 {
 	(void)tree;
-	while (leaf)
+	(void)leaf;
+}
+
+void	join_nodes(t_cmd **lst)
+{
+	char	*cmd_node;
+	
+	cmd_node =  (*lst)->cmd;
+	printf("FIRST CMD in nodes: %s\n", (*lst)->cmd);
+	while((*lst) != NULL)
 	{
-		printf("%s\n", leaf->cmd);
-		leaf = leaf->next;
-	}
-	while (!is_delimiter(leaf->e_token))
-		leaf = leaf->next;
+		if ((*lst)->next != NULL)
+		{
+			if (!is_delimiter((*lst)->e_token))
+				cmd_node = ft_strjoin(cmd_node, (*lst)->cmd);
+			printf("%s\n", cmd_node);
+		}
+		(*lst) = (*lst)->next;
+	}	
 }
 
 void	parse_input(char *input)
@@ -67,17 +79,21 @@ void	parse_input(char *input)
 	t_cmd	*array;
 	t_tree	*tree;
 	int		argc;
+	int		c;
 
 	g_minishell.cmd_array = split_cmds(input, &argc);
 	printf("ARGC: %d\n", argc);
 	for(int i = 0; g_minishell.cmd_array[i] != NULL; i++)
 		printf("ARGV: %s\n", g_minishell.cmd_array[i]);
-	while (*g_minishell.cmd_array)
+	c = 0;
+	while (g_minishell.cmd_array[c] != NULL)
 	{
-		array = init_token(*g_minishell.cmd_array, array);
-		if (*g_minishell.cmd_array)
-			g_minishell.cmd_array++;
+		array = init_token(g_minishell.cmd_array[c], array);
+		c++;
 	}
-	init_tree(array, &tree);
+	printf("FIRST CMD: %s\n", array->cmd);
+	join_nodes(&array);
+	(void)tree;
+	// init_tree(array, &tree);
 	//builtin_parser(g_minishell.cmd_array, argc);
 }

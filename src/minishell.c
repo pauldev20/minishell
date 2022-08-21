@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/18 09:54:01 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/21 10:15:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ void	minishell(void)
 	while (1)
 	{
 		input = readline("➜  minishell: ");
-		add_history(input);
-		parse_input(input);
+		if (input != NULL)
+		{
+			add_history(input);
+			parse_input(input);
+		}
 	}
 	free (input);
 }

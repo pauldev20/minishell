@@ -6,7 +6,7 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/19 11:31:06 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/08/21 12:09:20 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS =	src/main.c \
 		src/helpers.c	\
 		src/env/env.c	\
 		src/env/helpers.c	\
-		src/parser/parser.c	\
+		src/parser/sh_like_parser.c \
 		src/parser/parser_helper.c \
 		src/parser/tokens.c \
 		src/builtins/builtin.c	\
