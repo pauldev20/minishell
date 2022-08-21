@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 11:00:53 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/21 14:35:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/21 14:48:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,15 +150,21 @@ char	*get_cmd(char *word)
 
 char	*get_args(char *word)
 {
-	(void)word;
-	return ("args");
+	char	*arg;
+	char	**arr;
+
+	arr = ft_split(word, ' ');
+	if (arr[1] == NULL)
+		return (NULL);
+	arg = ft_strdup(word + ft_strlen(arr[0]) + 1);
+	free_array(arr);
+	return (arg);
 }
 
 t_token_struct	*split_words(t_token_struct *token)
 {
 	t_token_struct	*new_token;
 
-	// printf("TOKEN: %s\n", token->token);
 	new_token = (t_token_struct *)malloc(sizeof(t_token_struct));
 	new_token->cmd = get_cmd(token->token);
 	new_token->args = get_args(token->token);
