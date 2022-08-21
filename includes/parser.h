@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:26:31 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/21 12:09:47 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/21 13:44:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_cmd
 typedef struct s_token
 {
 	char			*token;
+	char			*cmd;
+	char			*args;
 	t_token			e_token_type;
 	int				nbr_from_left;
 	bool			is_prio;

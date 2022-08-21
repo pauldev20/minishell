@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 11:00:53 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/21 13:36:40 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/21 14:25:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_token_struct	*get_token(int start, int stop, char *input)
 	return (token);
 }
 
-void	parse_input(char *input)
+t_token_struct	**parse_tokens(char *input)
 {
 	t_token_struct	**token;
 	int				token_nbr;
@@ -134,8 +134,45 @@ void	parse_input(char *input)
 	token[token_nbr + 1] = NULL;
 	for (int i = 0; token[i] != NULL; i++)
 		printf("TOKEN %d TOKEN-NBR: %d STRING: %s\n", i, token[i]->nbr_from_left, token[i]->token);
-	
+	return (token);
+}
 
-	// init_tree(array, &tree);
-	//builtin_parser(g_minishell.cmd_array, argc);
+char	*get_cmd(char *word)
+{
+	(void)word;
+	return ("test");
+}
+
+char	*get_args(char *word)
+{
+	(void)word;
+	return ("test");
+}
+
+t_token_struct	*split_words(t_token_struct *token)
+{
+	t_token_struct	*new_token;
+
+	printf("TOKEN: %s\n", token->token);
+	new_token = (t_token_struct *)malloc(sizeof(t_token_struct));
+	new_token->cmd = get_cmd(token->token);
+	new_token->args = get_args(token->token);
+	free(token);
+	return (new_token);
+}
+
+void	parse_input(char *input)
+{
+	t_token_struct	**tokens;
+	int				i;
+
+	tokens = parse_tokens(input);
+	i = 0;
+	while (tokens[i] != NULL)
+	{
+		if (tokens[i]->e_token_type == WORD)
+			tokens[i] = split_words(tokens[i]);
+		printf("%s, %s, %s\n", tokens[i]->token, tokens[i]->cmd, tokens[i]->args);
+		i++;
+	}
 }
