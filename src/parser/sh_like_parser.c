@@ -6,9 +6,12 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 11:00:53 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/21 14:48:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/21 14:49:24 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+// TODO: IMPLEMENT TREE AND CORREC EXECUTION
 
 #include "minishell.h"
 #include "parser.h"
