@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 11:00:53 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/21 14:25:50 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/21 14:35:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,21 +139,26 @@ t_token_struct	**parse_tokens(char *input)
 
 char	*get_cmd(char *word)
 {
-	(void)word;
-	return ("test");
+	char	**arr;
+	char	*cmd;
+
+	arr = ft_split(word, ' ');
+	cmd = ft_strdup(arr[0]);
+	free_array(arr);
+	return (cmd);
 }
 
 char	*get_args(char *word)
 {
 	(void)word;
-	return ("test");
+	return ("args");
 }
 
 t_token_struct	*split_words(t_token_struct *token)
 {
 	t_token_struct	*new_token;
 
-	printf("TOKEN: %s\n", token->token);
+	// printf("TOKEN: %s\n", token->token);
 	new_token = (t_token_struct *)malloc(sizeof(t_token_struct));
 	new_token->cmd = get_cmd(token->token);
 	new_token->args = get_args(token->token);
@@ -167,12 +172,13 @@ void	parse_input(char *input)
 	int				i;
 
 	tokens = parse_tokens(input);
+	printf("\n");
 	i = 0;
 	while (tokens[i] != NULL)
 	{
 		if (tokens[i]->e_token_type == WORD)
 			tokens[i] = split_words(tokens[i]);
-		printf("%s, %s, %s\n", tokens[i]->token, tokens[i]->cmd, tokens[i]->args);
+		printf("TOKEN: %s, CMD: %s, ARGS: %s\n", tokens[i]->token, tokens[i]->cmd, tokens[i]->args);
 		i++;
 	}
 }
