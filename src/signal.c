@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 13:31:47 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 00:38:00 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/21 23:34:45 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/22 00:08:44 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	handle_signal(int sig)
 {
-	if (argc != 1)
-		return (0);
-	else
-		minishell(argc, argv, envp);
-	return (1);
+	if (sig == SIGINT)
+	{
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}	
 }

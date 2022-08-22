@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 13:31:47 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 00:38:00 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/20 15:00:20 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/20 15:01:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef COLORS_H
+# define COLORS_H
 
-int	main(int argc, char **argv, char **envp)
-{
-	if (argc != 1)
-		return (0);
-	else
-		minishell(argc, argv, envp);
-	return (1);
-}
+# define WHITE_BLACK "\x1b[7m"
+# define RESET "\x1b[0m"
+
+#endif

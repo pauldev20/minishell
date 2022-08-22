@@ -6,20 +6,22 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 10:24:21 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/19 12:02:13 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/20 17:02:11 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_unset(char **argv, int argc)
+int	builtin_unset(char **argv, int argc)
 {
 	int		i;
 	int		j;
 	t_env	*env;
 
 	if (argc < 1)
-		return ;
+		write(1, "unset: not enough arguments\n", 28);
+	if (argc < 1)
+		return (EXIT_FAILURE);
 	j = 0;
 	while (argv[j])
 	{
@@ -34,4 +36,5 @@ void	builtin_unset(char **argv, int argc)
 		}
 		j++;
 	}
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/19 10:53:38 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/21 23:12:30 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_env	*create_new(char *str)
 	t_env	*new;
 	char	**array;
 
+	if (!ft_strrchr(str, '='))
+		return (NULL);
 	array = ft_split(str, '=');
 	if (!array[0])
 	{
@@ -44,7 +46,7 @@ t_env	*create_new(char *str)
 	return (new);
 }
 
-void	builtin_export(char	**argv, int argc)
+int	builtin_export(char	**argv, int argc)
 {
 	int		i;
 	int		j;
@@ -55,7 +57,7 @@ void	builtin_export(char	**argv, int argc)
 	if (argc < 1)
 	{
 		builtin_env();
-		return ;
+		return (EXIT_SUCCESS);
 	}
 	while (env)
 	{
@@ -69,4 +71,5 @@ void	builtin_export(char	**argv, int argc)
 		if (env)
 			add_at_index(&g_minishell.envp, env, i++);
 	}
+	return (EXIT_SUCCESS);
 }

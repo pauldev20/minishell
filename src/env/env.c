@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 22:21:41 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/19 12:05:36 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 00:45:52 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,23 @@
 
 void	add_at_index(t_env **list, t_env *el, int index)
 {
+	int		i;
 	t_env	*env;
+	t_env	*lst;
 
-	env = (*list);
-	while (index-- && (*list))
+	i = 0;
+	lst = (*list);
+	while (i++ < index && lst)
 	{
-		env = (*list);
-		list = &(*list)->next;
+		env = lst;
+		lst = lst->next;
 	}
-	el->next = (*list);
-	env->next = el;
+	el->next = lst;
+	if (index > 0)
+		env->next = el;
+	else
+		(*list) = el;
 }
-
-// void	remove_at_index(t_env **list, int index)
-// {
-// 	t_env	*env;
-// 	t_env	*first;
-
-// 	env = (*list);
-// 	if (index == 0)
-// 		first = (*list)->next;
-// 	else
-// 		first = (*list);
-// 	while (index-- && (*list))
-// 	{
-// 		env = (*list);
-// 		list = &(*list)->next;
-// 	}
-// 	free((*list)->key);
-// 	free((*list)->value);
-// 	if ((*list)->next)
-// 		env->next = (*list)->next;
-// 	else
-// 		env->next = NULL;
-// 	free((*list));
-// }
 
 void	remove_at_index(t_env **list, int index)
 {
@@ -57,7 +39,6 @@ void	remove_at_index(t_env **list, int index)
 	t_env	*lst;
 
 	i = 0;
-	env = (*list);
 	lst = (*list);
 	while (i++ < index && lst)
 	{
@@ -66,14 +47,14 @@ void	remove_at_index(t_env **list, int index)
 	}
 	free(lst->key);
 	free(lst->value);
-	if ((*list)->next)
-		env->next = (*list)->next;
+	if (index > 0)
+		env->next = lst->next;
 	else
-		env->next = NULL;
-	free((*list));
+		(*list) = lst->next;
+	free(lst);
 }
 
-t_env	*parse_array_to_env(char **env)
+t_env	*parse_array_to_env(char **env, t_env *minienviro)
 {
 	int		i;
 	char	**splitted;
@@ -81,15 +62,23 @@ t_env	*parse_array_to_env(char **env)
 	t_env	*new;
 
 	i = 0;
-	enviro = NULL;
+	enviro = minienviro;
 	while (env[i])
 	{
 		splitted = ft_split(env[i++], '=');
-		new = (t_env *)malloc(sizeof(t_env));
-		new->next = NULL;
-		new->key = splitted[0];
-		new->value = splitted[1];
-		add_back(&enviro, new);
+		if (!in_list(enviro, splitted[0]))
+		{
+			new = (t_env *)malloc(sizeof(t_env));
+			new->next = NULL;
+			new->key = splitted[0];
+			new->value = splitted[1];
+			add_back(&enviro, new);
+		}
+		else
+		{
+			free(splitted[0]);
+			free(splitted[1]);
+		}
 		free(splitted);
 	}
 	return (enviro);
