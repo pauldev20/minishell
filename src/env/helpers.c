@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 10:08:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/22 00:44:09 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 16:55:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	set_env_var(t_env **env, char *key, char *value)
 		el = get_env_var(*env, key);
 		if (!el)
 			return (0);
-		el->value = value;
+		free(el->value);
+		el->value = ft_strdup(value);
 		return (1);
 	}
 	el = (t_env *)malloc(sizeof(t_env));

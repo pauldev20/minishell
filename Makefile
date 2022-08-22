@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/22 13:55:29 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/22 15:01:07 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = minishell
 LIBFT = libft/libft.a
 
 # compiler flags
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= #-Wall -Werror -Wextra
 
 # the compiler to be used
 CC	= cc

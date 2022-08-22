@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 13:30:04 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 16:56:59 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	minishell(int argc, char **argv, char **envp)
 	while (1)
 	{
 		cache[0] = get_promt();
-		cache[1] = readline(cache[0]);
+		readline(cache[0]);
 		free(cache[0]);
 		if (if_chars(cache[1]))
 			add_history(cache[1]);
