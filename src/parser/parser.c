@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/20 16:40:21 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 13:31:22 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_quotes_str(char *str, int *len)
 
 	str ++;
 	*len = get_len_quotes(str);
-	ret = ft_substr(str, 0, *len);
+	ret = ft_substr(str - 1, 0, *len + 1);
 	*len += 2;
 	return (ret);
 }
@@ -50,27 +50,50 @@ char	**split_cmds(char *input, int *argc)
 	return (arr);
 }
 
-int	parse_input(char *input)
+void	init_tree(t_cmd *leaf, t_tree **tree)
 {
-	// t_cmd	*array;
+	(void)tree;
+	(void)leaf;
+}
+
+void	join_nodes(t_cmd **lst)
+{
+	char	*cmd_node;
+
+	cmd_node = (*lst)->cmd;
+	printf("FIRST CMD in nodes: %s\n", (*lst)->cmd);
+	while ((*lst) != NULL)
+	{
+		if ((*lst)->next != NULL)
+		{
+			if (!is_delimiter((*lst)->e_token))
+				cmd_node = ft_strjoin(cmd_node, (*lst)->cmd);
+			printf("%s\n", cmd_node);
+		}
+		(*lst) = (*lst)->next;
+	}	
+}
+
+void	parse_input(char *input)
+{
+	t_cmd	*array;
+	t_tree	*tree;
 	int		argc;
-	int		success;
+	int		c;
 
 	g_minishell.cmd_array = split_cmds(input, &argc);
-	// printf("ARGC: %d\n", argc);
-	// for(int i = 0; g_minishell.cmd_array[i] != NULL; i++)
-	// 	printf("ARGV: %s\n", g_minishell.cmd_array[i]);
-	while (*g_minishell.cmd_array)
+	printf("ARGC: %d\n", argc);
+	for (int i = 0; g_minishell.cmd_array[i] != NULL; i++)
+		printf("ARGV: %s\n", g_minishell.cmd_array[i]);
+	c = 0;
+	while (g_minishell.cmd_array[c] != NULL)
 	{
-		// array = init_token(*g_minishell.cmd_array, array);
-		success = builtin_parser(g_minishell.cmd_array, argc);
-		if (*g_minishell.cmd_array)
-			g_minishell.cmd_array++;
+		array = init_token(g_minishell.cmd_array[c], array);
+		c++;
 	}
-	// while (array)
-	// {
-	// 	printf("%s, %u\n", array->cmd, array->e_token);
-	// 	array = array->next;
-	// }
-	return (success);
+	printf("FIRST CMD: %s\n", array->cmd);
+	join_nodes(&array);
+	(void)tree;
+	// init_tree(array, &tree);
+	//builtin_parser(g_minishell.cmd_array, argc);
 }

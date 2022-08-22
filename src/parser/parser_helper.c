@@ -6,12 +6,19 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 10:02:14 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/19 15:26:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/20 14:53:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+
+bool	is_delimiter(t_token i)
+{
+	if (i == DLESS || i == PIPE || i == DGREAT || i == LESS || i == GREAT)
+		return (true);
+	return (false);
+}
 
 int	get_arr_words(char *input)
 {
@@ -63,5 +70,6 @@ int	get_len_quotes(char *source)
 		c ++;
 		source++;
 	}
+	c++;
 	return (c);
 }
