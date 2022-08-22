@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/22 14:45:40 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 16:58:03 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	parse_input(char *input)
 		array = init_token(g_minishell.cmd_array[c], array);
 		c++;
 	}
+	for (int i = 0; arra[i] != NULL; i++)
+		printf("ARRAY: %s, TOKEN: %u\n");
 	printf("FIRST CMD: %s\n", array->cmd);
 	join_nodes(&array);
 	(void)tree;
