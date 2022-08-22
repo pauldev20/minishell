@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 17:37:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/22 17:38:42 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	init_env(char **argv)
 
 void	minishell(int argc, char **argv, char **envp)
 {
-	char		*cache[3];
+	char		*cache[2];
 	int			stdout_cpy;
 	int			*stdout_pipe;
 
@@ -92,7 +92,6 @@ void	minishell(int argc, char **argv, char **envp)
 	while (1)
 	{
 		cache[0] = get_promt();
-		cache[2] = NULL;
 		cache[1] = readline(cache[0]);
 		free(cache[0]);
 		if (if_chars(cache[1]))
