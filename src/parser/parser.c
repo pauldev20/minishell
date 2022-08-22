@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/22 13:31:22 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 14:04:59 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	parse_input(char *input)
 		array = init_token(g_minishell.cmd_array[c], array);
 		c++;
 	}
+	for (int i = 0; arra[i] != NULL; i++)
+		printf("ARRAY: %s, TOKEN: %u\n");
 	printf("FIRST CMD: %s\n", array->cmd);
 	join_nodes(&array);
 	(void)tree;
