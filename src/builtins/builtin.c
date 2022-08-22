@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/20 16:43:00 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 13:33:17 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	builtin_parser(char **argv, int argc)
 	if (ft_strncmp(*argv, "exit", 5) == 0)
 		builtin_exit();
 	if (ft_strncmp(*argv, "env", 4) == 0)
-		fail = builtin_env();
+		builtin_env();
 	if (ft_strncmp(*argv, "export", 7) == 0)
 		fail = builtin_export(argv + 1, argc - 1);
 	if (ft_strncmp(*argv, "unset", 6) == 0)

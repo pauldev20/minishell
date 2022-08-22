@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_like_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 11:00:53 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 11:48:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/22 13:32:39 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,10 +182,10 @@ void	parse_input(char *input)
 			tokens[i] = split_words(tokens[i]);
 		i++;
 	}
-	if (has_here_doc(tokens))
-		execute_here_doc();
-	else
-		excute_left_right();
+	// if (has_here_doc(tokens))
+	// 	execute_here_doc();
+	// else
+	// 	excute_left_right();
 	for (int i = 0; tokens[i] != NULL; i++)
 		printf("TOKEN: %s CMD: %s ARGS: %s\n", tokens[i]->token, tokens[i]->cmd, tokens[i]->args);
 }

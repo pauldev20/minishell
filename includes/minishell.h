@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 00:40:34 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 13:33:06 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ char	**arr_dup(char **enviroment);
 int		builtin_parser(char **argv, int argc);
 int		builtin_echo(char **argv, int argc);
 void	builtin_exit(void);
-int		builtin_env(void);
+void	builtin_env(void);
 int		builtin_export(char	**argv, int argc);
 int		builtin_unset(char **argv, int argc);
 int		builtin_pwd(void);
 
-int		parse_input(char *input);
+void	parse_input(char *input);
 
 // ENV
 void	add_back(t_env **env, t_env *new);
