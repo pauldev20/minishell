@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 13:33:06 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 13:41:46 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	print_env(t_env	*env);
 t_env	*get_env_var(t_env *env, char *key);
 int		in_list(t_env *env, char *key);
 int		set_env_var(t_env **env, char *key, char *value);
+
+void    rl_replace_line(const char *text, int clear_undo);
 
 // PROMT
 char	*get_promt(void);

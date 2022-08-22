@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/22 14:04:59 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/22 16:58:03 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	parse_input(char *input)
 	int		c;
 
 	g_minishell.cmd_array = split_cmds(input, &argc);
+	print_env(g_minishell.envp);
 	printf("ARGC: %d\n", argc);
 	for (int i = 0; g_minishell.cmd_array[i] != NULL; i++)
 		printf("ARGV: %s\n", g_minishell.cmd_array[i]);
