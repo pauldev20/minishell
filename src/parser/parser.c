@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/19 15:57:23 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/20 16:40:21 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,27 @@ char	**split_cmds(char *input, int *argc)
 	return (arr);
 }
 
-void	parse_input(char *input)
+int	parse_input(char *input)
 {
-	t_cmd	*array;
+	// t_cmd	*array;
 	int		argc;
+	int		success;
 
 	g_minishell.cmd_array = split_cmds(input, &argc);
-	printf("ARGC: %d\n", argc);
-	for(int i = 0; g_minishell.cmd_array[i] != NULL; i++)
-		printf("ARGV: %s\n", g_minishell.cmd_array[i]);
+	// printf("ARGC: %d\n", argc);
+	// for(int i = 0; g_minishell.cmd_array[i] != NULL; i++)
+	// 	printf("ARGV: %s\n", g_minishell.cmd_array[i]);
 	while (*g_minishell.cmd_array)
 	{
-		array = init_token(*g_minishell.cmd_array, array);
-		builtin_parser(g_minishell.cmd_array);
+		// array = init_token(*g_minishell.cmd_array, array);
+		success = builtin_parser(g_minishell.cmd_array, argc);
 		if (*g_minishell.cmd_array)
 			g_minishell.cmd_array++;
 	}
-	while (array)
-	{
-		printf("%s, %u\n", array->cmd, array->e_token);
-		array = array->next;
-	}
+	// while (array)
+	// {
+	// 	printf("%s, %u\n", array->cmd, array->e_token);
+	// 	array = array->next;
+	// }
+	return (success);
 }

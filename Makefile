@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
+#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/19 11:31:06 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/08/22 00:00:25 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,14 +21,16 @@ CFLAGS	= -Wall -Werror -Wextra
 # the compiler to be used
 CC	= cc
 
-INCLUDES = -Ilibft -Iincludes
+INCLUDES = -I/opt/homebrew/Cellar/readline/8.1.2/include -Ilibft -Iincludes
 
-LDFLAGS = -lreadline -Llibft -lft
+LDFLAGS = -L/opt/homebrew/Cellar/readline/8.1.2/lib -lreadline -Llibft -lft
 
 # all the src/.c files that need to be compiled
 SRCS =	src/main.c \
 		src/minishell.c \
 		src/helpers.c	\
+		src/promt.c	\
+		src/signal.c	\
 		src/env/env.c	\
 		src/env/helpers.c	\
 		src/parser/parser.c	\
@@ -58,7 +60,7 @@ $(LIBFT):
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 debug:
-	$(MAKE) CFLAGS='-g' #re
+	$(MAKE) CFLAGS='-g' re
 
 # remove the .o files
 clean:
