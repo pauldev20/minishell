@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 16:56:59 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 17:37:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	init_env(char **argv)
 
 void	minishell(int argc, char **argv, char **envp)
 {
-	char		*cache[2];
+	char		*cache[3];
 	int			stdout_cpy;
 	int			*stdout_pipe;
 
@@ -92,13 +92,15 @@ void	minishell(int argc, char **argv, char **envp)
 	while (1)
 	{
 		cache[0] = get_promt();
-		readline(cache[0]);
+		cache[2] = NULL;
+		cache[1] = readline(cache[0]);
 		free(cache[0]);
 		if (if_chars(cache[1]))
 			add_history(cache[1]);
 		catch_output(&stdout_cpy, &stdout_pipe);
-		parse_input(cache[1]);
+		if (cache[1] != NULL)
+			parse_input(cache[1]);
 		write_output(&stdout_cpy, &stdout_pipe);
-		free(cache[1]);
+		free (cache[1]);
 	}
 }

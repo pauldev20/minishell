@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/22 14:45:03 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/22 17:15:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static char	*replace_pwd(char *home, char *pwd)
 		i++;
 	}
 	j = 0;
-	out = (char *)malloc(sizeof(char) * (ft_strlen(pwd) - ft_strlen(home) + 2));
+	out = (char *)malloc(sizeof(char) * ((ft_strlen(pwd) - ft_strlen(home)) + 2));
 	if (!out)
 		return (NULL);
 	out[j++] = '~';
-	while (j++ < (int)(ft_strlen(pwd) - ft_strlen(home) + 2))
+	while (j++ < (int)(ft_strlen(pwd) - ft_strlen(home)))
 		out[j - 1] = pwd[i++];
 	out[j - 1] = '\0';
 	return (out);

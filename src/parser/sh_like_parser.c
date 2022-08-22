@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 11:00:53 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 14:33:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/22 17:35:23 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_token_struct	**parse_tokens(char *input)
 			token[token_nbr]->nbr_from_left = token_nbr;
 			token_nbr++;
 			start = c + 1;
-			while (input[start] == ' ')
+			while (input[start] == ' ' && input[start] != '\0')
 				start ++;
 		}
 		c++;
@@ -123,11 +123,11 @@ void	parse_input(char *input)
 	t_token_struct	**tokens;
 	
 	tokens = parse_tokens(input);
-	for (int i = 0; tokens[i] != NULL; i++)
-	{
-		write (1, tokens[i]->token, ft_strlen(tokens[i]->token));
-		write (1, &tokens[i]->e_token_type, 1);
-		write (1, "\n", 1);
-	}
+	// for (int i = 0; tokens[i] != NULL; i++)
+	// {
+	// 	write (1, tokens[i]->token, ft_strlen(tokens[i]->token));
+	// 	write (1, &tokens[i]->e_token_type, 1);
+	// 	write (1, "\n", 1);
+	// }
 	// get_tree(tokens);
 }
