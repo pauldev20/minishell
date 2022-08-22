@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 11:00:53 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/21 14:49:24 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/22 11:48:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,6 @@
 
 #include "minishell.h"
 #include "parser.h"
-
-
-bool	check_quotes(char character, char *str, int c)
-{
-	(void)character;
-	(void)str;
-	(void)c;
-	return (true);
-}
-
-bool	check_redirector(char character, char *str, int c)
-{
-	(void)character;
-	(void)str;
-	(void)c;
-	return (false);
-}
 
 bool	check_dollar(char *str, int c)
 {
@@ -56,9 +39,6 @@ bool	is_token_delimiter(char character, char *str, int c)
 {
 	if (character == '|' || (character == '<' && str[c + 1] == '<'))
 		return (true);
-	else if (character == '<' || character == '>' || 
-		(character == '>' && str[c + 1] == '>'))
-		return (check_redirector(character, str, c));
 	else if (character == '$')
 		return (check_dollar(str, c));
 	else
@@ -127,7 +107,7 @@ t_token_struct	**parse_tokens(char *input)
 			token[token_nbr]->nbr_from_left = token_nbr;
 			token_nbr++;
 			start = c + 1;
-			while (input[start] == ' ' || input[start] == '<')
+			while (input[start] == ' ')
 				start ++;
 		}
 		c++;
@@ -136,7 +116,7 @@ t_token_struct	**parse_tokens(char *input)
 	token[token_nbr]->nbr_from_left = token_nbr;
 	token[token_nbr + 1] = NULL;
 	for (int i = 0; token[i] != NULL; i++)
-		printf("TOKEN %d TOKEN-NBR: %d STRING: %s\n", i, token[i]->nbr_from_left, token[i]->token);
+		printf("TOKEN %d TOKEN-NBR: %d STRING: %s TOKEN-TYPE %u\n", i, token[i]->nbr_from_left, token[i]->token, token[i]->e_token_type);
 	return (token);
 }
 
@@ -175,19 +155,37 @@ t_token_struct	*split_words(t_token_struct *token)
 	return (new_token);
 }
 
+bool	has_here_doc(t_token_struct **tokens)
+{
+	int	i;
+
+	i = 0;
+	while(tokens[i] != NULL)
+	{
+		if (tokens[i]->e_token_type == DGREAT)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 void	parse_input(char *input)
 {
 	t_token_struct	**tokens;
 	int				i;
 
 	tokens = parse_tokens(input);
-	printf("\n");
 	i = 0;
 	while (tokens[i] != NULL)
 	{
 		if (tokens[i]->e_token_type == WORD)
 			tokens[i] = split_words(tokens[i]);
-		printf("TOKEN: %s, CMD: %s, ARGS: %s\n", tokens[i]->token, tokens[i]->cmd, tokens[i]->args);
 		i++;
 	}
+	if (has_here_doc(tokens))
+		execute_here_doc();
+	else
+		excute_left_right();
+	for (int i = 0; tokens[i] != NULL; i++)
+		printf("TOKEN: %s CMD: %s ARGS: %s\n", tokens[i]->token, tokens[i]->cmd, tokens[i]->args);
 }
