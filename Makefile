@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/22 13:55:29 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/22 16:58:25 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CC	= cc
 
 INCLUDES = -I${HOME}/.brew/Cellar/readline/8.1.2/include -Ilibft -Iincludes
 
-LDFLAGS = -L${HOME}/.brew/Cellar/readline/8.1.2/lib -lreadline -Llibft -lft
+LDFLAGS = -L${HOME}/.brew/Cellar/readline/8.1.2/lib -lreadline -Llibft -lft -g -fsanitize=address,undefined
 
 # all the src/.c files that need to be compiled
 SRCS =	src/main.c \
