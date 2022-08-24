@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/23 23:28:41 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/24 19:57:46 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,7 @@ CFLAGS	= #-Wall -Werror -Wextra
 # the compiler to be used
 CC	= cc
 
-INCLUDES = -I/opt/homebrew/Cellar/readline/8.1.2/include -Ilibft -Iincludes -g -fsanitize=address,undefined
-
+INCLUDES = -I/opt/homebrew/Cellar/readline/8.1.2/include -Ilibft -Iincludes #-g -fsanitize=address,undefined
 LDFLAGS = -L/opt/homebrew/Cellar/readline/8.1.2/lib -lreadline -Llibft -lft
 
 # all the src/.c files that need to be compiled
@@ -31,9 +30,12 @@ SRCS =	src/main.c \
 		src/helpers.c	\
 		src/promt.c	\
 		src/signal.c	\
+		src/error.c	\
 		src/env/env.c	\
 		src/env/helpers.c	\
-		src/parser/sh_like_parser.c \
+		src/parser/parser.c \
+		src/parser/lexer.c \
+		src/parser/pipe_expander.c \
 		src/parser/parser_helper.c \
 		src/parser/tokens.c \
 		src/builtins/builtin.c	\
