@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 17:38:42 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:17:03 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,8 @@ void	minishell(int argc, char **argv, char **envp)
 		free(cache[0]);
 		if (if_chars(cache[1]))
 			add_history(cache[1]);
-		catch_output(&stdout_cpy, &stdout_pipe);
 		if (cache[1] != NULL)
 			parse_input(cache[1]);
-		write_output(&stdout_cpy, &stdout_pipe);
-		free (cache[1]);
+		free(cache[1]);
 	}
 }

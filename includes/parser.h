@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:26:31 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 13:31:38 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/24 11:18:20 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_tree {
 int		get_arr_words(char *input);
 int		get_len_normal(char *source);
 int		get_len_quotes(char *source);
-char	**split_cmds(char *input, int *argc);
 
 t_cmd	*init_token(char *arr, t_cmd *head);
 t_cmd	*ft_cmdnew(char *command, t_token token);

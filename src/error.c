@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/24 18:54:27 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/24 15:09:29 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/24 15:20:22 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parser.h"
 
-void	*parse_input(char *input)
+// need to sett status!!!!!
+void	*print_error(int errtype, char *params, int err)
 {
-	char	**splitted;
-
-	splitted = lexer(input, ' ');
-	if (!splitted)
-		return (print_error(QUOTE, NULL, 1));
-	pipe_expander(&splitted);
-	printf("{");
-	for (int i = 0; splitted[i] != NULL; i++)
-		printf("%s, ", splitted[i]);
-	printf("NULL}\n");
-	for (int i = 0; splitted[i] != NULL; i++)
-		free(splitted[i]);
-	free(splitted);
+	if (errtype == QUOTE)
+		ft_putstr_fd("minishell: error while parsing input", 2);
+	ft_putendl_fd(params, 2);
 	return (NULL);
 }
