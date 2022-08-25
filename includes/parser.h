@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:26:31 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 13:31:38 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/23 11:33:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,24 @@ typedef enum e_token
 {
 	DLESS,
 	PIPE,
+	DOLLAR,
 	DGREAT,
 	LESS,
 	GREAT,
 	WORD,
 }	t_token;
 
-typedef struct s_cmd
-{
-	char			*cmd;
-	t_token			e_token;
-	bool			is_root;
-	struct s_cmd	*next;
-}	t_cmd;
-
 typedef struct s_token
 {
 	char			*token;
-	char			*cmd;
-	char			*args;
 	t_token			e_token_type;
 	int				nbr_from_left;
-	bool			is_prio;
+	int				layer;
 }	t_token_struct;
 
 typedef struct s_tree {
 	struct s_tree	*root;
-	struct s_cmd	*cmd;
+	struct s_token	*token;
 	struct s_tree	*right;
 	struct s_tree	*left;	
 }	t_tree;
@@ -53,9 +44,9 @@ int		get_len_normal(char *source);
 int		get_len_quotes(char *source);
 char	**split_cmds(char *input, int *argc);
 
-t_cmd	*init_token(char *arr, t_cmd *head);
-t_cmd	*ft_cmdnew(char *command, t_token token);
-
-bool	is_delimiter(t_token i);
+bool			check_dollar(char *str, int c);
+bool			is_token_delimiter(char character, char *str, int c);
+t_token_struct	*get_token(int start, int stop, char *input);
+t_token_struct	**parse_tokens(char *input);
 
 #endif

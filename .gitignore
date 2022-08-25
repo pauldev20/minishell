@@ -2,3 +2,6 @@
 *.a
 minishell
 *.txt
+.*
+*.json
+Makefile

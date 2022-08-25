@@ -6,128 +6,141 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 11:00:53 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 17:35:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/24 10:41:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 // TODO: IMPLEMENT TREE AND CORREC EXECUTION
 
 #include "minishell.h"
 #include "parser.h"
 
-bool	check_dollar(char *str, int c)
+void	start_heredoc(char *cmd, char *eof)
+{
+	if (cmd[0] == '|')
+		cmd = NULL;
+	(void)eof;
+}
+
+void	exe_heredocs(t_token_struct **tokens)
 {
 	int	i;
-	int	quote_counter;
-	
+
 	i = 0;
-	quote_counter = 0;
-	while (i <= c)
+	while (tokens[i])
 	{
-		if (str[i] == '\'')
-			quote_counter++;
+		if (tokens[i]->e_token_type == DGREAT)
+		{
+			start_heredoc(tokens[i - 1]->token, tokens[i + 1]->token);
+		}
+	}
+}
+
+bool	has_io_here(t_token_struct **tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i] != NULL)
+	{
+		if (tokens[i]->e_token_type == DGREAT)
+			return (true);
 		i++;
 	}
-	if (quote_counter % 2 == 0)
-		return (true);
-	else
-		return (false);
+	return (false);
 }
 
-bool	is_token_delimiter(char character, char *str, int c)
+bool	add_to_tree(t_tree **tree, t_tree *node)
 {
-	if (character == '|' || (character == '<' && str[c + 1] == '<'))
-		return (true);
-	else if (character == '$')
-		return (check_dollar(str, c));
-	else
-		return (false);
-}
+	t_tree	*root;
 
-t_token_struct	*get_delimiter_token(char *c)
-{
-	t_token_struct	*token;
-	int 			nbr;
-	
-	token = (t_token_struct *)malloc(sizeof(t_token_struct));
-	if (!token)
-		return (NULL);
-	if (c[0] == '|')
-		token->e_token_type = PIPE;
-	else if (c[0] == '<' && c[1] == '<')
-		token->e_token_type = DGREAT;
-	if (c[1] == '<')
-		nbr = 3;
-	else
-		nbr = 2;
-	token->token = (char *)malloc(sizeof(char) * nbr);
-	if (!token->token)
-		return (NULL);
-	token->token[0] = c[0];
-	if (c[1] == '<')
-		token->token[1] = c[1];
-	token->token[nbr - 1] = '\0';
-	return (token);
-}
-
-t_token_struct	*get_token(int start, int stop, char *input)
-{
-	t_token_struct	*token;
-
-	token = (t_token_struct *)malloc(sizeof(t_token_struct));
-	if (!token)
-		return (NULL);
-	token->e_token_type = WORD;
-	if (input[start] == '<')
-		start++;
-	token->token = ft_substr(input, start, (stop - start));
-	return (token);
-}
-
-t_token_struct	**parse_tokens(char *input)
-{
-	t_token_struct	**token;
-	int				token_nbr;
-	int				start;
-	int				c;
-
-	c = 0;
-	start = 0;
-	token_nbr = 0;
-	token = (t_token_struct **)malloc(sizeof(t_token_struct *) * 20);
-	while (input[c] != '\0')
+	root = *tree;
+	if (root == NULL)
 	{
-		if (is_token_delimiter(input[c], input, c))
-		{
-			token[token_nbr] = get_token(start, c, input);
-			token[token_nbr]->nbr_from_left = token_nbr;
-			token_nbr++;
-			token[token_nbr] = get_delimiter_token(input + c);
-			token[token_nbr]->nbr_from_left = token_nbr;
-			token_nbr++;
-			start = c + 1;
-			while (input[start] == ' ' && input[start] != '\0')
-				start ++;
-		}
-		c++;
+		(*tree) = node;
+		return (true);
 	}
-	token[token_nbr] = get_token(start, c, input);
-	token[token_nbr]->nbr_from_left = token_nbr;
-	token[token_nbr + 1] = NULL;
-	return (token);
+	if (node->token->nbr_from_left == root->token->nbr_from_left)
+		return (false);
+	if (node->token->nbr_from_left < root->token->nbr_from_left)
+		return (add_to_tree(&(root->left), node));
+	else
+		return (add_to_tree(&(root->right), node));
+}
+
+void	print_tabs(int amount)
+{
+	int	i;
+	
+	i = 0;
+	while (i < amount)
+	{
+		printf("\t");
+		i++;
+	}
+}
+
+void	print_tree(t_tree *tree, int level)
+{
+	if (!tree)
+	{
+		print_tabs(level);
+		printf("------<TREE EMPTY>-----\n");
+		return ;
+	}
+	print_tabs(level);
+	printf("token = %s\n", tree->token->token);
+	print_tabs(level);
+	printf("left\n");
+	print_tree(tree->left, level + 1);
+	print_tabs(level);
+	printf("right\n");
+	print_tree(tree->right, level + 1);
+	print_tabs(level);
+	printf("done\n");
+}
+
+t_tree	*new_node(t_token_struct *token)
+{
+	t_tree	*node;
+
+	node = (t_tree *)malloc(sizeof(t_tree));
+	if (!node)
+		return (NULL);
+	node->root = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	node->token = token;
+	return (node);
+}
+
+t_tree	*get_tree(t_token_struct **tokens)
+{
+	t_tree	*tree;
+	t_tree	*root;
+	int		i;
+
+	root = new_node(tokens[0]);
+	i = 1;
+	while (tokens[i] != NULL)
+	{
+		tree = new_node(tokens[i]);
+		add_to_tree(&root, tree);
+		i++;
+	}
+	return (root);
 }
 
 void	parse_input(char *input)
 {
 	t_token_struct	**tokens;
+	t_tree			*tree;
 	
 	tokens = parse_tokens(input);
-	// for (int i = 0; tokens[i] != NULL; i++)
-	// {
-	// 	write (1, tokens[i]->token, ft_strlen(tokens[i]->token));
-	// 	write (1, &tokens[i]->e_token_type, 1);
-	// 	write (1, "\n", 1);
-	// }
-	// get_tree(tokens);
+	for (int i = 0; tokens[i] != NULL; i++)
+		printf("%s, %d\n", tokens[i]->token, tokens[i]->nbr_from_left);
+	// if (has_io_here(tokens))
+	// 	exe_heredocs(tokens);
+	// else
+		// tree = get_tree(tokens);
 }
