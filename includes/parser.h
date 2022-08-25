@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:26:31 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/25 10:28:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/25 10:40:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		get_len_quotes(char *source);
 bool			check_dollar(char *str, int c);
 bool			is_token_delimiter(char character, char *str, int c);
 t_token_struct	*get_token(int start, int stop, char *input);
+char			*expand_vars(char *str);
 t_token_struct	**parse_tokens(char *input);
 
 #endif
