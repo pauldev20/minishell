@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/25 10:38:58 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/25 14:59:03 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include <readline/readline.h>
@@ -70,6 +71,7 @@ int		in_list(t_env *env, char *key);
 int		set_env_var(t_env **env, char *key, char *value);
 
 char	**lexer(char const *s, char c);
+char	*expand_vars(char *str);
 void	**pipe_expander(char ***arr);
 void	*free_arr(char **arr, int arr_count);
 

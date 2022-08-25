@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/25 10:02:22 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/08/25 14:58:51 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS =	src/main.c \
 		src/env/helpers.c	\
 		src/parser/parser.c \
 		src/parser/lexer.c \
+		src/parser/expander.c \
 		src/parser/pipe_expander.c \
 		src/parser/parser_helper.c \
 		src/parser/tokens.c \
