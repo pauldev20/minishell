@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colors.h                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/20 15:00:20 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/23 23:50:55 by pgeeser          ###   ########.fr       */
+/*   Created: 2022/08/24 15:09:29 by pgeeser           #+#    #+#             */
+/*   Updated: 2022/08/24 15:20:22 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLORS_H
-# define COLORS_H
+#include "minishell.h"
 
-# define WHITE_BLACK "\x1b[7m"
-# define BLUE "\x1b[94m"
-# define GREEN "\x1b[92m"
-# define RESET "\x1b[0m"
-
-#endif
+// need to sett status!!!!!
+void	*print_error(int errtype, char *params, int err)
+{
+	if (errtype == QUOTE)
+		ft_putstr_fd("minishell: error while parsing input", 2);
+	ft_putendl_fd(params, 2);
+	return (NULL);
+}

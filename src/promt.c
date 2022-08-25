@@ -3,70 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/22 17:15:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/24 00:01:40 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "colors.h"
 
-static char	*replace_pwd(char *home, char *pwd)
+static char	*replace_pwd(t_env *home, t_env *pwd)
 {
 	int		i;
 	int		j;
 	char	*out;
 
 	i = 0;
-	while (home[i] && pwd[i] && i < (int)ft_strlen(home))
+	if (!home)
+		return (pwd->value);
+	while (home->value[i] && pwd->value[i] && i < (int)ft_strlen(home->value))
 	{
-		if (home[i] != pwd[i])
-			return (NULL);
+		if (home->value[i] != pwd->value[i])
+			return (pwd->value);
 		i++;
 	}
 	j = 0;
-	out = (char *)malloc(sizeof(char) * ((ft_strlen(pwd) - ft_strlen(home)) + 2));
+	out = (char *)malloc(sizeof(char) * ((ft_strlen(pwd->value)
+					- ft_strlen(home->value)) + 2));
 	if (!out)
 		return (NULL);
 	out[j++] = '~';
-	while (j++ < (int)(ft_strlen(pwd) - ft_strlen(home)))
-		out[j - 1] = pwd[i++];
+	while (j++ < (int)(ft_strlen(pwd->value) - ft_strlen(home->value)))
+		out[j - 1] = pwd->value[i++];
 	out[j - 1] = '\0';
 	return (out);
 }
 
-static char	*promtstr(t_env *usr, t_env *pwd, t_env *home)
+static char	*get_user(t_env *usr)
+{
+	if (!usr)
+		return (ft_strdup("guest"));
+	return (ft_strjoin(BLUE, usr->value));
+}
+
+char	*get_promt(t_env *usr, t_env *pwd, t_env *home)
 {
 	char	*out;
 	char	*front;
 	char	*back;
-	char	*path;
+	char	*user;
+	char	*tmp;
 
-	path = NULL;
-	if (!usr)
-		front = ft_strjoin("guest", "@minishell ");
-	else
-		front = ft_strjoin(usr->value, "@minishell ");
-	if (home)
-		path = replace_pwd(home->value, pwd->value);
-	if (home && path)
-		back = ft_strjoin(path, " $ ");
-	else
-		back = ft_strjoin(pwd->value, " $ ");
-	out = ft_strjoin(front, back);
+	user = get_user(usr);
+	tmp = ft_strjoin(user, "@minishell ");
+	free(user);
+	front = ft_strjoin(tmp, GREEN);
+	free(tmp);
+	back = ft_strjoin(replace_pwd(home, pwd), " $ ");
+	tmp = ft_strjoin(front, back);
 	free(front);
 	free(back);
-	if (path)
-		free(path);
+	out = ft_strjoin(tmp, RESET);
+	free(tmp);
 	return (out);
-}
-
-char	*get_promt(void)
-{
-	return (promtstr(
-			get_env_var(g_minishell.envp, "USER"),
-			get_env_var(g_minishell.envp, "PWD"),
-			get_env_var(g_minishell.envp, "HOME")
-		));
 }

@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 13:41:46 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/24 19:58:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ typedef struct s_minishell
 
 t_minishell		g_minishell;
 
+enum	e_minishell_errors {
+	QUOTE = 1
+};
+
 void	minishell(int argc, char **argv, char **envp);
 char	**arr_dup(char **enviroment);
 
@@ -49,7 +53,9 @@ int		builtin_export(char	**argv, int argc);
 int		builtin_unset(char **argv, int argc);
 int		builtin_pwd(void);
 
-void	parse_input(char *input);
+void	*parse_input(char *input);
+
+void	*print_error(int errtype, char *params, int err);
 
 // ENV
 void	add_back(t_env **env, t_env *new);
@@ -63,10 +69,11 @@ t_env	*get_env_var(t_env *env, char *key);
 int		in_list(t_env *env, char *key);
 int		set_env_var(t_env **env, char *key, char *value);
 
-void    rl_replace_line(const char *text, int clear_undo);
+char	**lexer(char const *s, char c);
+void	**pipe_expander(char ***arr);
 
 // PROMT
-char	*get_promt(void);
+char	*get_promt(t_env *usr, t_env *pwd, t_env *home);
 
 // SIGNAL
 void	handle_signal(int sig);

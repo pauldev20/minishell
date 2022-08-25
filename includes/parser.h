@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:26:31 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/23 11:33:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/25 10:28:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_tree {
 int		get_arr_words(char *input);
 int		get_len_normal(char *source);
 int		get_len_quotes(char *source);
-char	**split_cmds(char *input, int *argc);
 
 bool			check_dollar(char *str, int c);
 bool			is_token_delimiter(char character, char *str, int c);
