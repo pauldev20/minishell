@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_helper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 10:02:14 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/20 14:53:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/08/25 10:38:49 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,12 @@ int	get_len_quotes(char *source)
 	}
 	c++;
 	return (c);
+}
+
+void	*free_arr(char **arr, int arr_count)
+{
+	while (arr_count >= 0)
+		free(arr[arr_count--]);
+	free(arr);
+	return (NULL);
 }

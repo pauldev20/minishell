@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/24 19:58:33 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/25 10:38:58 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int		set_env_var(t_env **env, char *key, char *value);
 
 char	**lexer(char const *s, char c);
 void	**pipe_expander(char ***arr);
+void	*free_arr(char **arr, int arr_count);
 
 // PROMT
 char	*get_promt(t_env *usr, t_env *pwd, t_env *home);

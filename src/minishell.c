@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/24 19:58:08 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/08/25 00:12:36 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	minishell(int argc, char **argv, char **envp)
 	g_minishell.envp = NULL;
 	g_minishell.envp = parse_array_to_env(envp, g_minishell.envp);
 	init_env(argv);
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, handle_signal);
+	// signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		cache[0] = get_promt(
