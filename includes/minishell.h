@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/25 14:59:03 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/09/22 14:26:39 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # include <readline/history.h>
 # include <sys/ioctl.h>
 # include <limits.h>
-# include "libft.h"
+// # include "libft.h"
+# include <sys/stat.h>
+# include <fcntl.h>
 
 typedef struct s_env
 {

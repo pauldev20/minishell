@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/25 13:18:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/22 10:18:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*get_substr_var(char *str, int index)
 			new_str = ft_strjoin(new_str, str + ft_word_len(str));
 			free(to_replace);
 			return (new_str);
-		}
+		}  
 		i++;
 	}
 	return (str);
@@ -125,11 +125,11 @@ char	*expand_vars(char *str)
 		d_quotes = check_dquotes(str);
 		i++;
 	}
-	printf("%d\n", d_quotes);
 	if (d_quotes > 0)
 	{
 		str = get_substr_var(str, ++i);
 	}
+	printf("%s\n", str);
 	return (str);
 }
 

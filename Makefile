@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/25 14:58:51 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/09/22 11:28:40 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,6 @@ SRCS =	src/main.c \
 		src/parser/lexer.c \
 		src/parser/expander.c \
 		src/parser/pipe_expander.c \
-		src/parser/parser_helper.c \
-		src/parser/tokens.c \
 		src/builtins/builtin.c	\
 		src/builtins/echo.c	\
 		src/builtins/exit.c	\
