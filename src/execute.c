@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/22 15:33:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/23 15:00:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,22 +127,24 @@ int fd_outfile(char *outfile)
 	return(fd);
 }
 
-void	redirect_input(char *file, char *token)
+int	redirect_input(char *file, char *token)
 {
 	printf("%s\n", token);
 	if (ft_strnstr(token, "LESS", 4))
-		dup2(fd_infile(file), STDIN_FILENO);
+		return (fd_infile(file));
 	else if (ft_strnstr(token, "DLESS", 5))
-		return ;
+		return (-10);
+	return (0);
 	//make here_doc
 }
 
-void	redirect_output(char *file, char *token)
+int	redirect_output(char *file, char *token)
 {
 	if (ft_strnstr(token, "GREAT", 5))
-		dup2(fd_outfile(file), STDOUT_FILENO);
+		return(fd_outfile(file));
 	else if (ft_strnstr(token, "DGREAT", 6))
-		dup2(fd_outfile_append(file), STDOUT_FILENO);;
+		return(fd_outfile_append(file));
+	return (-10);
 }
 
 bool	is_input_redirector(char *str)
@@ -177,13 +179,15 @@ char	**get_token_list(char **arr)
 		{
 			if (arr[i][1] == '<')
 				tokens[i] = ft_strdup("DLESS");
-			tokens[i] = ft_strdup("LESS");
+			else
+				tokens[i] = ft_strdup("LESS");
 		}
 		else if (arr[i][0] == '>')
 		{
 			if (arr[i][1] == '>')
 				tokens[i] = ft_strdup("DGREAT");
-			tokens[i] = ft_strdup("GREAT");
+			else
+				tokens[i] = ft_strdup("GREAT");
 		}
 		else
 			tokens[i] = ft_strdup("WORD");
@@ -193,28 +197,61 @@ char	**get_token_list(char **arr)
 	return (tokens);
 }
 
+void	execute_pipes(char **arr, char **tokens, int input_fd)
+{
+	int	pipe_counter;
+	int	i;
+	int	(*pipes)[2];
+	
+	i = 0;
+	pipe_counter = 0;
+	while (tokens[i] != NULL)
+	{
+		if (ft_strnstr(tokens[i], "PIPE", 4))
+			pipe_counter++;
+		i++;
+	}
+	printf("PIPES: %d\n", pipe_counter);
+	pipes = malloc(sizeof(int *) * pipe_counter);
+	i  = 0;
+	while (i < pipe_counter)
+	{
+		pipe(pipes[i]);
+		printf("%d %d\n", pipes[i][0], pipes[i][1]);
+		i++;
+	}
+	/*  Maybe think about a recursive solution where u execute the first pipe of the 
+		programm and pass the result as a new input for the next function call and also
+		pass the rest of the unparsed string as an arg
+		execute_pipes(arr + x, tokens + x, pipes[0][1]);
+	*/
+
+}
+
 // NEED TO FORK BEFORE TO MAKE A OWN PROCESS FOR THE REDIRECTION ALREADY
-void	execute_pipes(char **arr)
+void	execute_smart_cmd(char **arr)
 {
 	char	**token_list;
 	int		i;
 	int		pipe_amount;
-	
+	int		io[2];
+
 	printf("EXECUTE PIPES\n");
 	token_list = get_token_list(arr);
 	i = -1;
+	io[0] = STDIN_FILENO;
+	io[1] = STDOUT_FILENO;
 	while (token_list[++i] != NULL)
 	{
-		if (is_input_redirector(token_list[i]))	
-			redirect_input(arr[i + 1], token_list[i]);
+		if (is_input_redirector(token_list[i]))
+			io[0] = redirect_input(arr[i + 1], token_list[i]);
 	}
-	// start pipex 
+	execute_pipes(arr, token_list, io[0]);
 	i = -1;
 	while (token_list[++i] != NULL)
 	{
-		if (is_output_redirector(token_list[i])){
-			redirect_output(arr[i + 1], token_list[i]);
-			printf("ETST");}
+		if (is_output_redirector(token_list[i]))
+			io[1] = redirect_output(arr[i + 1], token_list[i]);
 	}
 }
 
@@ -224,15 +261,8 @@ int	main_pipes(char **arr)
 
 	id = fork();
 	if (id == 0)
-	{
-		printf("CHILD: %d\n", id);
-		execute_pipes(arr);
-	}
-	else
-	{
-		printf("PARENT: %d\n", id);
-		wait(&id);
-	}
+		execute_smart_cmd(arr);
+	wait(&id);
 	return (0);
 }
 
@@ -243,10 +273,10 @@ int main()
 		"|",
 		"test",
 		"-l",
-		">",
+		">>",
 		"outfile",
 		"<",
-		"infile",
+		"|",
 		NULL,
 	};
 	main_pipes(arr);
