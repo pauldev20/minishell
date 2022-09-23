@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/23 15:00:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/23 15:19:05 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,12 +220,6 @@ void	execute_pipes(char **arr, char **tokens, int input_fd)
 		printf("%d %d\n", pipes[i][0], pipes[i][1]);
 		i++;
 	}
-	/*  Maybe think about a recursive solution where u execute the first pipe of the 
-		programm and pass the result as a new input for the next function call and also
-		pass the rest of the unparsed string as an arg
-		execute_pipes(arr + x, tokens + x, pipes[0][1]);
-	*/
-
 }
 
 // NEED TO FORK BEFORE TO MAKE A OWN PROCESS FOR THE REDIRECTION ALREADY
@@ -246,6 +240,22 @@ void	execute_smart_cmd(char **arr)
 		if (is_input_redirector(token_list[i]))
 			io[0] = redirect_input(arr[i + 1], token_list[i]);
 	}
+	/*  here i Start the recursive process
+		I give it the STDIN or already changed input
+		Do I need to initilize all the pipes before?
+		or just allways pass diferent fds and write the output in the
+		different fds (to do so i would need all the pipes before)
+		maybe init first, pass all pipes, also pass a counter and 
+		tell the recursive process to use the fds out of the counter
+	
+		execute_pipes(arr + x, tokens + x, **pipes, counter)
+		{
+			if counter > 0
+				execute_pipes(arr + x, tokens + x, **pipes, counter - 1)
+			else
+				go_back_to_main_and_pipe_last_cmd_to_output
+		}
+	*/
 	execute_pipes(arr, token_list, io[0]);
 	i = -1;
 	while (token_list[++i] != NULL)
