@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/23 15:21:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/23 15:31:24 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,8 @@ void	execute_smart_cmd(char **arr)
 			else
 				go_back_to_main_and_pipe_last_cmd_to_output
 		}
+
+		https://www.youtube.com/watch?v=SToUyjAsaFk&list=RDLVdDtZLm7HIJs&index=6
 	*/
 	execute_pipes(arr, token_list, io[0]);
 	i = -1;
