@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/23 15:19:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/23 15:21:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ void	execute_smart_cmd(char **arr)
 		if (is_input_redirector(token_list[i]))
 			io[0] = redirect_input(arr[i + 1], token_list[i]);
 	}
-	/*  here i Start the recursive process
+	/*  here we start the recursive process
 		I give it the STDIN or already changed input
 		Do I need to initilize all the pipes before?
 		or just allways pass diferent fds and write the output in the
