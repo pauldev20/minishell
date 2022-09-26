@@ -6,7 +6,7 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/09/22 11:28:40 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/09/26 16:20:56 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CFLAGS	= #-Wall -Werror -Wextra
 # the compiler to be used
 CC	= cc
 
-INCLUDES = -I$(HOME)/.brew/Cellar/readline/8.1.2/include -Ilibft -Iincludes -g -fsanitize=address,undefined
+INCLUDES = -I$(HOME)/.brew/Cellar/readline/8.1.2/include -Ilibft -Iincludes -g  #-fsanitize=address,undefined
 LDFLAGS = -L$(HOME)/.brew/Cellar/readline/8.1.2/lib -lreadline -Llibft -lft
 
 # all the src/.c files that need to be compiled
@@ -31,6 +31,7 @@ SRCS =	src/main.c \
 		src/promt.c	\
 		src/signal.c	\
 		src/error.c	\
+		src/execute.c \
 		src/env/env.c	\
 		src/env/helpers.c	\
 		src/parser/parser.c \
@@ -51,7 +52,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 # this rule is responsible for building the executable/archive. It uses the built-in rule: ($(CC) $(CPPFLAGS) $(CFLAGS) -c -o x.o x.c) because .o prerequisites
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LDFLAGS) $(OBJS) -o $(NAME)
 
 $(LIBFT):

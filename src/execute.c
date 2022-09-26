@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/26 16:11:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/26 16:24:49 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,14 +362,6 @@ void	execute_pipes(char **arr, char **tokens, int input_fd)
 	for (int i = 0; cmd_array[i] != NULL; i++)
 		printf("CMD_ARR[%d]: %s\n", i, cmd_array[i]);
 	// execute pipex von paul
-	// i  = -1;
-	// dup2(input_fd, STDIN_FILENO);
-	// execute(cmd_array[0]);
-	// i = 0;
-	// while (++i < pipe_counter)
-	// 	child_process(cmd_array[i]);
-	// dup2(get_outfile_fd(tokens, arr), STDOUT_FILENO);
-	// execute_last(cmd_array[pipe_counter + 1]);
 }
 
 // NEED TO FORK BEFORE TO MAKE A OWN PROCESS FOR THE REDIRECTION ALREADY
