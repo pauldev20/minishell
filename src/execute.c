@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/23 15:31:24 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:21:53 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ int fd_outfile(char *outfile)
 
 int	redirect_input(char *file, char *token)
 {
-	printf("%s\n", token);
 	if (ft_strnstr(token, "LESS", 4))
 		return (fd_infile(file));
 	else if (ft_strnstr(token, "DLESS", 5))
@@ -159,6 +158,37 @@ bool	is_output_redirector(char *str)
 	if (ft_strnstr(str, "GREAT", 5) || ft_strnstr(str, "DGREAT", 6))
 		return (true);
 	return (false);
+}
+
+int		get_outfile_fd(char **token, char **arr)
+{
+	int	outfile;
+	int	i;
+	
+	outfile = 1;
+	i = -1;
+	while (token[++i] != NULL)
+	{
+		if (is_output_redirector(token[i]))
+			outfile = redirect_output(arr[i + 1], token[i]);
+	}
+	return (outfile);
+}
+
+int		get_pipe_amount(char **tokens)
+{
+	int	pipe_counter;
+	int	i;
+
+	pipe_counter = 0;
+	i = 0;
+	while (tokens[i] != NULL)
+	{
+		if (ft_strnstr(tokens[i], "PIPE", 4))
+			pipe_counter++;
+		i++;
+	}
+	return (pipe_counter);
 }
 
 char	**get_token_list(char **arr)
@@ -197,29 +227,126 @@ char	**get_token_list(char **arr)
 	return (tokens);
 }
 
+// void	child_process(char *cmd)
+// {
+// 	pid_t	pid;
+// 	int		fd[2];
+
+// 	if (pipe(fd) == -1)
+// 		error();
+// 	pid = fork();
+// 	if (pid == -1)
+// 		error();
+// 	if (pid == 0)
+// 	{
+// 		close(fd[0]);
+// 		dup2(fd[1], STDOUT_FILENO);
+// 		execute(cmd);
+// 	}
+// 	else
+// 	{
+// 		close(fd[1]);
+// 		dup2(fd[0], STDIN_FILENO);
+// 		waitpid(pid, NULL, 0);
+// 	}
+// }
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*ptr;
+	int		i;
+
+	if (!s1 || !s2)
+		return (NULL);
+	ptr = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (*s1)
+		ptr[i++] = *s1++;
+	while (*s2)
+		ptr[i++] = *s2++;
+	return (ptr);
+}
+
+
+char	*add_toarray(char *str, char *str2)
+{
+	if (!str)
+		str = str2;
+	else
+	{
+		str = ft_strjoin(str, " ");
+		str = ft_strjoin(str, str2);
+	}
+	return (str);
+}
+
+int		io_tokens_to_skip(char **arr, char **tokens, int start)
+{
+	if (is_input_redirector(tokens[start]) || is_output_redirector(tokens[start]))
+			return (2);
+	// if (!ft_strnstr(tokens[start + 1], "WORD", 4))
+	// 	return (-1);
+	return (0);
+}
+
+char	**extract_cmd_array(char **arr, char **tokens, int size)
+{
+	char	**cmd_array;
+	int		tokens_i;
+	int		cmd_checker;
+	int		cmd_i;
+
+	cmd_array = (char **)malloc(sizeof(char *) * size + 1);
+	tokens_i = 0;
+	cmd_i = 0;
+	cmd_checker = 0;
+	while (arr[tokens_i] != NULL)
+	{
+		tokens_i += io_tokens_to_skip(arr, tokens, tokens_i);
+		if (ft_strnstr(tokens[tokens_i], "PIPE", 4))
+		{
+			while (!ft_strnstr(tokens[cmd_checker], "PIPE", 4) && ft_strnstr(tokens[cmd_checker], "WORD", 4))
+			{
+				cmd_array[cmd_i] = add_toarray(cmd_array[cmd_i], arr[cmd_checker]);
+				cmd_checker++;
+			}
+			cmd_checker++;
+			cmd_i++;
+		}
+		tokens_i++;
+	}
+	cmd_checker = tokens_i;
+	while (arr[cmd_checker] != NULL && ft_strnstr(tokens[cmd_checker], "WORD", 4))
+	{
+		printf("TOKEN: %s\n", tokens[cmd_checker]);
+		cmd_array[cmd_i] = add_toarray(cmd_array[cmd_i], arr[cmd_checker]);
+		cmd_checker++;
+	}
+	cmd_array[cmd_i + 1] = NULL;
+	for (int i = 0; cmd_array[i] != NULL; i++)
+		printf("CMD_ARRAY of  %d: %s\n", i, cmd_array[i]);
+	return (cmd_array);
+}
+
 void	execute_pipes(char **arr, char **tokens, int input_fd)
 {
-	int	pipe_counter;
-	int	i;
-	int	(*pipes)[2];
+	int		pipe_counter;
+	int		i;
+	char	**cmd_array;
 	
-	i = 0;
-	pipe_counter = 0;
-	while (tokens[i] != NULL)
-	{
-		if (ft_strnstr(tokens[i], "PIPE", 4))
-			pipe_counter++;
-		i++;
-	}
-	printf("PIPES: %d\n", pipe_counter);
-	pipes = malloc(sizeof(int *) * pipe_counter);
-	i  = 0;
-	while (i < pipe_counter)
-	{
-		pipe(pipes[i]);
-		printf("%d %d\n", pipes[i][0], pipes[i][1]);
-		i++;
-	}
+	pipe_counter = get_pipe_amount(tokens);
+	printf("%d\n", pipe_counter);
+	cmd_array = extract_cmd_array(arr, tokens, pipe_counter + 1);
+	// i  = -1;
+	// dup2(input_fd, STDIN_FILENO);
+	// execute(cmd_array[0]);
+	// i = 0;
+	// while (++i < pipe_counter)
+	// 	child_process(cmd_array[i]);
+	// dup2(get_outfile_fd(tokens, arr), STDOUT_FILENO);
+	// execute_last(cmd_array[pipe_counter + 1]);
 }
 
 // NEED TO FORK BEFORE TO MAKE A OWN PROCESS FOR THE REDIRECTION ALREADY
@@ -228,43 +355,17 @@ void	execute_smart_cmd(char **arr)
 	char	**token_list;
 	int		i;
 	int		pipe_amount;
-	int		io[2];
+	int		input;
 
 	printf("EXECUTE PIPES\n");
 	token_list = get_token_list(arr);
 	i = -1;
-	io[0] = STDIN_FILENO;
-	io[1] = STDOUT_FILENO;
 	while (token_list[++i] != NULL)
 	{
 		if (is_input_redirector(token_list[i]))
-			io[0] = redirect_input(arr[i + 1], token_list[i]);
+			input = redirect_input(arr[i + 1], token_list[i]);
 	}
-	/*  here we start the recursive process
-		I give it the STDIN or already changed input
-		Do I need to initilize all the pipes before?
-		or just allways pass diferent fds and write the output in the
-		different fds (to do so i would need all the pipes before)
-		maybe init first, pass all pipes, also pass a counter and 
-		tell the recursive process to use the fds out of the counter
-	
-		execute_pipes(arr + x, tokens + x, **pipes, counter)
-		{
-			if counter > 0
-				execute_pipes(arr + x, tokens + x, **pipes, counter - 1)
-			else
-				go_back_to_main_and_pipe_last_cmd_to_output
-		}
-
-		https://www.youtube.com/watch?v=SToUyjAsaFk&list=RDLVdDtZLm7HIJs&index=6
-	*/
-	execute_pipes(arr, token_list, io[0]);
-	i = -1;
-	while (token_list[++i] != NULL)
-	{
-		if (is_output_redirector(token_list[i]))
-			io[1] = redirect_output(arr[i + 1], token_list[i]);
-	}
+	execute_pipes(arr, token_list, input);
 }
 
 int	main_pipes(char **arr)
@@ -282,13 +383,14 @@ int main()
 {
 	char *arr[] = {
 		"wc",
-		"|",
-		"test",
 		"-l",
+		"|",
+		"echo -wc",
 		">>",
 		"outfile",
-		"<",
 		"|",
+		"ls",
+		"-a",
 		NULL,
 	};
 	main_pipes(arr);
