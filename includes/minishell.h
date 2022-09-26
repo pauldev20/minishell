@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/22 14:26:39 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/26 16:10:18 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,8 @@ char	*get_promt(t_env *usr, t_env *pwd, t_env *home);
 
 // SIGNAL
 void	handle_signal(int sig);
+
+// EXECUTE
+int		handle_execute(char **arr);
 
 #endif

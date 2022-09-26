@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/26 14:21:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/26 16:11:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,90 +18,90 @@
 	cmd_and_args: WORD args
 	args: WORD
 */
-void	*ft_memset(void *ptr, int value, size_t num)
-{
-	size_t	i;
+// void	*ft_memset(void *ptr, int value, size_t num)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (i < num)
-		((unsigned char *)ptr)[i++] = (unsigned char)value;
-	return (ptr);
-}
+// 	i = 0;
+// 	while (i < num)
+// 		((unsigned char *)ptr)[i++] = (unsigned char)value;
+// 	return (ptr);
+// }
 
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset((char *)s, 0, n);
-}
+// void	ft_bzero(void *s, size_t n)
+// {
+// 	ft_memset((char *)s, 0, n);
+// }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	size_t	i;
+// void	*ft_memcpy(void *dest, const void *src, size_t n)
+// {
+// 	size_t	i;
 
-	i = 0;
-	if (dest == src)
-		return (dest);
-	while (i < n)
-	{
-		*((unsigned char *)dest + i) = *((unsigned char *)src + i);
-		i++;
-	}
-	return (dest);
-}
+// 	i = 0;
+// 	if (dest == src)
+// 		return (dest);
+// 	while (i < n)
+// 	{
+// 		*((unsigned char *)dest + i) = *((unsigned char *)src + i);
+// 		i++;
+// 	}
+// 	return (dest);
+// }
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	len;
+// size_t	ft_strlen(const char *str)
+// {
+// 	size_t	len;
 
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
+// 	len = 0;
+// 	while (str[len])
+// 		len++;
+// 	return (len);
+// }
 
-void	*ft_calloc(size_t num, size_t size)
-{
-	void	*ptr;
+// void	*ft_calloc(size_t num, size_t size)
+// {
+// 	void	*ptr;
 
-	ptr = malloc(size * num);
-	if (!ptr)
-		return (NULL);
-	ft_bzero(ptr, size * num);
-	return (ptr);
-}
+// 	ptr = malloc(size * num);
+// 	if (!ptr)
+// 		return (NULL);
+// 	ft_bzero(ptr, size * num);
+// 	return (ptr);
+// }
 
-char	*ft_strdup(const char *str1)
-{
-	int		len;
-	char	*ptr;
+// char	*ft_strdup(const char *str1)
+// {
+// 	int		len;
+// 	char	*ptr;
 
-	len = ft_strlen(str1);
-	ptr = (char *)ft_calloc(len + 1, sizeof(char));
-	if (!ptr)
-		return (NULL);
-	return (ft_memcpy(ptr, str1, len + 1));
-}
+// 	len = ft_strlen(str1);
+// 	ptr = (char *)ft_calloc(len + 1, sizeof(char));
+// 	if (!ptr)
+// 		return (NULL);
+// 	return (ft_memcpy(ptr, str1, len + 1));
+// }
 
-char	*ft_strnstr(const char	*big, const char *little, size_t len)
-{
-	size_t	i;
-	size_t	y;
+// char	*ft_strnstr(const char	*big, const char *little, size_t len)
+// {
+// 	size_t	i;
+// 	size_t	y;
 
-	i = 0;
-	if (!(*little))
-		return ((char *)big);
-	while (big[i] && i < len)
-	{
-		y = 0;
-		while (little[y] == big[i + y] && i + y < len)
-		{
-			y++;
-			if (!little[y])
-				return ((char *)big + i);
-		}
-		i++;
-	}
-	return (NULL);
-}
+// 	i = 0;
+// 	if (!(*little))
+// 		return ((char *)big);
+// 	while (big[i] && i < len)
+// 	{
+// 		y = 0;
+// 		while (little[y] == big[i + y] && i + y < len)
+// 		{
+// 			y++;
+// 			if (!little[y])
+// 				return ((char *)big + i);
+// 		}
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
 int fd_infile(char *infile)
 {
@@ -282,13 +282,37 @@ char	*add_toarray(char *str, char *str2)
 	return (str);
 }
 
-int		io_tokens_to_skip(char **arr, char **tokens, int start)
+bool	is_io(char *token)
 {
-	if (is_input_redirector(tokens[start]) || is_output_redirector(tokens[start]))
-			return (2);
-	// if (!ft_strnstr(tokens[start + 1], "WORD", 4))
-	// 	return (-1);
-	return (0);
+	if (is_input_redirector(token) == true || is_output_redirector(token) == true)
+			return (true);
+	return (false);
+}
+
+char	**delete_io(char **arr, char **tokens)
+{
+	int		i;
+	int		new_i;
+
+	new_i = 0;
+	i = 0;
+	while (tokens[i] != NULL)
+	{
+		if (is_io(tokens[i]))
+			i =  i + 2;
+		else
+		{
+			arr[new_i] = arr[i];
+			new_i++;
+			i++;
+		}
+	}
+	while (tokens[new_i] != NULL)
+	{
+		arr[new_i] = NULL;
+		new_i++;
+	}
+	return (arr);
 }
 
 char	**extract_cmd_array(char **arr, char **tokens, int size)
@@ -302,9 +326,10 @@ char	**extract_cmd_array(char **arr, char **tokens, int size)
 	tokens_i = 0;
 	cmd_i = 0;
 	cmd_checker = 0;
+	arr = delete_io(arr, tokens);
+	tokens = get_token_list(arr);
 	while (arr[tokens_i] != NULL)
 	{
-		tokens_i += io_tokens_to_skip(arr, tokens, tokens_i);
 		if (ft_strnstr(tokens[tokens_i], "PIPE", 4))
 		{
 			while (!ft_strnstr(tokens[cmd_checker], "PIPE", 4) && ft_strnstr(tokens[cmd_checker], "WORD", 4))
@@ -317,16 +342,12 @@ char	**extract_cmd_array(char **arr, char **tokens, int size)
 		}
 		tokens_i++;
 	}
-	cmd_checker = tokens_i;
 	while (arr[cmd_checker] != NULL && ft_strnstr(tokens[cmd_checker], "WORD", 4))
 	{
-		printf("TOKEN: %s\n", tokens[cmd_checker]);
 		cmd_array[cmd_i] = add_toarray(cmd_array[cmd_i], arr[cmd_checker]);
 		cmd_checker++;
 	}
 	cmd_array[cmd_i + 1] = NULL;
-	for (int i = 0; cmd_array[i] != NULL; i++)
-		printf("CMD_ARRAY of  %d: %s\n", i, cmd_array[i]);
 	return (cmd_array);
 }
 
@@ -337,8 +358,10 @@ void	execute_pipes(char **arr, char **tokens, int input_fd)
 	char	**cmd_array;
 	
 	pipe_counter = get_pipe_amount(tokens);
-	printf("%d\n", pipe_counter);
 	cmd_array = extract_cmd_array(arr, tokens, pipe_counter + 1);
+	for (int i = 0; cmd_array[i] != NULL; i++)
+		printf("CMD_ARR[%d]: %s\n", i, cmd_array[i]);
+	// execute pipex von paul
 	// i  = -1;
 	// dup2(input_fd, STDIN_FILENO);
 	// execute(cmd_array[0]);
@@ -368,7 +391,7 @@ void	execute_smart_cmd(char **arr)
 	execute_pipes(arr, token_list, input);
 }
 
-int	main_pipes(char **arr)
+int	handle_execute(char **arr)
 {
 	pid_t	id;
 
@@ -379,20 +402,20 @@ int	main_pipes(char **arr)
 	return (0);
 }
 
-int main()
-{
-	char *arr[] = {
-		"wc",
-		"-l",
-		"|",
-		"echo -wc",
-		">>",
-		"outfile",
-		"|",
-		"ls",
-		"-a",
-		NULL,
-	};
-	main_pipes(arr);
-	return 0;
-}
+// int main()
+// {
+// 	char *arr[] = {
+// 		"wc",
+// 		"-l",
+// 		"|",
+// 		"echo -wc",
+// 		">>",
+// 		"outfile",
+// 		"|",
+// 		"ls",
+// 		"-a",
+// 		NULL,
+// 	};
+// 	main_pipes(arr);
+// 	return 0;
+// }
