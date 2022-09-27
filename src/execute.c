@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 14:17:09 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:18:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,6 @@ void	execute_smart_cmd(char **arr)
 	int		pipe_amount;
 	int		input;
 
-	printf("EXECUTE PIPES\n");
 	arr = join_d_redirector(arr);
 	token_list = get_token_list(arr);
 	if (!check_syntax(token_list))

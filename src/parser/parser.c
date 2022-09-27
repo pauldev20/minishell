@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/09/26 16:18:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:19:02 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	*parse_input(char *input)
 		c++;
 	}
 	handle_execute(splitted);
-	printf("{");
-	for (int i = 0; splitted[i] != NULL; i++)
-		printf("%s, ", splitted[i]);
-	printf("NULL}\n");
+	// printf("{");
+	// for (int i = 0; splitted[i] != NULL; i++)
+	// 	printf("%s, ", splitted[i]);
+	// printf("NULL}\n");
 	for (int i = 0; splitted[i] != NULL; i++)
 		free(splitted[i]);
 	free(splitted);
