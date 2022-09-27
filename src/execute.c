@@ -6,12 +6,13 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 13:15:12 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:17:09 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+extern char **environ;
 /* TO DO:
 	- ADD ERROR HANDELING
 	- ADD PIPEX IMPLEMENTATION
@@ -269,12 +270,20 @@ void	execute_pipes(char **arr, char **tokens, int input_fd)
 {
 	int		pipe_counter;
 	int		i;
+	int		output_fd;
 	char	**cmd_array;
 	
 	pipe_counter = get_pipe_amount(tokens);
+	output_fd = get_outfile_fd(tokens, arr);
 	cmd_array = extract_cmd_array(arr, tokens, pipe_counter + 1);
-	for (int i = 0; cmd_array[i] != NULL; i++)
-		printf("CMD_ARR[%d]: %s\n", i, cmd_array[i]);
+	i = 0;
+	while (i < pipe_counter)
+	{
+		child_process(cmd_array[i], environ);
+		i++;
+	}
+	dup2(output_fd, STDOUT_FILENO);
+	execute(cmd_array[pipe_counter], environ);
 	// free_array(cmd_array);
 	// execute pipex von paul
 }
@@ -287,7 +296,6 @@ bool	check_syntax(char **tokens)
 	i = 0;
 	while (tokens[i] != NULL)
 	{
-		printf("TOKEN[%d]: %s\n", i, tokens[i]);
 		if (ft_strnstr(tokens[i], "PIPE", 4))
 		{
 			if (tokens[i - 1] == NULL || tokens[i + 1] == NULL
@@ -299,7 +307,6 @@ bool	check_syntax(char **tokens)
 		}
 		else if (is_input_redirector(tokens[i]) || is_output_redirector(tokens[i]))
 		{
-			printf("TOKEN[%d]: %s\n", i, tokens[i + 1]);
 			if (tokens[i + 1] == NULL || !ft_strnstr(tokens[i + 1], "WORD", 4))
 			{
 				printf("SYTNAX ERROR NEAR IO-REDIRECTOR\n");
@@ -318,7 +325,7 @@ void	execute_smart_cmd(char **arr)
 	char	**token_list;
 	int		i;
 	int		pipe_amount;
-	int		io[2];
+	int		input;
 
 	printf("EXECUTE PIPES\n");
 	arr = join_d_redirector(arr);
@@ -329,9 +336,7 @@ void	execute_smart_cmd(char **arr)
 	while (token_list[++i] != NULL)
 	{
 		if (is_input_redirector(token_list[i]))
-			io[0] = redirect_input(arr[i + 1], token_list[i]);
-		if (is_output_redirector(token_list[i]))
-			io[1] = redirect_output([arr + 1], token_list[i]);
+			input = redirect_input(arr[i + 1], token_list[i]);
 	}
 	execute_pipes(arr, token_list, input);
 }

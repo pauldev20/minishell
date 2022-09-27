@@ -6,7 +6,7 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/09/26 16:20:56 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/09/27 14:16:25 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS =	src/main.c \
 		src/signal.c	\
 		src/error.c	\
 		src/execute.c \
+		src/pipex.c \
 		src/env/env.c	\
 		src/env/helpers.c	\
 		src/parser/parser.c \

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/26 16:18:03 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:15:52 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,9 @@ void	handle_signal(int sig);
 
 // EXECUTE
 int		handle_execute(char **arr);
+
+// PIPEX
+void	child_process(char *argv, char **envp);
+void	execute(char *argv, char **envp);
 
 #endif
