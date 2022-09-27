@@ -6,11 +6,17 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 11:04:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 11:06:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/* TO DO:
+	- ADD DOCUMENTATION
+	- ADD ERROR HANDELING
+	- ADD PIPEX IMPLEMENTATION
+*/
 
 int fd_infile(char *infile)
 {
@@ -279,7 +285,6 @@ char	**join_d_redirector(char **arr)
 	return (arr);
 }
 
-// NEED TO FORK BEFORE TO MAKE A OWN PROCESS FOR THE REDIRECTION ALREADY
 void	execute_smart_cmd(char **arr)
 {
 	char	**token_list;
@@ -310,21 +315,3 @@ int	handle_execute(char **arr)
 	wait(&id);
 	return (0);
 }
-
-// int main()
-// {
-// 	char *arr[] = {
-// 		"wc",
-// 		"-l",
-// 		"|",
-// 		"echo -wc",
-// 		">>",
-// 		"outfile",
-// 		"|",
-// 		"ls",
-// 		"-a",
-// 		NULL,
-// 	};
-// 	main_pipes(arr);
-// 	return 0;
-// }
