@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/22 10:18:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 10:12:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ char	*expand_vars(char *str)
 	{
 		str = get_substr_var(str, ++i);
 	}
-	printf("%s\n", str);
 	return (str);
 }
 

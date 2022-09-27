@@ -6,102 +6,11 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/26 16:24:49 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 11:04:53 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/* TOKEN LIST:
-	io_redirector: GREAT word, LESS word, DGREAT word, DLESS word
-	pipes: pipes PIPE cmd_args
-	cmd_and_args: WORD args
-	args: WORD
-*/
-// void	*ft_memset(void *ptr, int value, size_t num)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < num)
-// 		((unsigned char *)ptr)[i++] = (unsigned char)value;
-// 	return (ptr);
-// }
-
-// void	ft_bzero(void *s, size_t n)
-// {
-// 	ft_memset((char *)s, 0, n);
-// }
-
-// void	*ft_memcpy(void *dest, const void *src, size_t n)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	if (dest == src)
-// 		return (dest);
-// 	while (i < n)
-// 	{
-// 		*((unsigned char *)dest + i) = *((unsigned char *)src + i);
-// 		i++;
-// 	}
-// 	return (dest);
-// }
-
-// size_t	ft_strlen(const char *str)
-// {
-// 	size_t	len;
-
-// 	len = 0;
-// 	while (str[len])
-// 		len++;
-// 	return (len);
-// }
-
-// void	*ft_calloc(size_t num, size_t size)
-// {
-// 	void	*ptr;
-
-// 	ptr = malloc(size * num);
-// 	if (!ptr)
-// 		return (NULL);
-// 	ft_bzero(ptr, size * num);
-// 	return (ptr);
-// }
-
-// char	*ft_strdup(const char *str1)
-// {
-// 	int		len;
-// 	char	*ptr;
-
-// 	len = ft_strlen(str1);
-// 	ptr = (char *)ft_calloc(len + 1, sizeof(char));
-// 	if (!ptr)
-// 		return (NULL);
-// 	return (ft_memcpy(ptr, str1, len + 1));
-// }
-
-// char	*ft_strnstr(const char	*big, const char *little, size_t len)
-// {
-// 	size_t	i;
-// 	size_t	y;
-
-// 	i = 0;
-// 	if (!(*little))
-// 		return ((char *)big);
-// 	while (big[i] && i < len)
-// 	{
-// 		y = 0;
-// 		while (little[y] == big[i + y] && i + y < len)
-// 		{
-// 			y++;
-// 			if (!little[y])
-// 				return ((char *)big + i);
-// 		}
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
 
 int fd_infile(char *infile)
 {
@@ -227,30 +136,6 @@ char	**get_token_list(char **arr)
 	return (tokens);
 }
 
-// void	child_process(char *cmd)
-// {
-// 	pid_t	pid;
-// 	int		fd[2];
-
-// 	if (pipe(fd) == -1)
-// 		error();
-// 	pid = fork();
-// 	if (pid == -1)
-// 		error();
-// 	if (pid == 0)
-// 	{
-// 		close(fd[0]);
-// 		dup2(fd[1], STDOUT_FILENO);
-// 		execute(cmd);
-// 	}
-// 	else
-// 	{
-// 		close(fd[1]);
-// 		dup2(fd[0], STDIN_FILENO);
-// 		waitpid(pid, NULL, 0);
-// 	}
-// }
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ptr;
@@ -269,7 +154,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (ptr);
 }
 
-
 char	*add_toarray(char *str, char *str2)
 {
 	if (!str)
@@ -282,13 +166,6 @@ char	*add_toarray(char *str, char *str2)
 	return (str);
 }
 
-bool	is_io(char *token)
-{
-	if (is_input_redirector(token) == true || is_output_redirector(token) == true)
-			return (true);
-	return (false);
-}
-
 char	**delete_io(char **arr, char **tokens)
 {
 	int		i;
@@ -298,14 +175,14 @@ char	**delete_io(char **arr, char **tokens)
 	i = 0;
 	while (tokens[i] != NULL)
 	{
-		if (is_io(tokens[i]))
-			i =  i + 2;
-		else
-		{
+		if (is_input_redirector(tokens[i]) || is_output_redirector(tokens[i]))
+			i += 2;
+		if (tokens[i] != NULL)
 			arr[new_i] = arr[i];
-			new_i++;
-			i++;
-		}
+		else
+			arr[new_i] = NULL;
+		new_i++;
+		i++;
 	}
 	while (tokens[new_i] != NULL)
 	{
@@ -364,6 +241,44 @@ void	execute_pipes(char **arr, char **tokens, int input_fd)
 	// execute pipex von paul
 }
 
+char	**join_d_redirector(char **arr)
+{
+	int	old_i;
+	int new_i;
+	
+	old_i = 0;
+	new_i = 0;
+	while (arr[old_i] != NULL)
+	{
+		if (arr[old_i + 1] != NULL)
+		{
+			if (arr[old_i][0] == '<' && arr[old_i + 1][0] == '<')
+			{
+				arr[new_i] = ft_strjoin(arr[new_i], "<");
+				old_i++;
+			}
+			else if (arr[old_i][0] == '>' && arr[old_i + 1][0] == '>')
+			{
+				arr[new_i] = ft_strjoin(arr[new_i], ">");
+				old_i++;
+			}
+			else
+				arr[new_i] = arr[old_i];
+		}
+		else
+			arr[new_i] = arr[old_i];
+		new_i++;
+		old_i++;
+	}
+	while (new_i < old_i)
+	{
+		arr[new_i] = NULL;
+		new_i++;
+	}
+	arr[new_i] = NULL;
+	return (arr);
+}
+
 // NEED TO FORK BEFORE TO MAKE A OWN PROCESS FOR THE REDIRECTION ALREADY
 void	execute_smart_cmd(char **arr)
 {
@@ -373,6 +288,7 @@ void	execute_smart_cmd(char **arr)
 	int		input;
 
 	printf("EXECUTE PIPES\n");
+	arr = join_d_redirector(arr);
 	token_list = get_token_list(arr);
 	i = -1;
 	while (token_list[++i] != NULL)
@@ -380,6 +296,7 @@ void	execute_smart_cmd(char **arr)
 		if (is_input_redirector(token_list[i]))
 			input = redirect_input(arr[i + 1], token_list[i]);
 	}
+	printf("TEST\n");
 	execute_pipes(arr, token_list, input);
 }
 
