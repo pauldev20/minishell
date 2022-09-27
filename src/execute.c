@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 14:29:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 15:22:01 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ char	**get_token_list(char **arr)
 	i = 0;
 	while (arr[i] != NULL)
 		i++;
-	tokens = (char **)malloc(sizeof(char *) * i + 1);
+	tokens = (char **)malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (arr[i] != NULL)
 	{
@@ -190,13 +190,14 @@ char	**get_token_list(char **arr)
 
 char	*add_toarray(char *str, char *str2)
 {
-	if (!str)
-		str = str2;
-	else
+	if (str == NULL)
 	{
-		str = ft_strjoin(str, " ");
-		str = ft_strjoin(str, str2);
+		str = ft_strdup(str2);
+		free(str2);
+		return (str);
 	}
+	str = ft_strjoin(str, " ");
+	str = ft_strjoin(str, str2);
 	return (str);
 }
 
@@ -276,6 +277,8 @@ void	execute_pipes(char **arr, char **tokens, int input_fd)
 	pipe_counter = get_pipe_amount(tokens);
 	output_fd = get_outfile_fd(tokens, arr);
 	cmd_array = extract_cmd_array(arr, tokens, pipe_counter + 1);
+	for (int i = 0; cmd_array[i] != NULL; i++)
+		printf("CMD_ARRAY[%d]: %s\n", i, cmd_array[i]);
 	i = 0;
 	while (i < pipe_counter)
 	{
