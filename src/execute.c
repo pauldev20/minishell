@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 11:45:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 13:15:12 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,21 @@ int	redirect_output(char *file, char *token)
 	return (-10);
 }
 
+/*  CHECKS IF THE TOKEN PASSED AS AN ARG IS AN REDIRECTOR */
+bool	is_input_redirector(char *str)
+{
+	if (ft_strnstr(str, "LESS", 4) || ft_strnstr(str, "DLESS", 5))
+		return (true);
+	return (false);
+}
+
+bool	is_output_redirector(char *str)
+{
+	if (ft_strnstr(str, "GREAT", 5) || ft_strnstr(str, "DGREAT", 6))
+		return (true);
+	return (false);
+}
+
 int	get_outfile_fd(char **token, char **arr)
 {
 	int	outfile;
@@ -75,22 +90,6 @@ int	get_outfile_fd(char **token, char **arr)
 			outfile = redirect_output(arr[i + 1], token[i]);
 	}
 	return (outfile);
-}
-
-/*  CHECKS IF THE TOKEN PASSED AS AN ARG IS AN REDIRECTOR */
-
-bool	is_input_redirector(char *str)
-{
-	if (ft_strnstr(str, "LESS", 4) || ft_strnstr(str, "DLESS", 5))
-		return (true);
-	return (false);
-}
-
-bool	is_output_redirector(char *str)
-{
-	if (ft_strnstr(str, "GREAT", 5) || ft_strnstr(str, "DGREAT", 6))
-		return (true);
-	return (false);
 }
 
 /*	JOINS '>' + '>' AND '<' + '<' IF NEEDED */
@@ -213,14 +212,13 @@ char	**delete_io(char **arr, char **tokens)
 	{
 		if (is_input_redirector(tokens[i]) || is_output_redirector(tokens[i]))
 			i += 2;
-		if (tokens[i] != NULL)
-			arr[new_i] = arr[i];
-		else
-			arr[new_i] = NULL;
+		arr[new_i] = arr[i];
+		if (arr[new_i] == NULL)
+			break ;
 		new_i++;
 		i++;
 	}
-	while (tokens[new_i] != NULL)
+	while (new_i < i)
 	{
 		arr[new_i] = NULL;
 		new_i++;
@@ -277,7 +275,40 @@ void	execute_pipes(char **arr, char **tokens, int input_fd)
 	cmd_array = extract_cmd_array(arr, tokens, pipe_counter + 1);
 	for (int i = 0; cmd_array[i] != NULL; i++)
 		printf("CMD_ARR[%d]: %s\n", i, cmd_array[i]);
+	// free_array(cmd_array);
 	// execute pipex von paul
+}
+
+/* CHECKS FOR GRAMMAR MISTAKES IN THE SYNTAX*/
+bool	check_syntax(char **tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i] != NULL)
+	{
+		printf("TOKEN[%d]: %s\n", i, tokens[i]);
+		if (ft_strnstr(tokens[i], "PIPE", 4))
+		{
+			if (tokens[i - 1] == NULL || tokens[i + 1] == NULL
+				|| !ft_strnstr(tokens[i - 1], "WORD", 4) || !ft_strnstr(tokens[i + 1], "WORD", 4))
+			{
+				printf("SYTNAX ERROR NEAR PIPE\n");
+				return (false);
+			}
+		}
+		else if (is_input_redirector(tokens[i]) || is_output_redirector(tokens[i]))
+		{
+			printf("TOKEN[%d]: %s\n", i, tokens[i + 1]);
+			if (tokens[i + 1] == NULL || !ft_strnstr(tokens[i + 1], "WORD", 4))
+			{
+				printf("SYTNAX ERROR NEAR IO-REDIRECTOR\n");
+				return (false);
+			}
+		}
+		i++;
+	}
+	return (true);
 }
 
 /*	CHANGES INFILE IF NEEDED AND GOES INTO PIPEX 
@@ -287,18 +318,21 @@ void	execute_smart_cmd(char **arr)
 	char	**token_list;
 	int		i;
 	int		pipe_amount;
-	int		input;
+	int		io[2];
 
 	printf("EXECUTE PIPES\n");
 	arr = join_d_redirector(arr);
 	token_list = get_token_list(arr);
+	if (!check_syntax(token_list))
+		return ;
 	i = -1;
 	while (token_list[++i] != NULL)
 	{
 		if (is_input_redirector(token_list[i]))
-			input = redirect_input(arr[i + 1], token_list[i]);
+			io[0] = redirect_input(arr[i + 1], token_list[i]);
+		if (is_output_redirector(token_list[i]))
+			io[1] = redirect_output([arr + 1], token_list[i]);
 	}
-	printf("TEST\n");
 	execute_pipes(arr, token_list, input);
 }
 
