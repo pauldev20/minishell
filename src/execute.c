@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 14:18:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:29:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int fd_infile(char *infile)
 {
 	int	fd;
 
-	fd = open(infile, O_RDONLY, 00700);
+	fd = open(infile, O_RDONLY, 0777);
 	return (fd);
 }
 
@@ -335,7 +335,7 @@ void	execute_smart_cmd(char **arr)
 	while (token_list[++i] != NULL)
 	{
 		if (is_input_redirector(token_list[i]))
-			input = redirect_input(arr[i + 1], token_list[i]);
+			dup2(redirect_input(arr[i + 1], token_list[i]), STDIN_FILENO);
 	}
 	execute_pipes(arr, token_list, input);
 }
