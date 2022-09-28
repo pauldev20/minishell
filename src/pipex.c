@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 14:15:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:04:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,48 @@ void	error(void)
 	exit(EXIT_FAILURE);
 }
 
+/* A simple function to cut the cmd array in the right amount neede*/
+char	**cut_start_stop(char **cmd, int start_stop[2])
+{
+	int	i;
+
+	i = 0;
+	while (start_stop[0] < start_stop[1])
+	{
+		cmd[i] = cmd[start_stop[0]];
+		i++;
+		start_stop[0]++;
+	}
+	while (cmd[i] != NULL)
+	{
+		cmd[i] = NULL;
+		i++;
+	}
+	return (cmd);
+}
+
 /* Function that take the command and send it to find_path
  before executing it. */
-void	execute(char *argv, char **envp)
+void	execute(char **cmd, char **envp, int start_stop[2])
 {
-	char	**cmd;
-	int 	i;
+	int		i;
 	char	*path;
-	
+
 	i = -1;
-	cmd = ft_split(argv, ' ');
-	path = find_path(cmd[0], envp);
-	if (!path)	
+	path = find_path(cmd[start_stop[0]], envp);
+	if (!path)
 	{
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
 		error();
 	}
+	cmd = cut_start_stop(cmd, start_stop);
 	if (execve(path, cmd, envp) == -1)
 		error();
 }
 
-void	child_process(char *argv, char **envp)
+void	child_process(char **cmd_args, char **envp, int start_stop[2])
 {
 	pid_t	pid;
 	int		fd[2];
@@ -84,7 +103,7 @@ void	child_process(char *argv, char **envp)
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
-		execute(argv, envp);
+		execute(cmd_args, envp, start_stop);
 	}
 	else
 	{

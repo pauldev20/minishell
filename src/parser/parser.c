@@ -6,12 +6,20 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/09/27 14:19:02 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/28 14:41:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+
+void print_token(char **splitted)
+{
+	printf("{");
+	for (int i = 0; splitted[i] != NULL; i++)
+		printf("%s, ", splitted[i]);
+	printf("NULL}\n");
+}
 
 typedef struct s_cmd {
 	char	**full_cmd;
@@ -49,11 +57,8 @@ void	*parse_input(char *input)
 		splitted[c] = expand_vars(splitted[c]);
 		c++;
 	}
-	handle_execute(splitted);
-	// printf("{");
-	// for (int i = 0; splitted[i] != NULL; i++)
-	// 	printf("%s, ", splitted[i]);
-	// printf("NULL}\n");
+	// print_token(splitted);
+	start_execute(splitted);
 	for (int i = 0; splitted[i] != NULL; i++)
 		free(splitted[i]);
 	free(splitted);

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 14:15:52 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:03:42 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/ioctl.h>
 # include <limits.h>
 # include "libft.h"
+# include "get_next_line.h"
 # include <sys/stat.h>
 # include <fcntl.h>
 
@@ -84,10 +85,10 @@ char	*get_promt(t_env *usr, t_env *pwd, t_env *home);
 void	handle_signal(int sig);
 
 // EXECUTE
-int		handle_execute(char **arr);
+int		start_execute(char **arr);
 
 // PIPEX
-void	child_process(char *argv, char **envp);
-void	execute(char *argv, char **envp);
+void	child_process(char **cmd_args, char **envp, int start_stop[2]);
+void	execute(char **cmd, char **envp, int start_stop[2]);
 
 #endif

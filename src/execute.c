@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/27 15:22:01 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/28 13:33:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,10 @@
 extern char **environ;
 /* TO DO:
 	- ADD ERROR HANDELING
-	- ADD PIPEX IMPLEMENTATION
 */
 
 /*  RETURNS FD OF A FILE IN THE RIGHT MODE
  	[R_ONLY | WR_ONLY WITH APPEND OR TRUNC DEPENDING ON THE TYPE NEEDED] */
-int fd_infile(char *infile)
-{
-	int	fd;
-
-	fd = open(infile, O_RDONLY, 0777);
-	return (fd);
-}
-
-int	fd_outfile_append(char *outfile)
-{
-	int	fd;
-
-	fd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 00700);
-	return(fd);
-}
-
-int fd_outfile(char *outfile)
-{
-	int	fd;
-
-	fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 00700);
-	return(fd);
-}
-
-int	redirect_input(char *file, char *token)
-{
-	if (ft_strnstr(token, "LESS", 4))
-		return (fd_infile(file));
-	else if (ft_strnstr(token, "DLESS", 5))
-		return (-10);
-	return (0);
-	//make here_doc
-}
-
-int	redirect_output(char *file, char *token)
-{
-	if (ft_strnstr(token, "GREAT", 5))
-		return(fd_outfile(file));
-	else if (ft_strnstr(token, "DGREAT", 6))
-		return(fd_outfile_append(file));
-	return (-10);
-}
 
 /*  CHECKS IF THE TOKEN PASSED AS AN ARG IS AN REDIRECTOR */
 bool	is_input_redirector(char *str)
@@ -80,21 +37,46 @@ bool	is_output_redirector(char *str)
 
 int	get_outfile_fd(char **token, char **arr)
 {
-	int	outfile;
+	int	fd;
 	int	i;
 	
-	outfile = 1;
+	fd = STDOUT_FILENO;
 	i = -1;
 	while (token[++i] != NULL)
 	{
 		if (is_output_redirector(token[i]))
-			outfile = redirect_output(arr[i + 1], token[i]);
+		{
+			if (ft_strnstr(token[i], "GREAT", 5))
+				fd = open(arr[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 00700);
+			else if (ft_strnstr(token[i], "DGREAT", 6))
+				fd = open(arr[i + 1], O_WRONLY | O_CREAT | O_APPEND, 00700);
+		}
 	}
-	return (outfile);
+	return (fd);
+}
+
+int	get_infile_fd(char **token, char **arr)
+{
+	int	fd;
+	int	i;
+	
+	fd = STDIN_FILENO;
+	i = -1;
+	while (token[++i] != NULL)
+	{
+		if (is_input_redirector(token[i]))
+		{
+			if (ft_strnstr(token[i], "LESS", 4))
+				fd = open(arr[i + 1], O_RDONLY, 0777);
+			else if (ft_strnstr(token[i], "DLESS", 5))
+				fd = -10;
+		}
+	}
+	return (fd);
 }
 
 /*	JOINS '>' + '>' AND '<' + '<' IF NEEDED */
-char	**join_d_redirector(char **arr)
+char	**join_io_modifier(char **arr)
 {
 	int	old_i;
 	int new_i;
@@ -152,7 +134,7 @@ int		get_pipe_amount(char **tokens)
 
 /*  CREATES A TOKEN LIST TO KNOW WHAT WE ARE WORKING
 	WITH [PIPES | REDIRECTOR | WORDS] */
-char	**get_token_list(char **arr)
+char	**get_token_array(char **arr)
 {
 	char	**tokens;
 	int		i;
@@ -188,19 +170,6 @@ char	**get_token_list(char **arr)
 	return (tokens);
 }
 
-char	*add_toarray(char *str, char *str2)
-{
-	if (str == NULL)
-	{
-		str = ft_strdup(str2);
-		free(str2);
-		return (str);
-	}
-	str = ft_strjoin(str, " ");
-	str = ft_strjoin(str, str2);
-	return (str);
-}
-
 /*  DELETES THE REDIRECTORS OUT OF THE STRING SO THAT 
 	ONLY THE CMD PIPELINES REMAINS AND WE CAN ITERATE OVER IT */
 char	**delete_io(char **arr, char **tokens)
@@ -228,69 +197,6 @@ char	**delete_io(char **arr, char **tokens)
 	return (arr);
 }
 
-/*  DELETES THE PIPES AND CREATES A CMD ARRAY JOINS CMD AND ARGS 
-	AND RETURNS CMDS LIKE ARGV SO THAT ONLY CMD WITH ARGS REMAIN */
-char	**extract_cmd_array(char **arr, char **tokens, int size)
-{
-	char	**cmd_array;
-	int		tokens_i;
-	int		cmd_checker;
-	int		cmd_i;
-
-	cmd_array = (char **)malloc(sizeof(char *) * size + 1);
-	tokens_i = 0;
-	cmd_i = 0;
-	cmd_checker = 0;
-	arr = delete_io(arr, tokens);
-	tokens = get_token_list(arr);
-	while (arr[tokens_i] != NULL)
-	{
-		if (ft_strnstr(tokens[tokens_i], "PIPE", 4))
-		{
-			while (!ft_strnstr(tokens[cmd_checker], "PIPE", 4) && ft_strnstr(tokens[cmd_checker], "WORD", 4))
-			{
-				cmd_array[cmd_i] = add_toarray(cmd_array[cmd_i], arr[cmd_checker]);
-				cmd_checker++;
-			}
-			cmd_checker++;
-			cmd_i++;
-		}
-		tokens_i++;
-	}
-	while (arr[cmd_checker] != NULL && ft_strnstr(tokens[cmd_checker], "WORD", 4))
-	{
-		cmd_array[cmd_i] = add_toarray(cmd_array[cmd_i], arr[cmd_checker]);
-		cmd_checker++;
-	}
-	cmd_array[cmd_i + 1] = NULL;
-	return (cmd_array);
-}
-
-/*	CREATES CMD-TABLE AND STARTS PIPEX */
-void	execute_pipes(char **arr, char **tokens, int input_fd)
-{
-	int		pipe_counter;
-	int		i;
-	int		output_fd;
-	char	**cmd_array;
-	
-	pipe_counter = get_pipe_amount(tokens);
-	output_fd = get_outfile_fd(tokens, arr);
-	cmd_array = extract_cmd_array(arr, tokens, pipe_counter + 1);
-	for (int i = 0; cmd_array[i] != NULL; i++)
-		printf("CMD_ARRAY[%d]: %s\n", i, cmd_array[i]);
-	i = 0;
-	while (i < pipe_counter)
-	{
-		child_process(cmd_array[i], environ);
-		i++;
-	}
-	dup2(output_fd, STDOUT_FILENO);
-	execute(cmd_array[pipe_counter], environ);
-	// free_array(cmd_array);
-	// execute pipex von paul
-}
-
 /* CHECKS FOR GRAMMAR MISTAKES IN THE SYNTAX*/
 bool	check_syntax(char **tokens)
 {
@@ -304,7 +210,7 @@ bool	check_syntax(char **tokens)
 			if (tokens[i - 1] == NULL || tokens[i + 1] == NULL
 				|| !ft_strnstr(tokens[i - 1], "WORD", 4) || !ft_strnstr(tokens[i + 1], "WORD", 4))
 			{
-				printf("SYTNAX ERROR NEAR PIPE\n");
+				printf("minishell: syntax error near pipe\n");
 				return (false);
 			}
 		}
@@ -312,7 +218,7 @@ bool	check_syntax(char **tokens)
 		{
 			if (tokens[i + 1] == NULL || !ft_strnstr(tokens[i + 1], "WORD", 4))
 			{
-				printf("SYTNAX ERROR NEAR IO-REDIRECTOR\n");
+				printf("minishell: syntax error near io-modifier\n");
 				return (false);
 			}
 		}
@@ -321,36 +227,66 @@ bool	check_syntax(char **tokens)
 	return (true);
 }
 
+int	get_start(char	**tokens, int start, int stop)
+{
+	if (stop != 0)
+		start = stop + 1;
+	return (start);
+}
+
+int	get_stop(char **tokens, int stop, int start)
+{
+	if (stop != 0)
+		stop++;
+	while (tokens[stop] != NULL && ft_strnstr(tokens[stop], "PIPE", 4) == NULL)
+		stop++;
+	return (stop);	
+}
+
 /*	CHANGES INFILE IF NEEDED AND GOES INTO PIPEX 
 	MAYBE ALSO NEEDS TO CHANGE OUTFILE AND EXECUTE LAST CMD */
-void	execute_smart_cmd(char **arr)
+void	execute_pipeline(char **cmd_array)
 {
-	char	**token_list;
+	char	**token_array;
 	int		i;
-	int		pipe_amount;
-	int		input;
+	int		io_modifier[2];
+	int		start_stop[2];
 
-	arr = join_d_redirector(arr);
-	token_list = get_token_list(arr);
-	if (!check_syntax(token_list))
+	// -> pre jobs
+	start_stop[0] = 0;
+	start_stop[1] = 0;
+	cmd_array = join_io_modifier(cmd_array);
+	token_array = get_token_array(cmd_array);
+	if (!check_syntax(token_array))
 		return ;
-	i = -1;
-	while (token_list[++i] != NULL)
+	io_modifier[0] = get_infile_fd(token_array, cmd_array);
+	io_modifier[1] = get_outfile_fd(token_array, cmd_array);
+	cmd_array = delete_io(cmd_array, token_array);
+	token_array = get_token_array(cmd_array);
+	// -> executer
+	dup2(io_modifier[0], STDIN_FILENO);
+	i = 0;
+	while (i < get_pipe_amount(token_array))
 	{
-		if (is_input_redirector(token_list[i]))
-			dup2(redirect_input(arr[i + 1], token_list[i]), STDIN_FILENO);
+		start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
+		start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
+		child_process(cmd_array, environ, start_stop);
+		i++;
 	}
-	execute_pipes(arr, token_list, input);
+	dup2(io_modifier[1], STDOUT_FILENO);
+	start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
+	start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
+	execute(cmd_array, environ, start_stop);
 }
 
 /*	"MAIN" RETURNS ERRORS ETC. */
-int	handle_execute(char **arr)
+int	start_execute(char **arr)
 {
 	pid_t	id;
 
 	id = fork();
 	if (id == 0)
-		execute_smart_cmd(arr);
+		execute_pipeline(arr);
 	wait(&id);
 	return (0);
 }
