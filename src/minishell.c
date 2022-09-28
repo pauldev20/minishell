@@ -6,11 +6,19 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/28 15:30:18 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:43:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* TO DO:
+	- ADD TTY REDIRECTION
+	- CATCH ^C AND ^\
+	- ADD HERE_DOC
+	- ADD REST OF BUILTINS
+	- ADD OWN ENVP IN EXECUTE
+	*/
 
 static int	if_chars(char *str)
 {
