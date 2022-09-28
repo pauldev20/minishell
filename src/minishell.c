@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/28 15:43:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:45:23 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	minishell(int argc, char **argv, char **envp)
 				get_env_var(g_minishell.envp, "PWD"),
 				get_env_var(g_minishell.envp, "HOME"));
 		cache[1] = catch_tty(cache[0]);
-		return ;
 		free(cache[0]);
 		// if (if_chars(cache[1]))
 		// 	add_history(cache[1]);
