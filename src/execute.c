@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/29 11:25:41 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/29 17:06:57 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,18 +256,66 @@ bool	check_syntax(char **tokens)
 
 int	get_start(char	**tokens, int start, int stop)
 {
-	if (stop != 0)
+	if (ft_strnstr(tokens[stop], "GREAT", 5) || ft_strnstr(tokens[stop], "DGREAT", 6)
+		|| ft_strnstr(tokens[stop], "LESS", 4) || ft_strnstr(tokens[stop], "DLESS", 5 ))
+		start = stop + 2;
+	else if (stop != 0)
 		start = stop + 1;
 	return (start);
 }
 
 int	get_stop(char **tokens, int stop, int start)
 {
+	stop = start;
 	if (stop != 0)
 		stop++;
-	while (tokens[stop] != NULL && ft_strnstr(tokens[stop], "PIPE", 4) == NULL)
+	while (tokens[stop] != NULL && !ft_strnstr(tokens[stop], "PIPE", 4) 
+		&& !ft_strnstr(tokens[stop], "GREAT", 5) && !ft_strnstr(tokens[stop], "DGREAT", 6)
+		&& !ft_strnstr(tokens[stop], "LESS", 4) && !ft_strnstr(tokens[stop], "DLESS", 5 ))
 		stop++;
-	return (stop);	
+	return (stop);
+}
+
+bool	modify_io(char **cmd_array, int mode)
+{
+	int		i;
+	char	**tokens;
+	int	io_modifier;
+	
+	cmd_array = join_io_modifier(cmd_array);
+	tokens = get_token_array(cmd_array);
+	if (!check_syntax(tokens))
+		return (false);
+	i = 0;
+	while (tokens[i] != NULL)
+	{
+		if (mode == INFILE_MODE)
+		{
+			io_modifier = STDIN_FILENO;
+			if (is_input_redirector(tokens[i]))
+			{
+				if (ft_strnstr(tokens[i], "LESS", 4))
+					io_modifier = open(cmd_array[i + 1], O_RDONLY, 0777);
+				else if (ft_strnstr(tokens[i], "DLESS", 5))
+					here_doc(cmd_array[i + 1]);
+				dup2(io_modifier, STDIN_FILENO);
+			}
+		}
+		else if (mode == OUTFILE_MODE)
+		{
+			io_modifier = STDOUT_FILENO;
+			if (is_output_redirector(tokens[i]))
+			{
+				if (ft_strnstr(tokens[i], "GREAT", 5))
+					io_modifier = open(cmd_array[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 00700);
+				else if (ft_strnstr(tokens[i], "DGREAT", 6))
+					io_modifier = open(cmd_array[i + 1], O_WRONLY | O_CREAT | O_APPEND, 00700);
+				dup2(io_modifier, STDOUT_FILENO);
+			}
+		}
+		i++;
+	}
+	return (true);
 }
 
 /*	CHANGES INFILE IF NEEDED AND GOES INTO PIPEX 
@@ -276,23 +324,14 @@ void	execute_pipeline(char **cmd_array)
 {
 	char	**token_array;
 	int		i;
-	int		io_modifier[2];
 	int		start_stop[2];
 
-	// -> pre jobs
 	start_stop[0] = 0;
 	start_stop[1] = 0;
-	cmd_array = join_io_modifier(cmd_array);
-	token_array = get_token_array(cmd_array);
-	if (!check_syntax(token_array))
+	if (!modify_io(cmd_array, INFILE_MODE))
 		return ;
-	io_modifier[0] = get_infile_fd(token_array, cmd_array);
-	io_modifier[1] = get_outfile_fd(token_array, cmd_array);
-	cmd_array = delete_io(cmd_array, token_array);
-	token_array = get_token_array(cmd_array);
-	// -> executer
-	dup2(io_modifier[0], STDIN_FILENO);
 	i = 0;
+	token_array = get_token_array(cmd_array);
 	while (i < get_pipe_amount(token_array))
 	{
 		start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
@@ -300,11 +339,47 @@ void	execute_pipeline(char **cmd_array)
 		child_process(cmd_array, environ, start_stop);
 		i++;
 	}
-	dup2(io_modifier[1], STDOUT_FILENO);
+	if (!modify_io(cmd_array, OUTFILE_MODE))
+		return ;
 	start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
 	start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
+	printf("%s	%s %d %d\n", cmd_array[start_stop[0]], cmd_array[start_stop[1]], start_stop[0], start_stop[1]);
 	execute(cmd_array, environ, start_stop);
 }
+
+
+// OLD
+// void	execute_pipeline(char **cmd_array)
+// {
+// 	char	**token_array;
+// 	int		i;
+// 	int		io_modifier[2];
+// 	int		start_stop[2];
+
+// 	// -> pre jobs
+// 	start_stop[0] = 0;
+// 	start_stop[1] = 0;
+// 	cmd_array = join_io_modifier(cmd_array);
+// 	token_array = get_token_array(cmd_array);
+// 	if (!check_syntax(token_array))
+// 		return ;
+// 	io_modifier[0] = get_infile_fd(token_array, cmd_array);
+// 	io_modifier[1] = get_outfile_fd(token_array, cmd_array);
+// 	// -> executer
+// 	dup2(io_modifier[0], STDIN_FILENO);
+// 	i = 0;
+// 	while (i < get_pipe_amount(token_array))
+// 	{
+// 		start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
+// 		start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
+// 		child_process(cmd_array, environ, start_stop);
+// 		i++;
+// 	}
+// 	dup2(io_modifier[1], STDOUT_FILENO);
+// 	start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
+// 	start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
+// 	execute(cmd_array, environ, start_stop);
+// }
 
 /*	"MAIN" RETURNS ERRORS ETC. */
 int	start_execute(char **arr)

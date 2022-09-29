@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/29 11:24:51 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/29 16:37:36 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include "libft.h"
 # include <sys/stat.h>
 # include <fcntl.h>
+
+# define INFILE_MODE 1
+# define OUTFILE_MODE 0
 
 typedef struct s_env
 {
