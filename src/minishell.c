@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/28 15:45:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/29 11:16:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,6 @@ static void	init_env(char **argv)
 		set_env_var(&g_minishell.envp, "_", argv[0]);
 }
 
-char	*catch_tty(char *prompt)
-{
-	char	*str;
-	
-	if (isatty(STDIN_FILENO))
-		str = readline(prompt);
-	else
-		str = get_next_line(STDIN_FILENO);
-	printf("%s\n", str);
-	if (isatty(STDIN_FILENO))
-		add_history(str);
-	return(str);
-}
-
 void	minishell(int argc, char **argv, char **envp)
 {
 	char		*cache[2];
@@ -90,6 +76,8 @@ void	minishell(int argc, char **argv, char **envp)
 				get_env_var(g_minishell.envp, "PWD"),
 				get_env_var(g_minishell.envp, "HOME"));
 		cache[1] = catch_tty(cache[0]);
+		if (cache[1] == NULL)
+			break ;
 		free(cache[0]);
 		// if (if_chars(cache[1]))
 		// 	add_history(cache[1]);
