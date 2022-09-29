@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/29 11:17:27 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/29 11:24:51 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ void	execute(char **cmd, char **envp, int start_stop[2]);
 
 // TTY
 char	*catch_tty(char *prompt);
+char	*get_terminal_line(int fd);
 
 #endif

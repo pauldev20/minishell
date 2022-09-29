@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/28 13:33:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/29 11:25:41 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,33 @@ int	get_outfile_fd(char **token, char **arr)
 	return (fd);
 }
 
+void	here_doc(char *limiter)
+{
+	pid_t	reader;
+	int		fd[2];
+	char	*line;
+
+	if (pipe(fd) == -1)
+		return ;
+	reader = fork();
+	if (reader == 0)
+	{
+		close(fd[0]);
+		while (get_terminal_line(fd[1]) != NULL)
+		{
+			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+				exit(EXIT_SUCCESS);
+			write(fd[1], line, ft_strlen(line));
+		}
+	}
+	else
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		wait(NULL);
+	}
+}
+
 int	get_infile_fd(char **token, char **arr)
 {
 	int	fd;
@@ -69,7 +96,7 @@ int	get_infile_fd(char **token, char **arr)
 			if (ft_strnstr(token[i], "LESS", 4))
 				fd = open(arr[i + 1], O_RDONLY, 0777);
 			else if (ft_strnstr(token[i], "DLESS", 5))
-				fd = -10;
+				here_doc(arr[i + 1]);
 		}
 	}
 	return (fd);
