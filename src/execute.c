@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/29 17:06:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/29 17:15:03 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 extern char **environ;
 /* TO DO:
 	- ADD ERROR HANDELING
+	- ADD HANDELING MORE INFILES
 */
-
-/*  RETURNS FD OF A FILE IN THE RIGHT MODE
- 	[R_ONLY | WR_ONLY WITH APPEND OR TRUNC DEPENDING ON THE TYPE NEEDED] */
 
 /*  CHECKS IF THE TOKEN PASSED AS AN ARG IS AN REDIRECTOR */
 bool	is_input_redirector(char *str)
@@ -320,54 +318,18 @@ bool	modify_io(char **cmd_array, int mode)
 
 /*	CHANGES INFILE IF NEEDED AND GOES INTO PIPEX 
 	MAYBE ALSO NEEDS TO CHANGE OUTFILE AND EXECUTE LAST CMD */
-void	execute_pipeline(char **cmd_array)
-{
-	char	**token_array;
-	int		i;
-	int		start_stop[2];
-
-	start_stop[0] = 0;
-	start_stop[1] = 0;
-	if (!modify_io(cmd_array, INFILE_MODE))
-		return ;
-	i = 0;
-	token_array = get_token_array(cmd_array);
-	while (i < get_pipe_amount(token_array))
-	{
-		start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
-		start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
-		child_process(cmd_array, environ, start_stop);
-		i++;
-	}
-	if (!modify_io(cmd_array, OUTFILE_MODE))
-		return ;
-	start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
-	start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
-	printf("%s	%s %d %d\n", cmd_array[start_stop[0]], cmd_array[start_stop[1]], start_stop[0], start_stop[1]);
-	execute(cmd_array, environ, start_stop);
-}
-
-
-// OLD
 // void	execute_pipeline(char **cmd_array)
 // {
 // 	char	**token_array;
 // 	int		i;
-// 	int		io_modifier[2];
 // 	int		start_stop[2];
 
-// 	// -> pre jobs
 // 	start_stop[0] = 0;
 // 	start_stop[1] = 0;
-// 	cmd_array = join_io_modifier(cmd_array);
-// 	token_array = get_token_array(cmd_array);
-// 	if (!check_syntax(token_array))
+// 	if (!modify_io(cmd_array, INFILE_MODE))
 // 		return ;
-// 	io_modifier[0] = get_infile_fd(token_array, cmd_array);
-// 	io_modifier[1] = get_outfile_fd(token_array, cmd_array);
-// 	// -> executer
-// 	dup2(io_modifier[0], STDIN_FILENO);
 // 	i = 0;
+// 	token_array = get_token_array(cmd_array);
 // 	while (i < get_pipe_amount(token_array))
 // 	{
 // 		start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
@@ -375,11 +337,47 @@ void	execute_pipeline(char **cmd_array)
 // 		child_process(cmd_array, environ, start_stop);
 // 		i++;
 // 	}
-// 	dup2(io_modifier[1], STDOUT_FILENO);
+// 	if (!modify_io(cmd_array, OUTFILE_MODE))
+// 		return ;
 // 	start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
 // 	start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
+// 	printf("%s	%s %d %d\n", cmd_array[start_stop[0]], cmd_array[start_stop[1]], start_stop[0], start_stop[1]);
 // 	execute(cmd_array, environ, start_stop);
 // }
+
+
+// OLD
+void	execute_pipeline(char **cmd_array)
+{
+	char	**token_array;
+	int		i;
+	int		io_modifier[2];
+	int		start_stop[2];
+
+	// -> pre jobs
+	start_stop[0] = 0;
+	start_stop[1] = 0;
+	cmd_array = join_io_modifier(cmd_array);
+	token_array = get_token_array(cmd_array);
+	if (!check_syntax(token_array))
+		return ;
+	io_modifier[0] = get_infile_fd(token_array, cmd_array);
+	io_modifier[1] = get_outfile_fd(token_array, cmd_array);
+	// -> executer
+	dup2(io_modifier[0], STDIN_FILENO);
+	i = 0;
+	while (i < get_pipe_amount(token_array))
+	{
+		start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
+		start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
+		child_process(cmd_array, environ, start_stop);
+		i++;
+	}
+	dup2(io_modifier[1], STDOUT_FILENO);
+	start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
+	start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
+	execute(cmd_array, environ, start_stop);
+}
 
 /*	"MAIN" RETURNS ERRORS ETC. */
 int	start_execute(char **arr)
