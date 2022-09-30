@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/30 13:45:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/30 14:32:42 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,21 @@ void	here_doc_execute(char *limiter)
 	char	*line;
 	int		fd;
 
-	fd = open("/tmp/here_doc", O_CREAT | O_TRUNC, 0700);
+	fd = open("/tmp/here_doc", O_CREAT | O_TRUNC, 00700);
 	while (1)
 	{
 		write(1, "heredoc>", 9);
 		// write (1, "LINE", 4);
 		// write (1, line, ft_strlen(line));
 		// write (1, "LIMITER", 8);
-		// write (1, limiter, ft_strlen(limiter));
 		line = get_next_line(0);
-		write (1, "LINE", 4);
-		write (1, line, ft_strlen(line));
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)))
+		if (ft_strnstr(line, limiter, ft_strlen(limiter)))
 		{
 			free(line);
 			break;
 		}
-		write(fd, line, ft_strlen(line));
+		ft_putstr_fd(line, fd);
+		// write(fd, line, ft_strlen(line));
 		free(line);
 	}
 	
