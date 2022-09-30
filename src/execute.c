@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/29 17:15:03 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/30 13:45:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,31 @@ int	get_outfile_fd(char **token, char **arr)
 	return (fd);
 }
 
-void	here_doc(char *limiter)
+void	here_doc_execute(char *limiter)
 {
-	pid_t	reader;
-	int		fd[2];
 	char	*line;
+	int		fd;
 
-	if (pipe(fd) == -1)
-		return ;
-	reader = fork();
-	if (reader == 0)
+	fd = open("/tmp/here_doc", O_CREAT | O_TRUNC, 0700);
+	while (1)
 	{
-		close(fd[0]);
-		while (get_terminal_line(fd[1]) != NULL)
+		write(1, "heredoc>", 9);
+		// write (1, "LINE", 4);
+		// write (1, line, ft_strlen(line));
+		// write (1, "LIMITER", 8);
+		// write (1, limiter, ft_strlen(limiter));
+		line = get_next_line(0);
+		write (1, "LINE", 4);
+		write (1, line, ft_strlen(line));
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)))
 		{
-			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
-				exit(EXIT_SUCCESS);
-			write(fd[1], line, ft_strlen(line));
+			free(line);
+			break;
 		}
+		write(fd, line, ft_strlen(line));
+		free(line);
 	}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		wait(NULL);
-	}
+	
 }
 
 int	get_infile_fd(char **token, char **arr)
@@ -94,7 +94,7 @@ int	get_infile_fd(char **token, char **arr)
 			if (ft_strnstr(token[i], "LESS", 4))
 				fd = open(arr[i + 1], O_RDONLY, 0777);
 			else if (ft_strnstr(token[i], "DLESS", 5))
-				here_doc(arr[i + 1]);
+				here_doc_execute(arr[i + 1]);
 		}
 	}
 	return (fd);
@@ -254,99 +254,22 @@ bool	check_syntax(char **tokens)
 
 int	get_start(char	**tokens, int start, int stop)
 {
-	if (ft_strnstr(tokens[stop], "GREAT", 5) || ft_strnstr(tokens[stop], "DGREAT", 6)
-		|| ft_strnstr(tokens[stop], "LESS", 4) || ft_strnstr(tokens[stop], "DLESS", 5 ))
-		start = stop + 2;
-	else if (stop != 0)
+	if (stop != 0)
 		start = stop + 1;
 	return (start);
 }
 
 int	get_stop(char **tokens, int stop, int start)
 {
-	stop = start;
 	if (stop != 0)
 		stop++;
-	while (tokens[stop] != NULL && !ft_strnstr(tokens[stop], "PIPE", 4) 
-		&& !ft_strnstr(tokens[stop], "GREAT", 5) && !ft_strnstr(tokens[stop], "DGREAT", 6)
-		&& !ft_strnstr(tokens[stop], "LESS", 4) && !ft_strnstr(tokens[stop], "DLESS", 5 ))
+	while (tokens[stop] != NULL && ft_strnstr(tokens[stop], "PIPE", 4) == NULL)
 		stop++;
-	return (stop);
-}
-
-bool	modify_io(char **cmd_array, int mode)
-{
-	int		i;
-	char	**tokens;
-	int	io_modifier;
-	
-	cmd_array = join_io_modifier(cmd_array);
-	tokens = get_token_array(cmd_array);
-	if (!check_syntax(tokens))
-		return (false);
-	i = 0;
-	while (tokens[i] != NULL)
-	{
-		if (mode == INFILE_MODE)
-		{
-			io_modifier = STDIN_FILENO;
-			if (is_input_redirector(tokens[i]))
-			{
-				if (ft_strnstr(tokens[i], "LESS", 4))
-					io_modifier = open(cmd_array[i + 1], O_RDONLY, 0777);
-				else if (ft_strnstr(tokens[i], "DLESS", 5))
-					here_doc(cmd_array[i + 1]);
-				dup2(io_modifier, STDIN_FILENO);
-			}
-		}
-		else if (mode == OUTFILE_MODE)
-		{
-			io_modifier = STDOUT_FILENO;
-			if (is_output_redirector(tokens[i]))
-			{
-				if (ft_strnstr(tokens[i], "GREAT", 5))
-					io_modifier = open(cmd_array[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 00700);
-				else if (ft_strnstr(tokens[i], "DGREAT", 6))
-					io_modifier = open(cmd_array[i + 1], O_WRONLY | O_CREAT | O_APPEND, 00700);
-				dup2(io_modifier, STDOUT_FILENO);
-			}
-		}
-		i++;
-	}
-	return (true);
+	return (stop);	
 }
 
 /*	CHANGES INFILE IF NEEDED AND GOES INTO PIPEX 
 	MAYBE ALSO NEEDS TO CHANGE OUTFILE AND EXECUTE LAST CMD */
-// void	execute_pipeline(char **cmd_array)
-// {
-// 	char	**token_array;
-// 	int		i;
-// 	int		start_stop[2];
-
-// 	start_stop[0] = 0;
-// 	start_stop[1] = 0;
-// 	if (!modify_io(cmd_array, INFILE_MODE))
-// 		return ;
-// 	i = 0;
-// 	token_array = get_token_array(cmd_array);
-// 	while (i < get_pipe_amount(token_array))
-// 	{
-// 		start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
-// 		start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
-// 		child_process(cmd_array, environ, start_stop);
-// 		i++;
-// 	}
-// 	if (!modify_io(cmd_array, OUTFILE_MODE))
-// 		return ;
-// 	start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
-// 	start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
-// 	printf("%s	%s %d %d\n", cmd_array[start_stop[0]], cmd_array[start_stop[1]], start_stop[0], start_stop[1]);
-// 	execute(cmd_array, environ, start_stop);
-// }
-
-
-// OLD
 void	execute_pipeline(char **cmd_array)
 {
 	char	**token_array;
@@ -363,6 +286,8 @@ void	execute_pipeline(char **cmd_array)
 		return ;
 	io_modifier[0] = get_infile_fd(token_array, cmd_array);
 	io_modifier[1] = get_outfile_fd(token_array, cmd_array);
+	cmd_array = delete_io(cmd_array, token_array);
+	token_array = get_token_array(cmd_array);
 	// -> executer
 	dup2(io_modifier[0], STDIN_FILENO);
 	i = 0;

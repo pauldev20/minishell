@@ -6,11 +6,13 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/28 11:04:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/30 12:41:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// ADD FULL PATHS
 
 char	*find_path(char *cmd, char **envp)
 {
@@ -76,7 +78,10 @@ void	execute(char **cmd, char **envp, int start_stop[2])
 	char	*path;
 
 	i = -1;
-	path = find_path(cmd[start_stop[0]], envp);
+	if (access(cmd[0], X_OK | F_OK) == -1)
+		path = find_path(cmd[start_stop[0]], envp);
+	else
+		path = cmd[0];
 	if (!path)
 	{
 		while (cmd[++i])

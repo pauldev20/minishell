@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:59:22 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/09/28 15:14:38 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/30 13:17:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 /* Additional */
 int		ft_digits_of_int(long n);
 int		ft_digits_of_hex(unsigned long long n);
+char	*get_next_line(int fd);
 
 #endif
