@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/30 14:32:42 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/30 14:52:38 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 extern char **environ;
 /* TO DO:
 	- ADD ERROR HANDELING
-	- ADD HANDELING MORE INFILES
 */
 
 /*  CHECKS IF THE TOKEN PASSED AS AN ARG IS AN REDIRECTOR */
@@ -58,21 +57,17 @@ void	here_doc_execute(char *limiter)
 	char	*line;
 	int		fd;
 
-	fd = open("/tmp/here_doc", O_CREAT | O_TRUNC, 00700);
+	fd = open("/tmp/here_doc", O_WRONLY | O_CREAT | O_TRUNC, 00700);
 	while (1)
 	{
 		write(1, "heredoc>", 9);
-		// write (1, "LINE", 4);
-		// write (1, line, ft_strlen(line));
-		// write (1, "LIMITER", 8);
-		line = get_next_line(0);
+		line = get_next_line(STDIN_FILENO);
 		if (ft_strnstr(line, limiter, ft_strlen(limiter)))
 		{
 			free(line);
 			break;
 		}
-		ft_putstr_fd(line, fd);
-		// write(fd, line, ft_strlen(line));
+		write(fd, line, ft_strlen(line));
 		free(line);
 	}
 	
