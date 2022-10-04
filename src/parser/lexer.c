@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:11:18 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/24 18:49:40 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/09/22 09:51:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	count_words(const char *str, char del)
 	return (i[0]);
 }
 
-static void	*free_arr(char **arr, int arr_count)
+void	*free_arr(char **arr, int arr_count)
 {
 	while (arr_count >= 0)
 		free(arr[arr_count--]);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/08/25 14:58:51 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/09/29 11:16:48 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,18 +27,19 @@ LDFLAGS = -L$(HOME)/.brew/Cellar/readline/8.1.2/lib -lreadline -Llibft -lft
 # all the src/.c files that need to be compiled
 SRCS =	src/main.c \
 		src/minishell.c \
+		src/catch_tty.c \
 		src/helpers.c	\
 		src/promt.c	\
 		src/signal.c	\
 		src/error.c	\
+		src/execute.c \
+		src/pipex.c \
 		src/env/env.c	\
 		src/env/helpers.c	\
 		src/parser/parser.c \
 		src/parser/lexer.c \
 		src/parser/expander.c \
 		src/parser/pipe_expander.c \
-		src/parser/parser_helper.c \
-		src/parser/tokens.c \
 		src/builtins/builtin.c	\
 		src/builtins/echo.c	\
 		src/builtins/exit.c	\
@@ -53,7 +54,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 # this rule is responsible for building the executable/archive. It uses the built-in rule: ($(CC) $(CPPFLAGS) $(CFLAGS) -c -o x.o x.c) because .o prerequisites
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LDFLAGS) $(OBJS) -o $(NAME)
 
 $(LIBFT):
