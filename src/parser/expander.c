@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/25 13:18:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/09/29 11:48:11 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ bool	check_dquotes(char *str)
 			ret++;
 		i++;
 	}
-	// if (ret % 2 == 0)
-	// 	return (false);
 	return (true - squotes_first(str, i));
 }
 
@@ -106,7 +104,7 @@ char	*get_substr_var(char *str, int index)
 			new_str = ft_strjoin(new_str, str + ft_word_len(str));
 			free(to_replace);
 			return (new_str);
-		}
+		}  
 		i++;
 	}
 	return (str);
@@ -125,7 +123,6 @@ char	*expand_vars(char *str)
 		d_quotes = check_dquotes(str);
 		i++;
 	}
-	printf("%d\n", d_quotes);
 	if (d_quotes > 0)
 	{
 		str = get_substr_var(str, ++i);
@@ -143,4 +140,4 @@ char	*expand_vars(char *str)
 // 	printf("%s\n", expand_vars("\'$USER\'"));
 // 	printf("%s\n", expand_vars("\"\'$USER\'\""));
 // 	printf("%s\n", expand_vars("\'\"$USER\"\'"));
-// }
+// }	 

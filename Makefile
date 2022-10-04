@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/04 15:04:13 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/04 15:09:18 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,18 +29,19 @@ LDFLAGS = -L$(DOWNLOADFOLDER)/readline_out/lib -lreadline -Llibft -lft
 # all the src/.c files that need to be compiled
 SRCS =	src/main.c \
 		src/minishell.c \
+		src/catch_tty.c \
 		src/helpers.c	\
 		src/promt.c	\
 		src/signal.c	\
 		src/error.c	\
+		src/execute.c \
+		src/pipex.c \
 		src/env/env.c	\
 		src/env/helpers.c	\
 		src/parser/parser.c \
 		src/parser/lexer.c \
 		src/parser/expander.c \
 		src/parser/pipe_expander.c \
-		src/parser/parser_helper.c \
-		src/parser/tokens.c \
 		src/builtins/builtin.c	\
 		src/builtins/echo.c	\
 		src/builtins/exit.c	\

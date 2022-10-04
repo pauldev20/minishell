@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/25 14:59:03 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/04 13:30:24 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 # include <sys/ioctl.h>
 # include <limits.h>
 # include "libft.h"
+# include <sys/stat.h>
+# include <fcntl.h>
+
+# define INFILE_MODE 1
+# define OUTFILE_MODE 0
 
 typedef struct s_env
 {
@@ -80,5 +85,17 @@ char	*get_promt(t_env *usr, t_env *pwd, t_env *home);
 
 // SIGNAL
 void	handle_signal(int sig);
+
+// EXECUTE
+int		start_execute(char **arr);
+char	**get_token_array(char **arr);
+
+// PIPEX
+void	child_process(char **cmd_args, char **envp, int start_stop[2]);
+void	execute(char **cmd, char **envp, int start_stop[2]);
+
+// TTY
+char	*catch_tty(char *prompt);
+char	*get_terminal_line(int fd);
 
 #endif

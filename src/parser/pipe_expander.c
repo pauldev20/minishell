@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_expander.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:37:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/25 10:38:40 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/09/27 10:13:05 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static char	**set_split(char const *s, char *c)
 	if (!s)
 		return (NULL);
 	words = count_words(s, c);
-	printf("WORDS: %d\n", words);
 	if (words < 0)
 		return (NULL);
 	arr = (char **)malloc(sizeof(char *) * (words + 1));
@@ -122,11 +121,7 @@ void	**pipe_expander(char ***arr)
 		insert = set_split((*arr)[i], "<|>");
 		if (!insert)
 			return (NULL);
-		printf("INSERT: ");
 		g = 0;
-		while (insert[g])
-			printf("%s, ", insert[g++]);
-		printf("NULL\n");
 		insert_into_arr(arr, insert, i);
 		free(insert);
 		i++;

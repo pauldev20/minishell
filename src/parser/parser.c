@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/25 14:59:32 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/09/28 14:41:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+
+void print_token(char **splitted)
+{
+	printf("{");
+	for (int i = 0; splitted[i] != NULL; i++)
+		printf("%s, ", splitted[i]);
+	printf("NULL}\n");
+}
 
 typedef struct s_cmd {
 	char	**full_cmd;
@@ -37,15 +45,20 @@ t_cmd	*init_cmd(void)
 void	*parse_input(char *input)
 {
 	char	**splitted;
-
+	int		c;
+	
 	splitted = lexer(input, ' ');
 	if (!splitted)
 		return (print_error(QUOTE, NULL, 1));
 	pipe_expander(&splitted);
-	printf("{");
-	for (int i = 0; splitted[i] != NULL; i++)
-		printf("%s, ", splitted[i]);
-	printf("NULL}\n");
+	c = 0;
+	while (splitted[c] != NULL)
+	{
+		splitted[c] = expand_vars(splitted[c]);
+		c++;
+	}
+	// print_token(splitted);
+	start_execute(splitted);
 	for (int i = 0; splitted[i] != NULL; i++)
 		free(splitted[i]);
 	free(splitted);
