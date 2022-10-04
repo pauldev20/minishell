@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/04 14:05:11 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/04 16:03:53 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,49 @@ int	get_outfile_fd(char **token, char **arr)
 	return (fd);
 }
 
+char	**duplicate_arr(char **arr)
+{
+	char	**new_arr;
+	int		i;
+	
+	i = 0;
+	while (arr[i] != NULL)
+		i++;
+	new_arr = (char **)malloc(sizeof(char *) * (i  + 1));
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		new_arr[i] = ft_strdup(arr[i]);
+		i++;
+	}
+	new_arr[i] = NULL;
+	return (new_arr);
+}
+
+void	execute_here_doc(char **arr)
+{
+	int		start_stop[2];
+	char	**new_arr;
+	char	**cmd;
+	int		fd;
+
+	new_arr = duplicate_arr(arr);
+	cmd = (char **)malloc(sizeof(char *) * 2);
+	cmd[0] = ft_strdup("cat");
+	cmd[1] = NULL;
+	start_stop[0] = 0;
+	start_stop[1] = 1;
+	new_arr = delete_io(new_arr, get_token_array(new_arr));
+	if (new_arr[0] == NULL)
+	{
+		fd = open("/tmp/here_doc", O_RDONLY, 0777);
+		dup2(fd, STDIN_FILENO);
+		execute(cmd, environ, start_stop);
+	}
+	else
+		free_array(new_arr);
+}
+
 void	here_doc_execute(char *limiter, char **arr)
 {
 	char	*line;
@@ -114,6 +157,7 @@ void	here_doc_execute(char *limiter, char **arr)
 			{
 				free(line);
 				close(fd);
+				execute_here_doc(arr);
 				return ;
 			}
 		}
@@ -123,7 +167,6 @@ void	here_doc_execute(char *limiter, char **arr)
 			free(line);
 		}
 	}
-	close(fd);
 }
 
 int	get_infile_fd(char **token, char **arr)

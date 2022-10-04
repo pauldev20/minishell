@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/04 13:30:24 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/04 15:44:41 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_minishell		g_minishell;
 enum	e_minishell_errors {
 	QUOTE = 1
 };
+
+void	print_arr(char **arr);
 
 void	minishell(int argc, char **argv, char **envp);
 char	**arr_dup(char **enviroment);
@@ -89,6 +91,7 @@ void	handle_signal(int sig);
 // EXECUTE
 int		start_execute(char **arr);
 char	**get_token_array(char **arr);
+char	**delete_io(char **arr, char **tokens);
 
 // PIPEX
 void	child_process(char **cmd_args, char **envp, int start_stop[2]);

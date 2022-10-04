@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/04 13:58:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/04 15:10:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ void	execute(char **cmd, char **envp, int start_stop[2])
 	char	*path;
 
 	i = -1;
-	// for (int i = 0; cmd[i] != NULL; i++)
-	// 	printf("CMD [%d]: %s\n", i, cmd[i]);
 	if (access(cmd[start_stop[0]], X_OK | F_OK) == -1)
 		path = find_path(cmd[start_stop[0]], envp);
 	// else if (is_own_builtin(cmd,start_stop))

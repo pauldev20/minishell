@@ -6,12 +6,18 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/09/28 14:41:29 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/04 15:44:30 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+
+void	print_arr(char **arr)
+{
+	for (int i = 0; arr[i] != NULL; i++)
+		printf("ARR [%d]: %s\n", i, arr[i]);	
+}
 
 void print_token(char **splitted)
 {
