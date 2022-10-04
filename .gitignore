@@ -5,3 +5,5 @@ minishell
 .*
 *.json
 Makefile
+dwnlds
+.vscode
