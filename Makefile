@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/04 16:12:07 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/04 19:37:29 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ $(DOWNLOADFOLDER):
 	@mkdir -p dwnlds
 	@curl -s https://ftp.gnu.org/gnu/readline/readline-8.1.2.tar.gz --output dwnlds/readline-8.1.2.tar.gz > /dev/null
 	@tar xfz dwnlds/readline-8.1.2.tar.gz -C dwnlds
+	@echo "$(YELLOW)STARTING DOWNLOAD(s)...$(NC)"
 	@cd dwnlds/readline-8.1.2; ./configure --prefix=$(PWD)/dwnlds/readline_out > /dev/null; cd ../../;
 	@cd $(DOWNLOADFOLDER)/readline-8.1.2; make -s > /dev/null 2> /dev/null; make -s install > /dev/null 2> /dev/null;
 	@echo "$(GREEN)FINISHED DOWNLOAD(s)...$(NC)"
@@ -74,7 +75,7 @@ $(DOWNLOADFOLDER):
 # this rule is responsible for building the executable/archive. It uses the built-in rule: ($(CC) $(CPPFLAGS) $(CFLAGS) -c -o x.o x.c) because .o prerequisites
 $(NAME): $(DOWNLOADFOLDER) $(OBJS) $(LIBFT)
 	@echo	"$(GREEN)LINKING: $(HIGHIWHITE)minishell...$(NC)"
-	$(CC) $(CFLAGS) $(INCLUDES) $(LDFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(LDFLAGS) $(OBJS) -o $(NAME)
 	@echo	"$(GREEN)FINISHED...$(NC)"
 
 $(LIBFT):
