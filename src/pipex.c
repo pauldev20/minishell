@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/30 16:11:21 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/04 15:10:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*find_path(char *cmd, char **envp)
 /* A simple error displaying function. */
 void	error(void)
 {
-	perror("\033[31mError");
+	perror("\033[31mminishell");
 	exit(EXIT_FAILURE);
 }
 
@@ -82,6 +82,8 @@ void	execute(char **cmd, char **envp, int start_stop[2])
 	// 	execute_own_builtin(cmd, start_stop);
 	else
 		path = cmd[start_stop[0]];
+	if (cmd[start_stop[0]] == NULL)
+		return ;
 	if (!path)
 	{
 		while (cmd[++i])
@@ -91,7 +93,7 @@ void	execute(char **cmd, char **envp, int start_stop[2])
 	}
 	cmd = cut_start_stop(cmd, start_stop);
 	if (execve(path, cmd, envp) == -1)
-		error();
+		return ;
 }
 
 void	child_process(char **cmd_args, char **envp, int start_stop[2])

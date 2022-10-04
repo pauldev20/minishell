@@ -6,16 +6,13 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/30 14:52:38 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/04 17:45:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 extern char **environ;
-/* TO DO:
-	- ADD ERROR HANDELING
-*/
 
 /*  CHECKS IF THE TOKEN PASSED AS AN ARG IS AN REDIRECTOR */
 bool	is_input_redirector(char *str)
@@ -30,6 +27,50 @@ bool	is_output_redirector(char *str)
 	if (ft_strnstr(str, "GREAT", 5) || ft_strnstr(str, "DGREAT", 6))
 		return (true);
 	return (false);
+}
+
+int	get_here_doc_amount(char **arr)
+{
+	char	**tokens;
+	int		i;
+	int		ret;
+
+	ret = 0;
+	i = 0;
+	tokens = get_token_array(arr);
+	while (tokens[i] != NULL)
+	{
+		if (ft_strnstr(tokens[i], "DLESS", 5))
+			ret++;
+		i++;	
+	}
+	return (ret);
+}
+
+char	**get_here_doc_limiters(char **arr)
+{
+	int		i;
+	int		limiter_i;
+	int		here_doc_amount;
+	char	**limiter;
+	char	**tokens;
+
+	limiter_i = 0;
+	i = 0;
+	tokens = get_token_array(arr);
+	here_doc_amount = get_here_doc_amount(arr);
+	limiter = (char **)malloc(sizeof(char *) * (here_doc_amount + 1));
+	while (tokens[i] != NULL)
+	{
+		if (ft_strnstr(tokens[i], "DLESS", 5))
+		{
+			limiter[limiter_i] = arr[i + 1];
+			limiter_i++;
+		}
+		i++;
+	}
+	limiter[limiter_i] = NULL;
+	return (limiter);
 }
 
 int	get_outfile_fd(char **token, char **arr)
@@ -52,25 +93,81 @@ int	get_outfile_fd(char **token, char **arr)
 	return (fd);
 }
 
-void	here_doc_execute(char *limiter)
+char	**duplicate_arr(char **arr)
+{
+	char	**new_arr;
+	int		i;
+	
+	i = 0;
+	while (arr[i] != NULL)
+		i++;
+	new_arr = (char **)malloc(sizeof(char *) * (i  + 1));
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		new_arr[i] = ft_strdup(arr[i]);
+		i++;
+	}
+	new_arr[i] = NULL;
+	return (new_arr);
+}
+
+void	execute_here_doc(char **arr)
+{
+	int		start_stop[2];
+	char	**new_arr;
+	char	**cmd;
+	int		fd;
+
+	new_arr = duplicate_arr(arr);
+	cmd = (char **)malloc(sizeof(char *) * 2);
+	cmd[0] = ft_strdup("cat");
+	cmd[1] = NULL;
+	start_stop[0] = 0;
+	start_stop[1] = 1;
+	new_arr = delete_io(new_arr, get_token_array(new_arr));
+	if (new_arr[0] == NULL)
+	{
+		fd = open("/tmp/here_doc", O_RDONLY, 0777);
+		dup2(fd, STDIN_FILENO);
+		execute(cmd, environ, start_stop);
+	}
+	else
+		free_array(new_arr);
+}
+
+void	here_doc_execute(char *limiter, char **arr)
 {
 	char	*line;
 	int		fd;
+	char	**here_doc_limiters;
+	int		i;
 
-	fd = open("/tmp/here_doc", O_WRONLY | O_CREAT | O_TRUNC, 00700);
+	i = 0;
+	fd = open("/tmp/here_doc", O_WRONLY | O_CREAT | O_TRUNC, 00777);
+	here_doc_limiters = get_here_doc_limiters(arr);
 	while (1)
 	{
-		write(1, "heredoc>", 9);
-		line = get_next_line(STDIN_FILENO);
-		if (ft_strnstr(line, limiter, ft_strlen(limiter)))
+		write(1, "\e[1;34mheredoc> \e[0m", 21);
+		// line = get_next_line(STDIN_FILENO);
+		line = expand_vars(get_next_line(STDIN_FILENO));
+		if (ft_strnstr(line, here_doc_limiters[i], ft_strlen(here_doc_limiters[i])))
 		{
-			free(line);
-			break;
+			i++;
+			if (here_doc_limiters[i] == NULL)
+			{
+				free(line);
+				close(fd);
+				execute_here_doc(arr);
+				return ;
+			}
 		}
-		write(fd, line, ft_strlen(line));
-		free(line);
+		else
+		{
+			write(fd, line, ft_strlen(line));
+			free(line);
+		}
 	}
-	
 }
 
 int	get_infile_fd(char **token, char **arr)
@@ -87,7 +184,11 @@ int	get_infile_fd(char **token, char **arr)
 			if (ft_strnstr(token[i], "LESS", 4))
 				fd = open(arr[i + 1], O_RDONLY, 0777);
 			else if (ft_strnstr(token[i], "DLESS", 5))
-				here_doc_execute(arr[i + 1]);
+			{
+				here_doc_execute(arr[i + 1], arr);
+				fd = open("/tmp/here_doc", O_RDONLY, 0777);
+				break ;
+			}
 		}
 	}
 	return (fd);
@@ -107,12 +208,12 @@ char	**join_io_modifier(char **arr)
 		{
 			if (arr[old_i][0] == '<' && arr[old_i + 1][0] == '<')
 			{
-				arr[new_i] = ft_strjoin(arr[new_i], "<");
+				arr[new_i] = ft_strjoin(arr[old_i], "<");
 				old_i++;
 			}
 			else if (arr[old_i][0] == '>' && arr[old_i + 1][0] == '>')
 			{
-				arr[new_i] = ft_strjoin(arr[new_i], ">");
+				arr[new_i] = ft_strjoin(arr[old_i], ">");
 				old_i++;
 			}
 			else
@@ -199,7 +300,7 @@ char	**delete_io(char **arr, char **tokens)
 	i = 0;
 	while (tokens[i] != NULL)
 	{
-		if (is_input_redirector(tokens[i]) || is_output_redirector(tokens[i]))
+		while (tokens[i] != NULL && (is_input_redirector(tokens[i]) || is_output_redirector(tokens[i])))
 			i += 2;
 		arr[new_i] = arr[i];
 		if (arr[new_i] == NULL)
@@ -211,6 +312,15 @@ char	**delete_io(char **arr, char **tokens)
 	{
 		arr[new_i] = NULL;
 		new_i++;
+	}
+	if (arr[0] != NULL && arr[0][0] == '|')
+	{
+		new_i = 0;
+		while (arr[new_i] != NULL)	
+		{
+			arr[new_i] = arr[new_i + 1];
+			new_i++;
+		}
 	}
 	return (arr);
 }
@@ -228,7 +338,7 @@ bool	check_syntax(char **tokens)
 			if (tokens[i - 1] == NULL || tokens[i + 1] == NULL
 				|| !ft_strnstr(tokens[i - 1], "WORD", 4) || !ft_strnstr(tokens[i + 1], "WORD", 4))
 			{
-				printf("minishell: syntax error near pipe\n");
+				printf("\033[31mminishell: syntax error near pipe\n");
 				return (false);
 			}
 		}
@@ -236,7 +346,7 @@ bool	check_syntax(char **tokens)
 		{
 			if (tokens[i + 1] == NULL || !ft_strnstr(tokens[i + 1], "WORD", 4))
 			{
-				printf("minishell: syntax error near io-modifier\n");
+				printf("\033[31mminishell: syntax error near io-modifier\n");
 				return (false);
 			}
 		}
