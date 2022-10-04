@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/04 16:03:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/04 17:45:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ void	here_doc_execute(char *limiter, char **arr)
 	while (1)
 	{
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
-		line = get_next_line(STDIN_FILENO);
+		// line = get_next_line(STDIN_FILENO);
+		line = expand_vars(get_next_line(STDIN_FILENO));
 		if (ft_strnstr(line, here_doc_limiters[i], ft_strlen(here_doc_limiters[i])))
 		{
 			i++;
