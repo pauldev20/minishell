@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/04 15:09:18 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/04 15:10:12 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,8 +60,8 @@ $(DOWNLOADFOLDER):
 	@mkdir -p dwnlds
 	@curl https://ftp.gnu.org/gnu/readline/readline-8.1.2.tar.gz --output dwnlds/readline-8.1.2.tar.gz
 	@tar xvfz dwnlds/readline-8.1.2.tar.gz -C dwnlds
-	@cd dwnlds/readline-8.1.2; ./configure --prefix=$(PWD)/dwnlds/readline_out; cd ../../;
-	@cd $(DOWNLOADFOLDER)/readline-8.1.2; make; make install;
+	@@cd dwnlds/readline-8.1.2; ./configure --prefix=$(PWD)/dwnlds/readline_out; cd ../../;
+	@@cd $(DOWNLOADFOLDER)/readline-8.1.2; make; make install;
 	@echo "finished downloading readline lib..."
 
 # this rule is responsible for building the executable/archive. It uses the built-in rule: ($(CC) $(CPPFLAGS) $(CFLAGS) -c -o x.o x.c) because .o prerequisites

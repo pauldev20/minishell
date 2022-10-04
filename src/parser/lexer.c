@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:11:18 by pgeeser           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/04 15:05:32 by pgeeser          ###   ########.fr       */
-=======
-/*   Updated: 2022/09/22 09:51:14 by mhedtman         ###   ########.fr       */
->>>>>>> f75cdafb5dbfe76dbd217999cf2ff55ca61230fd
+/*   Updated: 2022/10/04 15:10:24 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
