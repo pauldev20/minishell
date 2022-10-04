@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
+#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/09/29 11:16:48 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/10/04 15:10:12 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,16 @@ NAME = minishell
 
 LIBFT = libft/libft.a
 
+DOWNLOADFOLDER = dwnlds
+
 # compiler flags
 CFLAGS	= #-Wall -Werror -Wextra
 
 # the compiler to be used
 CC	= cc
 
-INCLUDES = -I$(HOME)/.brew/Cellar/readline/8.1.2/include -Ilibft -Iincludes -g -fsanitize=address,undefined
-LDFLAGS = -L$(HOME)/.brew/Cellar/readline/8.1.2/lib -lreadline -Llibft -lft
+INCLUDES = -I$(DOWNLOADFOLDER)/readline_out/include -Ilibft -Iincludes -g -fsanitize=address,undefined
+LDFLAGS = -L$(DOWNLOADFOLDER)/readline_out/lib -lreadline -Llibft -lft
 
 # all the src/.c files that need to be compiled
 SRCS =	src/main.c \
@@ -53,15 +55,26 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
+$(DOWNLOADFOLDER):
+	@echo "dwonloading things ..."
+	@mkdir -p dwnlds
+	@curl https://ftp.gnu.org/gnu/readline/readline-8.1.2.tar.gz --output dwnlds/readline-8.1.2.tar.gz
+	@tar xvfz dwnlds/readline-8.1.2.tar.gz -C dwnlds
+	@@cd dwnlds/readline-8.1.2; ./configure --prefix=$(PWD)/dwnlds/readline_out; cd ../../;
+	@@cd $(DOWNLOADFOLDER)/readline-8.1.2; make; make install;
+	@echo "finished downloading readline lib..."
+
 # this rule is responsible for building the executable/archive. It uses the built-in rule: ($(CC) $(CPPFLAGS) $(CFLAGS) -c -o x.o x.c) because .o prerequisites
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(DOWNLOADFOLDER) $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LDFLAGS) $(OBJS) -o $(NAME)
 
 $(LIBFT):
+	@echo	"compiling: libft ..."
 	$(MAKE) bonus -C libft
 
 %.o : %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@echo "compiling: $< ..."
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 debug:
 	$(MAKE) CFLAGS='-g' re
@@ -75,8 +88,9 @@ clean:
 fclean: clean
 	$(MAKE) fclean -C libft
 	rm -rf $(NAME)
+	rm -rf $(DOWNLOADFOLDER)
 
 # remove all files and remake all
 re: fclean all
-	
+
 .PHONY:	all bonus clean fclean re debug
