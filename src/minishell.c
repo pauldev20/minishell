@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 15:40:59 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:53:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* TO DO:
 	- CATCH ^C AND ^\
-	- ADD QUOTATION TO ECHO
+	- ADD QUOTATION TO PARSER
 	- FIX UNSET
 	- ADD $?
 	- SET ERROR STATUS AND ERROR CODES
