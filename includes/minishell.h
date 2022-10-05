@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/04 15:44:41 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 13:18:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ char	**arr_dup(char **enviroment);
 // BUILTINS
 int		builtin_parser(char **argv, int argc);
 int		builtin_echo(char **argv, int argc);
-void	builtin_exit(void);
 void	builtin_env(void);
 int		builtin_export(char	**argv, int argc);
 int		builtin_unset(char **argv, int argc);
 int		builtin_pwd(void);
+void	builtin_cd(char *str);
+void	builtin_exit(void);
 
 void	*parse_input(char *input);
 
@@ -92,6 +93,11 @@ void	handle_signal(int sig);
 int		start_execute(char **arr);
 char	**get_token_array(char **arr);
 char	**delete_io(char **arr, char **tokens);
+char	**cut_start_stop(char **cmd, int start_stop[2]);
+
+// BUILTIN EXECUTER
+bool	is_own_builtin(char **cmd, int start_stop[2]);
+void	execute_own_builtin(char **cmd, int start_stop[2]);
 
 // PIPEX
 void	child_process(char **cmd_args, char **envp, int start_stop[2]);

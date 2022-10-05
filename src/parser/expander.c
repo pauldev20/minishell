@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/04 17:55:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 10:54:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ bool	check_dquotes(char *str)
 
 int	ft_word_len(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)
@@ -85,7 +85,7 @@ char	*get_substr_var(char *str, int index)
 	char	*new_str;
 	char	*pre_str;
 	char	*to_replace;
-	
+
 	i = 0;
 	to_replace = NULL;
 	while (str[i] != '\0' && str[i] != '\n')
@@ -108,7 +108,7 @@ char	*get_substr_var(char *str, int index)
 			new_str = ft_strjoin(new_str, str + ft_word_len(str));
 			free(to_replace);
 			return (new_str);
-		}  
+		} 
 		i++;
 	}
 	return (str);
@@ -132,7 +132,6 @@ char	*expand_vars(char *str)
 		str = get_substr_var(str, ++i);
 		return (str);
 	}
-	// printf("STR: %s\n", str);
 	return (str);
 }
 

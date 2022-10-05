@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/04 15:10:12 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/05 13:18:54 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS =	src/main.c \
 		src/signal.c	\
 		src/error.c	\
 		src/execute.c \
+		src/execute_builtins.c \
 		src/pipex.c \
 		src/env/env.c	\
 		src/env/helpers.c	\
@@ -44,11 +45,12 @@ SRCS =	src/main.c \
 		src/parser/pipe_expander.c \
 		src/builtins/builtin.c	\
 		src/builtins/echo.c	\
+		src/builtins/cd.c \
 		src/builtins/exit.c	\
 		src/builtins/env.c	\
 		src/builtins/export.c	\
 		src/builtins/pwd.c	\
-		src/builtins/unset.c
+		src/builtins/unset.c \
 
 # replace .c with .o -> $(var:pattern=replacement)
 OBJS = $(SRCS:.c=.o)

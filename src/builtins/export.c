@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/21 23:12:30 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/05 13:22:38 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	builtin_export(char	**argv, int argc)
 	if (argc < 1)
 	{
 		builtin_env();
-		return (EXIT_SUCCESS);
+		exit (EXIT_SUCCESS);
 	}
 	while (env)
 	{
@@ -71,5 +71,5 @@ int	builtin_export(char	**argv, int argc)
 		if (env)
 			add_at_index(&g_minishell.envp, env, i++);
 	}
-	return (EXIT_SUCCESS);
+	exit (EXIT_SUCCESS);
 }

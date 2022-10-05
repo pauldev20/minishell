@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/20 16:42:21 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/05 13:10:09 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int	builtin_echo(char **argv, int argc)
 	}
 	if (!(argc > 0 && ft_strncmp(argv[0], "-n", 3) == 0))
 		write(1, "\n", 1);
+	exit (EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

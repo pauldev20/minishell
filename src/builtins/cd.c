@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 11:20:10 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/09/29 13:46:45 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 13:04:15 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 void	builtin_cd(char *str)
 {
-	chdir(str);
+	printf("CD\n");
+	exit (0);
+	(void)str;
 }

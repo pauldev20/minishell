@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/04 15:44:30 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 10:53:18 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*parse_input(char *input)
 {
 	char	**splitted;
 	int		c;
-	
+
 	splitted = lexer(input, ' ');
 	if (!splitted)
 		return (print_error(QUOTE, NULL, 1));
@@ -63,10 +63,7 @@ void	*parse_input(char *input)
 		splitted[c] = expand_vars(splitted[c]);
 		c++;
 	}
-	// print_token(splitted);
 	start_execute(splitted);
-	for (int i = 0; splitted[i] != NULL; i++)
-		free(splitted[i]);
-	free(splitted);
+	free_array(splitted);
 	return (NULL);
 }

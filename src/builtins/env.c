@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/18 11:10:51 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 13:22:51 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,5 @@
 void	builtin_env(void)
 {
 	print_env(g_minishell.envp);
+	exit (EXIT_SUCCESS);
 }

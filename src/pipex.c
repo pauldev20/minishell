@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/04 15:10:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 13:09:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	error(void)
 char	**cut_start_stop(char **cmd, int start_stop[2])
 {
 	int	i;
+	int start_reset;
 
+	start_reset = start_stop[0];
 	i = 0;
 	while (start_stop[0] < start_stop[1])
 	{
@@ -65,6 +67,7 @@ char	**cut_start_stop(char **cmd, int start_stop[2])
 		cmd[i] = NULL;
 		i++;
 	}
+	start_stop[0] = start_reset;
 	return (cmd);
 }
 
@@ -76,10 +79,13 @@ void	execute(char **cmd, char **envp, int start_stop[2])
 	char	*path;
 
 	i = -1;
+	if (is_own_builtin(cmd, start_stop))
+	{
+		execute_own_builtin(cmd, start_stop);
+		return ;
+	}
 	if (access(cmd[start_stop[0]], X_OK | F_OK) == -1)
 		path = find_path(cmd[start_stop[0]], envp);
-	// else if (is_own_builtin(cmd,start_stop))
-	// 	execute_own_builtin(cmd, start_stop);
 	else
 		path = cmd[start_stop[0]];
 	if (cmd[start_stop[0]] == NULL)

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:15:21 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/09/29 11:16:18 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 10:51:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_terminal_line(int fd)
 	char		buf;
 	char		*rtn;
 	int			checker;
-	
+
 	rtn = ft_strdup("");
 	checker = read(fd, &buf, 1);
 	if (checker == -1 || checker == 0)
@@ -54,7 +54,6 @@ char	*get_terminal_line(int fd)
 		if (buf == '\n')
 			return (ft_strtrim(rtn, "\n"));
 		checker = read(fd, &buf, 1);
-			
 	}
 	if (checker == -1)
 		return (free_line(rtn));
@@ -64,14 +63,14 @@ char	*get_terminal_line(int fd)
 char	*catch_tty(char *prompt)
 {
 	char	*str;
-	
+
 	if (isatty(STDIN_FILENO))
 		str = readline(prompt);
 	else
 		str = get_terminal_line(STDIN_FILENO);
 	if (str == NULL)
-		return NULL;
+		return (NULL);
 	if (isatty(STDIN_FILENO))
 		add_history(str);
-	return(str);
+	return (str);
 }

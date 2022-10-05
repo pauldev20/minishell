@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 11:15:18 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/20 14:08:53 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/05 13:20:41 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int	builtin_pwd(void)
 		printf("%s\n", cwd);
 	else
 		return (EXIT_FAILURE);
+	exit (EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
