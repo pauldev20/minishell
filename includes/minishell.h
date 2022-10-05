@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 16:39:52 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 17:06:09 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ char	**get_token_array(char **arr);
 int		get_pipe_amount(char **tokens);
 char	**delete_io(char **arr, char **tokens);
 char	**cut_start_stop(char **cmd, int start_stop[2]);
+char	**execute_prejobs(char **arr);
 
 // IO MODIFICATION
 int		get_infile_fd(char **token, char **arr);

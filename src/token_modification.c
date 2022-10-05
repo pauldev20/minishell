@@ -6,50 +6,11 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:22:32 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 16:32:38 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 17:05:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*	JOINS '>' + '>' AND '<' + '<' IF NEEDED */
-char	**join_io_modifier(char **arr)
-{
-	int	old_i;
-	int	new_i;
-
-	old_i = 0;
-	new_i = 0;
-	while (arr[old_i] != NULL)
-	{
-		if (arr[old_i + 1] != NULL)
-		{
-			if (arr[old_i][0] == '<' && arr[old_i + 1][0] == '<')
-			{
-				arr[new_i] = ft_strjoin(arr[old_i], "<");
-				old_i++;
-			}
-			else if (arr[old_i][0] == '>' && arr[old_i + 1][0] == '>')
-			{
-				arr[new_i] = ft_strjoin(arr[old_i], ">");
-				old_i++;
-			}
-			else
-				arr[new_i] = arr[old_i];
-		}
-		else
-			arr[new_i] = arr[old_i];
-		new_i++;
-		old_i++;
-	}
-	while (new_i < old_i)
-	{
-		arr[new_i] = NULL;
-		new_i++;
-	}
-	arr[new_i] = NULL;
-	return (arr);
-}
 
 /*  RETURNS THE AMOUNT OF PIPES TO CHECK HOW MANY CMDS
 	WILL BE ADDED TO PIPEX */
