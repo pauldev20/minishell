@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 13:18:29 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:46:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ void	minishell(int argc, char **argv, char **envp);
 char	**arr_dup(char **enviroment);
 
 // BUILTINS
-int		builtin_parser(char **argv, int argc);
+int		builtin_parser(char **argv, int argc, int pipe_amount);
 int		builtin_echo(char **argv, int argc);
 void	builtin_env(void);
 int		builtin_export(char	**argv, int argc);
 int		builtin_unset(char **argv, int argc);
 int		builtin_pwd(void);
-void	builtin_cd(char *str);
+int		builtin_cd(char *path, int pipe_amount);
 void	builtin_exit(void);
 
 void	*parse_input(char *input);
@@ -92,6 +92,7 @@ void	handle_signal(int sig);
 // EXECUTE
 int		start_execute(char **arr);
 char	**get_token_array(char **arr);
+int		get_pipe_amount(char **tokens);
 char	**delete_io(char **arr, char **tokens);
 char	**cut_start_stop(char **cmd, int start_stop[2]);
 

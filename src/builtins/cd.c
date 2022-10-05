@@ -6,15 +6,18 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 11:20:10 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/05 13:04:15 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:47:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_cd(char *str)
+int	builtin_cd(char *path, int pipe_amount)
 {
-	printf("CD\n");
-	exit (0);
-	(void)str;
+	char	cwd[PATH_MAX];
+	
+	chdir(path);
+	if (pipe_amount > 0)
+		exit (0);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 13:23:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:46:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ void	execute_own_builtin(char **cmd, int start_stop[2])
 {
 	char	*path;
 	int		i;
-	
+	int		pipe_amount;
+
+	pipe_amount = get_pipe_amount(get_token_array(cmd));
 	cmd = cut_start_stop(cmd, start_stop);
 	i = 0;
 	while (cmd[i] != NULL)
 		i++;
-	builtin_parser(cmd, i);
+	builtin_parser(cmd, i, pipe_amount);
 }
