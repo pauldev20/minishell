@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 14:46:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:49:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	execute_own_builtin(char **cmd, int start_stop[2])
 	int		i;
 	int		pipe_amount;
 
+	printf("OWN BUILTIN EXECUTED\n");
 	pipe_amount = get_pipe_amount(get_token_array(cmd));
 	cmd = cut_start_stop(cmd, start_stop);
 	i = 0;

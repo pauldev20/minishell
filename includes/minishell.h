@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 14:46:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:00:53 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-# define INFILE_MODE 1
-# define OUTFILE_MODE 0
 
 typedef struct s_env
 {
@@ -84,7 +82,7 @@ void	**pipe_expander(char ***arr);
 void	*free_arr(char **arr, int arr_count);
 
 // PROMT
-char	*get_promt(t_env *usr, t_env *pwd, t_env *home);
+char	*get_prompt(t_env *usr, t_env *pwd, t_env *home);
 
 // SIGNAL
 void	handle_signal(int sig);

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 13:31:50 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:00:37 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 /* TO DO:
 	- CATCH ^C AND ^\
-	- ADD OWN ENVP IN EXECUTE
-	- ADD REST OF BUILTINS
-	- DELETE HERE_DOC AFTER PROGRAMM?
+	- ADD QUOTATION TO ECHO
+	- FIX UNSET
+	- ADD $?
+	- ADD exit
+	- SET ERROR STATUS
+	- REPLACE CHAR **ENVIRON IN EXECUTE.C
+	- ADD ERROR HANDELING IN EXECVE
 	*/
 
 static int	if_chars(char *str)
@@ -70,7 +74,7 @@ void	minishell(int argc, char **argv, char **envp)
 	// signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		cache[0] = get_promt(
+		cache[0] = get_prompt(
 				get_env_var(g_minishell.envp, "USER"),
 				get_env_var(g_minishell.envp, "PWD"),
 				get_env_var(g_minishell.envp, "HOME"));

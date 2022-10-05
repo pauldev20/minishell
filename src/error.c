@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 15:09:29 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/24 15:20:22 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/05 14:57:27 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// need to sett status!!!!!
 void	*print_error(int errtype, char *params, int err)
 {
 	if (errtype == QUOTE)

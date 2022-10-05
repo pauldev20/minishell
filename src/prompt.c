@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   promt.c                                            :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/05 13:35:33 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:00:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*get_user(t_env *usr)
 	return (ft_strjoin(BLUE, usr->value));
 }
 
-char	*get_promt(t_env *usr, t_env *pwd, t_env *home)
+char	*get_prompt(t_env *usr, t_env *pwd, t_env *home)
 {
 	char	*out;
 	char	*front;
