@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 15:28:46 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:40:59 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 	- ADD QUOTATION TO ECHO
 	- FIX UNSET
 	- ADD $?
-	- ADD exit
-	- SET ERROR STATUS
+	- SET ERROR STATUS AND ERROR CODES
 	- REPLACE CHAR **ENVIRON IN EXECUTE.C
 	- ADD ERROR HANDELING IN EXECVE
 	*/
