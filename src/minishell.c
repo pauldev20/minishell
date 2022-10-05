@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/04 11:15:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 13:31:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /* TO DO:
 	- CATCH ^C AND ^\
-	- ADD HERE_DOC
 	- ADD OWN ENVP IN EXECUTE
 	- ADD REST OF BUILTINS
 	- DELETE HERE_DOC AFTER PROGRAMM?

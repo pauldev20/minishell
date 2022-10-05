@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/24 00:01:40 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/05 13:35:33 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*replace_pwd(t_env *home, t_env *pwd)
 	if (!out)
 		return (NULL);
 	out[j++] = '~';
-	while (j++ < (int)(ft_strlen(pwd->value) - ft_strlen(home->value)))
+	while (j++ < (int)(ft_strlen(pwd->value) - ft_strlen(home->value)) + 1)
 		out[j - 1] = pwd->value[i++];
 	out[j - 1] = '\0';
 	return (out);
