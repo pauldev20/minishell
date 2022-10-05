@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 16:35:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 20:24:56 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@
 	- SET ERROR STATUS AND ERROR CODES
 	- REPLACE CHAR **ENVIRON IN EXECUTE.C
 	- ADD ERROR HANDELING IN EXECVE
+	- cat /dev/urandom | ls 
+	- chmod 000 -> check for permissions
+	- echo $? + error codes
+	- in heredoc when ^C quit whole thing 
+	- in heredoc when ^D no output + leaks
+	- leaks 
+	- in heredoc << eof cat -> also stops on "eof " (with space)
+	- only cd should go into home directory
+	- echo hello | << eof cat
+	- hierachie zuerst infile dann heredoc dann pipe
+	- echo | cat -e -> gives ^@$ should give $
 	*/
 
 static int	if_chars(char *str)
