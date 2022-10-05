@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 15:53:48 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:35:28 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ void	minishell(int argc, char **argv, char **envp)
 		if (cache[1] == NULL)
 			break ;
 		free(cache[0]);
-		// if (if_chars(cache[1]))
-		// 	add_history(cache[1]);
 		if (cache[1] != NULL)
 			parse_input(cache[1]);
 		free (cache[1]);

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 13:53:38 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:34:59 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	error(void)
 char	**cut_start_stop(char **cmd, int start_stop[2])
 {
 	int	i;
-	int start_reset;
+	int	start_reset;
 
 	start_reset = start_stop[0];
 	i = 0;

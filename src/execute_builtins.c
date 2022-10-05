@@ -6,13 +6,13 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 14:49:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:36:10 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern char **environ;
+extern char	**environ;
 
 bool	is_own_builtin(char **cmd, int start_stop[2])
 {
