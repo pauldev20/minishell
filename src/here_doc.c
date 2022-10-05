@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 16:29:18 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 20:54:20 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,24 @@ void	execute_here_doc(char **arr)
 		free_array(new_arr);
 }
 
+int	ft_strcmp(char *str1, char *str2)
+{
+	while(*str1)
+	{
+		if (*str1 != *str2)
+			return ((unsigned int)*str2 - (unsigned int)*str1);
+		str1++;
+		str2++;
+	}
+	return ((unsigned int)*str2 - (unsigned int)*str1);
+	
+}
+
+bool	str_is_equal(char *str1, char *str2)
+{
+	return (ft_strcmp(str1, str2) == 0);
+}
+
 void	here_doc_execute(char *limiter, char **arr)
 {
 	char	*line;
@@ -115,8 +133,7 @@ void	here_doc_execute(char *limiter, char **arr)
 	{
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
 		line = expand_vars(get_next_line(STDIN_FILENO));
-		if (ft_strnstr(line, here_doc_limiters[i],
-				ft_strlen(here_doc_limiters[i])))
+		if (str_is_equal(here_doc_limiters[i], line))
 		{
 			i++;
 			if (here_doc_limiters[i] == NULL)
