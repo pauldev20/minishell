@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 15:00:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:24:24 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,21 @@ char	**get_token_array(char **arr);
 int		get_pipe_amount(char **tokens);
 char	**delete_io(char **arr, char **tokens);
 char	**cut_start_stop(char **cmd, int start_stop[2]);
+
+// IO MODIFICATION
+int		get_infile_fd(char **token, char **arr);
+int		get_outfile_fd(char **token, char **arr);
+bool	is_output_redirector(char *str);
+bool	is_input_redirector(char *str);
+
+// TOKEN MODIFICATION
+char	**join_io_modifier(char **arr);
+int		get_pipe_amount(char **tokens);
+char	**get_token_array(char **arr);
+char	**delete_io(char **arr, char **tokens);
+
+// HERE_DOCS
+void	here_doc_execute(char *limiter, char **arr);
 
 // BUILTIN EXECUTER
 bool	is_own_builtin(char **cmd, int start_stop[2]);
