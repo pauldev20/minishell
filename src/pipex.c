@@ -6,23 +6,23 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 13:09:48 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 13:53:38 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*find_path(char *cmd, char **envp)
+char	*find_path(char *cmd)
 {
+	t_env	*env;
 	char	**paths;
 	char	*path;
 	int		i;
 	char	*part_path;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	env = get_env_var(g_minishell.envp, "PATH");
+	paths = ft_split(env->value + 5, ':');
 	i = 0;
 	while (paths[i])
 	{
@@ -85,7 +85,7 @@ void	execute(char **cmd, char **envp, int start_stop[2])
 		return ;
 	}
 	if (access(cmd[start_stop[0]], X_OK | F_OK) == -1)
-		path = find_path(cmd[start_stop[0]], envp);
+		path = find_path(cmd[start_stop[0]]);
 	else
 		path = cmd[start_stop[0]];
 	if (cmd[start_stop[0]] == NULL)

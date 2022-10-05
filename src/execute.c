@@ -6,13 +6,14 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 11:41:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 13:58:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 extern char **environ;
+// ONLY NEED TO REPLACE ENVIRON IN EXECVE CALL
 
 /*  CHECKS IF THE TOKEN PASSED AS AN ARG IS AN REDIRECTOR */
 bool	is_input_redirector(char *str)
