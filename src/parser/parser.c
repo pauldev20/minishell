@@ -6,12 +6,11 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/05 10:53:18 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:40:23 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parser.h"
 
 void	print_arr(char **arr)
 {
@@ -61,6 +60,13 @@ void	*parse_input(char *input)
 	while (splitted[c] != NULL)
 	{
 		splitted[c] = expand_vars(splitted[c]);
+		c++;
+	}
+	c = 0;
+	while (splitted[c])
+	{
+		if (ft_strnstr(splitted[c], "exit", 5))
+			exit(0);
 		c++;
 	}
 	start_execute(splitted);

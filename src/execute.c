@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 14:58:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:38:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,10 +411,24 @@ void	execute_pipeline(char **cmd_array)
 int	start_execute(char **arr)
 {
 	pid_t	id;
-
+	int		i;
+	
 	id = fork();
 	if (id == 0)
+	{
 		execute_pipeline(arr);
-	wait(&id);
-	return (0);
+		i = 0;
+		while (arr[i])
+		{
+			if (ft_strnstr(arr[i], "exit", 5))
+				exit(id);
+			i++;
+		}
+		return (-1);
+	}
+	else
+	{
+		wait(&id);
+		return (0);
+	}
 }
