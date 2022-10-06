@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 10:54:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:48:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ static void	init_env(char **argv)
 
 void	minishell(int argc, char **argv, char **envp)
 {
-	char		*cache[2];
-
+	char	*cache[2];
+	char	**cmd_array;
+	
 	(void)argc;
 	g_minishell.envp = NULL;
 	g_minishell.envp = parse_array_to_env(envp, g_minishell.envp);
@@ -93,7 +94,7 @@ void	minishell(int argc, char **argv, char **envp)
 			break ;
 		free(cache[0]);
 		if (cache[1] != NULL)
-			parse_input(cache[1]);
+			cmd_array = parse_input(cache[1]);
 		free (cache[1]);
 	}
 }

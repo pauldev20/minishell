@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/05 15:40:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:43:01 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_cmd	*init_cmd(void)
 	return (cmd);
 }
 
-void	*parse_input(char *input)
+char	**parse_input(char *input)
 {
 	char	**splitted;
 	int		c;
@@ -69,7 +69,5 @@ void	*parse_input(char *input)
 			exit(0);
 		c++;
 	}
-	start_execute(splitted);
-	free_array(splitted);
-	return (NULL);
+	return (splitted);
 }

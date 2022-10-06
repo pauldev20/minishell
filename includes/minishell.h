@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 09:10:33 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:45:28 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		builtin_pwd(void);
 int		builtin_cd(char *path, int pipe_amount);
 void	builtin_exit(void);
 
-void	*parse_input(char *input);
+char	**parse_input(char *input);
 
 void	*print_error(int errtype, char *params, int err);
 
