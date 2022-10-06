@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/05 13:10:09 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/06 10:53:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	builtin_echo(char **argv, int argc)
 {
 	int		i;
 	char	**array;
-
+	
 	if (argc < 2 && (argc > 0 && ft_strncmp(argv[0], "-n", 3) == 0))
 		return (EXIT_SUCCESS);
 	if (argc < 1)
-		write(1, "", 1);
+		write(1, "", 0);
 	array = argv + (argc > 0 && ft_strncmp(argv[0], "-n", 3) == 0);
 	i = 0;
 	while (array[i++])

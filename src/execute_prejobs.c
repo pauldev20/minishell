@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 17:07:40 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:30:42 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ bool	check_syntax(char **tokens)
 		if (ft_strnstr(tokens[i], "PIPE", 4))
 		{
 			if (tokens[i - 1] == NULL || tokens[i + 1] == NULL
-				|| !ft_strnstr(tokens[i - 1], "WORD", 4)
-				|| !ft_strnstr(tokens[i + 1], "WORD", 4))
+				|| ft_strnstr(tokens[i - 1], "PIPE", 4)
+				|| ft_strnstr(tokens[i + 1], "PIPE", 4))
 			{
 				printf("\033[31mminishell: syntax error near pipe\n");
 				return (false);
@@ -72,7 +72,7 @@ bool	check_syntax(char **tokens)
 		else if (is_input_redirector(tokens[i])
 			|| is_output_redirector(tokens[i]))
 		{
-			if (tokens[i + 1] == NULL || !ft_strnstr(tokens[i + 1], "WORD", 4))
+			if (tokens[i + 1] == NULL || is_input_redirector(tokens[i + 1]) || is_input_redirector(tokens[i + 1]))
 			{
 				printf("\033[31mminishell: syntax error near io-modifier\n");
 				return (false);
