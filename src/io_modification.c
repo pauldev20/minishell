@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:26 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 16:31:02 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:25:05 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,13 @@ int	get_infile_fd(char **token, char **arr)
 			}
 		}
 	}
+	// i = -1;
+	// while (token[++i] != NULL)
+	// {
+	// 	if (is_input_redirector(token[i]))
+	// 	{
+		
+	// 	}
+	// }
 	return (fd);
 }

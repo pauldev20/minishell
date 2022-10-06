@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 09:35:06 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:19:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ void	execute_here_doc(char **arr)
 		execute(cmd, environ, start_stop);
 	}
 	else
+	{
+		free_array(cmd);
 		free_array(new_arr);
+	}
 }
 
 int	ft_strcmp(char *str1, char *str2)
