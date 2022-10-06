@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 21:07:18 by max              ###   ########.fr       */
+/*   Updated: 2022/10/06 09:26:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 /* TO DO:
 	- CATCH ^C AND ^\ | P
 	- HANDLE QUOTATION TO PARSER | P
+	- CHECK IF "> > || < <" OR "<< | >>" AND ALREADT THROW ERROR IN PARSER IF THE FIRST HAPPENED | P
 	- FIX UNSET | P
 	- ADD $? | M
 	- SET ERROR STATUS AND ERROR CODES | M
 	- REPLACE CHAR **ENVIRON IN EXECUTE.C (HOW TO HANDLE ENVP LIST OR ARRAY?) | P
 	- ADD ERROR HANDELING IN EXECVE | M
-	- cat /dev/urandom | ls | M
+	- cat /cdev/urandom | ls | M
 	- chmod 000 -> check for permissions | M
 	- in heredoc when ^C quit whole thing | P 
 	- in heredoc when ^D no output + leaks | P
 	- leaks | M
-	- in heredoc << eof cat -> also stops on "eof " (with space) | M
+	- in heredoc << eof cat -> also stops on "eof " (with space) | ✅ 
 	- only cd should go into home directory | M
-	- echo hello | << eof cat | M
+	- echo hello | << eof cat | M 
 	- hierachie zuerst infile dann heredoc dann pipe | M
 	- echo | cat -e -> gives ^@$ should give $ | M 
 	*/

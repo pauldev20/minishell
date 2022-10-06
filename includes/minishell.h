@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 17:06:09 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:10:33 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ char	**delete_io(char **arr, char **tokens);
 
 // HERE_DOCS
 void	here_doc_execute(char *limiter, char **arr);
+bool	str_is_equal(char *str1, char *str2);
 
 // BUILTIN EXECUTER
 bool	is_own_builtin(char **cmd, int start_stop[2]);

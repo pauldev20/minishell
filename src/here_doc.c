@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 20:54:20 by max              ###   ########.fr       */
+/*   Updated: 2022/10/06 09:17:35 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	**get_here_doc_limiters(char **arr)
 		if (ft_strnstr(tokens[i], "DLESS", 5))
 		{
 			limiter[limiter_i] = arr[i + 1];
+			limiter[limiter_i] = ft_strjoin(limiter[limiter_i], "\n");
 			limiter_i++;
 		}
 		i++;
