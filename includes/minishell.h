@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 16:45:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:06:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ void	handle_signal(int sig);
 
 // EXECUTE
 int		start_execute(char **arr);
-char	**get_token_array(char **arr);
 int		get_pipe_amount(char **tokens);
-char	**delete_io(char **arr, char **tokens);
 char	**cut_start_stop(char **cmd, int start_stop[2]);
 char	**execute_prejobs(char **arr);
 
@@ -111,7 +109,7 @@ bool	is_input_redirector(char *str);
 char	**join_io_modifier(char **arr);
 int		get_pipe_amount(char **tokens);
 char	**get_token_array(char **arr);
-char	**delete_io(char **arr, char **tokens);
+char	**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
 void	here_doc_execute(char *limiter, char **arr);

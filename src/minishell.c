@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 16:48:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:38:20 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@
 	- in heredoc when ^C quit whole thing | P 
 	- in heredoc when ^D no output + leaks | P
 	- ADD $? | M
-	- SET ERROR STATUS AND ERROR CODES | M
-	- ADD ERROR HANDELING IN EXECVE | M
+	- SET ERROR STATUS AND EXIT CODES | M
 	- leaks | M
-	- echo hello | << eof cat | M 
-	- hierachie zuerst infile dann heredoc dann pipe | M
+	- to do is added to execute.c | M
+	- ADD ERROR HANDELING IN EXECVE | ✅
 	- echo | cat -e -> gives ^@$ should give $ | ✅
 	- cat /dev/urandom | ls | ✅
 	- chmod 000 -> check for permissions | ✅ 
@@ -95,6 +94,8 @@ void	minishell(int argc, char **argv, char **envp)
 		free(cache[0]);
 		if (cache[1] != NULL)
 			cmd_array = parse_input(cache[1]);
+		start_execute(cmd_array);
+		free(cmd_array);
 		free (cache[1]);
 	}
 }

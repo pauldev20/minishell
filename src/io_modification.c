@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:26 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 14:25:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/07 10:37:49 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	get_infile_fd(char **token, char **arr)
 			{
 				here_doc_execute(arr[i + 1], arr);
 				fd = open("/tmp/here_doc", O_RDONLY, 0777);
-				break ;
+				return (fd);
 			}
 		}
 	}

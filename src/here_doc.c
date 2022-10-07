@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 14:19:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/07 10:47:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,33 +78,6 @@ char	**duplicate_arr(char **arr)
 	return (new_arr);
 }
 
-void	execute_here_doc(char **arr)
-{
-	int		start_stop[2];
-	char	**new_arr;
-	char	**cmd;
-	int		fd;
-
-	new_arr = duplicate_arr(arr);
-	cmd = (char **)malloc(sizeof(char *) * 2);
-	cmd[0] = ft_strdup("cat");
-	cmd[1] = NULL;
-	start_stop[0] = 0;
-	start_stop[1] = 1;
-	new_arr = delete_io(new_arr, get_token_array(new_arr));
-	if (new_arr[0] == NULL)
-	{
-		fd = open("/tmp/here_doc", O_RDONLY, 0777);
-		dup2(fd, STDIN_FILENO);
-		execute(cmd, environ, start_stop);
-	}
-	else
-	{
-		free_array(cmd);
-		free_array(new_arr);
-	}
-}
-
 int	ft_strcmp(char *str1, char *str2)
 {
 	while(*str1)
@@ -141,12 +114,8 @@ void	here_doc_execute(char *limiter, char **arr)
 		{
 			i++;
 			if (here_doc_limiters[i] == NULL)
-			{
-				free(line);
-				close(fd);
-				execute_here_doc(arr);
 				return ;
-			}
+			fd = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}
 		else
 		{

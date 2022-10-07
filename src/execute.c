@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 16:50:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:47:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,22 @@ int	get_stop(char **tokens, int stop, int start)
 	return (stop);
 }
 
+int	execute_process(char **cmd_array, char **token_array, int start_stop[2])
+{
+	
+}
 /*	CHANGES INFILE IF NEEDED AND GOES INTO PIPEX 
-	MAYBE ALSO NEEDS TO CHANGE OUTFILE AND EXECUTE LAST CMD */
+	MAYBE ALSO NEEDS TO CHANGE OUTFILE AND EXECUTE LAST CMD 
+	
+	NEED TO ADD A INFILE REDIRECTION IN EVERY COMMAND AND ARG FAMILY
+	ONLY TAKES LAST IN AND OUTFILE OF THE FAMILY 
+	IF THERE IS NO INPUT REDIRECTON !!AFTER!! A PIPE IT TAKES AN EMTPY
+	FILE AS AN INPUT
+	-> GET START STOP OF CMD + ARGS + REDIRECTIONS
+	-> CHANGE FDs
+	-> DELETE REDIRECTIONS
+	-> EXECUTE*/
+
 void	execute_pipeline(char **cmd_array, char **token_array)
 {
 	int		i;
@@ -42,8 +56,9 @@ void	execute_pipeline(char **cmd_array, char **token_array)
 	start_stop[1] = 0;
 	io_modifier[0] = get_infile_fd(token_array, cmd_array);
 	io_modifier[1] = get_outfile_fd(token_array, cmd_array);
-	cmd_array = delete_io(cmd_array, token_array);
+	cmd_array = delete_io(cmd_array, token_array, &io_modifier[0]);
 	token_array = get_token_array(cmd_array);
+	print_arr(cmd_array);
 	dup2(io_modifier[0], STDIN_FILENO);
 	i = -1;
 	while (++i < get_pipe_amount(token_array))
@@ -74,7 +89,7 @@ int	start_execute(char **cmd_arr)
 		i = 0;
 		while (cmd_arr[i])
 		{
-			if (ft_strnstr(cmd_arr[i], "exit", 5))
+			if (str_is_equal(cmd_arr[i], "exit"))
 				exit(id);
 			i++;
 		}

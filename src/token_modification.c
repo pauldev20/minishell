@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:22:32 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 17:05:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:13:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,17 @@ char	**get_token_array(char **arr)
 	return (tokens);
 }
 
+int	handle_empty_input(void)
+{
+	int	fd;
+
+	fd = open("/tmp/empty_file", O_RDONLY | O_CREAT | O_TRUNC, 0777);
+	return (fd);
+}
+
 /*  DELETES THE REDIRECTORS OUT OF THE STRING SO THAT 
 	ONLY THE CMD PIPELINES REMAINS AND WE CAN ITERATE OVER IT */
-char	**delete_io(char **arr, char **tokens)
+char	**delete_io(char **arr, char **tokens, int *fd)
 {
 	int		i;
 	int		new_i;
@@ -96,6 +104,8 @@ char	**delete_io(char **arr, char **tokens)
 	if (arr[0] != NULL && arr[0][0] == '|')
 	{
 		new_i = 0;
+		if (arr[0][0] == '|')
+			*fd = handle_empty_input();
 		while (arr[new_i] != NULL)
 		{
 			arr[new_i] = arr[new_i + 1];
