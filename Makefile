@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
+#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/05 17:06:25 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/10/10 11:18:58 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ $(DOWNLOADFOLDER):
 	@mkdir -p dwnlds
 	@curl -s https://ftp.gnu.org/gnu/readline/readline-8.1.2.tar.gz --output dwnlds/readline-8.1.2.tar.gz > /dev/null
 	@tar xfz dwnlds/readline-8.1.2.tar.gz -C dwnlds
-	@echo "$(YELLOW)STARTING DOWNLOAD(s)...$(NC)"
+	@echo "$(YELLOW)STARTING BUILDS(s)...$(NC)"
 	@cd dwnlds/readline-8.1.2; ./configure --prefix=$(PWD)/dwnlds/readline_out > /dev/null; cd ../../;
 	@cd $(DOWNLOADFOLDER)/readline-8.1.2; make -s > /dev/null 2> /dev/null; make -s install > /dev/null 2> /dev/null;
 	@echo "$(GREEN)FINISHED DOWNLOAD(s)...$(NC)"

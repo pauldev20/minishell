@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 10:43:33 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:00:32 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,84 @@ char	*get_substr_var(char *str, int index)
 	return (str);
 }
 
+// char	*expand_vars(char *str)
+// {
+// 	int	d_quotes;
+// 	int	s_quotes;
+// 	int	i;
+
+// 	i = 0;
+// 	while (str[i] != '\0' && str != NULL)
+// 	{
+// 		s_quotes = check_squotes(str);
+// 		d_quotes = check_dquotes(str);
+// 		i++;
+// 	}
+// 	if (d_quotes)
+// 	{
+// 		str = get_substr_var(str, ++i);
+// 		return (str);
+// 	}
+// 	return (str);
+// }
+
 char	*expand_vars(char *str)
 {
-	int	d_quotes;
-	int	s_quotes;
-	int	i;
+	int		i;
+	int		doubleq;
+	int		singleq;
+	char	*to_replace;
+	char	*out;
+	char	*new;
+	char	*old;
+	t_env	*envvar;
 
 	i = 0;
-	while (str[i] != '\0' && str != NULL)
+	doubleq = 0;
+	singleq = 0;
+	out = ft_calloc(1, sizeof(char));
+	while (str[i])
 	{
-		s_quotes = check_squotes(str);
-		d_quotes = check_dquotes(str);
+		if (str[i] == '\"')
+			doubleq = !doubleq;
+		if (str[i] == '\'' && !doubleq)
+			singleq = !singleq;
+		if (doubleq && str[i] == '\'')
+		{
+			old = out;
+			out = ft_strjoin(out, "'");
+			free(old);
+		}
+		else if ((str[i] != '\'' && str[i] != '\"')
+			|| (str[i] != '\'' && singleq))
+		{
+			if (!singleq && str[i] == '$')
+			{
+				i++;
+				new = ft_substr(str + i, 0, ft_word_len(str + i));
+				envvar = get_env_var(g_minishell.envp, new);
+				old = out;
+				if (envvar)
+				{
+					out = ft_strjoin(out, envvar->value);
+					free(old);
+				}
+				i += ft_word_len(str + i) - 1;
+				free(new);
+			}
+			else
+			{
+				new = ft_substr(str, i, 1);
+				old = out;
+				out = ft_strjoin(out, new);
+				free(old);
+				free(new);
+			}
+		}
 		i++;
 	}
-	if (d_quotes > 0)
-	{
-		str = get_substr_var(str, ++i);
-		return (str);
-	}
-	return (str);
+	free(str);
+	return (out);
 }
 
 // int	main(int argc, char **argv, char **envp)

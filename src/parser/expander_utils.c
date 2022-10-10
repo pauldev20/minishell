@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:37:36 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 16:40:55 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:36:13 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_word_len(char *str)
 		return (0);
 	while (str[i] != '\0' && str[i] != ' '
 		&& str[i] != '\"' && str[i] != '\''
-		&& str[i] != '\n')
+		&& str[i] != '\n' && str[i] != '$')
 		i++;
 	return (i);
 }

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/07 11:47:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/11 00:22:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern char	**environ;
 
 int	get_start(char	**tokens, int start, int stop)
 {
@@ -51,7 +49,9 @@ void	execute_pipeline(char **cmd_array, char **token_array)
 	int		i;
 	int		io_modifier[2];
 	int		start_stop[2];
+	char	**env;
 
+	env = get_env_arr(g_minishell.envp);
 	start_stop[0] = 0;
 	start_stop[1] = 0;
 	io_modifier[0] = get_infile_fd(token_array, cmd_array);
@@ -65,12 +65,13 @@ void	execute_pipeline(char **cmd_array, char **token_array)
 	{
 		start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
 		start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
-		child_process(cmd_array, environ, start_stop);
+		child_process(cmd_array, env, start_stop);
 	}
 	dup2(io_modifier[1], STDOUT_FILENO);
 	start_stop[0] = get_start(token_array, start_stop[0], start_stop[1]);
 	start_stop[1] = get_stop(token_array, start_stop[1], start_stop[0]);
-	execute(cmd_array, environ, start_stop);
+	execute(cmd_array, env, start_stop);
+	free_array(env);
 }
 
 /*	"MAIN" RETURNS ERRORS ETC. */
@@ -79,8 +80,11 @@ int	start_execute(char **cmd_arr)
 	pid_t	id;
 	int		i;
 	char	**token_array;
+	int 	status;
 
+	g_minishell.executing = 1;
 	id = fork();
+	status = 0;
 	if (id == 0)
 	{
 		cmd_arr = execute_prejobs(cmd_arr);
@@ -90,14 +94,15 @@ int	start_execute(char **cmd_arr)
 		while (cmd_arr[i])
 		{
 			if (str_is_equal(cmd_arr[i], "exit"))
-				exit(id);
+				exit(id); // correct exit????
 			i++;
 		}
-		return (127);
+		exit(127);
 	}
 	else
 	{
-		wait(&id);
-		return (0);
+		waitpid(id, &status, 0);
+		g_minishell.executing = 0;
+		return ((status >> 8) & 0x000000ff);
 	}
 }

@@ -6,11 +6,41 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 22:21:41 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/22 00:45:52 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/11 00:20:36 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**get_env_arr(t_env *list)
+{
+	int		i;
+	int		v;
+	char	**arr;
+	char	*str;
+	t_env 	*lst;
+
+	i = 0;
+	lst = list;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	arr = ft_calloc(i + 1, sizeof(char *));
+	v = 0;
+	lst = list;
+	while (lst)
+	{
+		str = ft_strjoin(lst->key, "=");
+		arr[v] = ft_strjoin(str, lst->value);
+		free(str);
+		v++;
+		lst = lst->next;
+	}
+	arr[v] = NULL;
+	return (arr);
+}
 
 void	add_at_index(t_env **list, t_env *el, int index)
 {
@@ -36,22 +66,22 @@ void	remove_at_index(t_env **list, int index)
 {
 	int		i;
 	t_env	*env;
-	t_env	*lst;
+	t_env	**lst;
 
 	i = 0;
-	lst = (*list);
-	while (i++ < index && lst)
+	lst = list;
+	while (i++ < index && (*lst))
 	{
-		env = lst;
-		lst = lst->next;
+		env = (*lst);
+		lst = &((*lst)->next);
 	}
-	free(lst->key);
-	free(lst->value);
+	free((*lst)->key);
+	free((*lst)->value);
 	if (index > 0)
-		env->next = lst->next;
+		env->next = (*lst)->next;
 	else
-		(*list) = lst->next;
-	free(lst);
+		(*list) = (*lst)->next;
+	free((*lst));
 }
 
 t_env	*parse_array_to_env(char **env, t_env *minienviro)

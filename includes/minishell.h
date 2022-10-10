@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/07 11:06:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/11 00:18:42 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -37,6 +38,8 @@ typedef struct s_minishell
 {
 	t_env	*envp;
 	char	**cmd_array;
+	int		sigint;
+	int		executing;
 }	t_minishell;
 
 t_minishell		g_minishell;
@@ -65,6 +68,7 @@ char	**parse_input(char *input);
 void	*print_error(int errtype, char *params, int err);
 
 // ENV
+char	**get_env_arr(t_env *list);
 void	add_back(t_env **env, t_env *new);
 t_env	*get_last(t_env *env);
 void	add_at_index(t_env **list, t_env *el, int index);

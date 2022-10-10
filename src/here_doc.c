@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/07 10:47:19 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/10 23:17:47 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	here_doc_execute(char *limiter, char **arr)
 	{
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
 		line = expand_vars(get_next_line(STDIN_FILENO));
+		if (*line == '\n' && g_minishell.sigint)
+			break ;
 		if (str_is_equal(here_doc_limiters[i], line))
 		{
 			i++;
