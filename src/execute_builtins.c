@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 09:40:18 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/13 13:42:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,34 @@
 
 extern char	**environ;
 
-bool	is_own_builtin(char **cmd, int start_stop[2])
+bool	is_own_builtin(char **cmd)
 {
-	if (cmd[start_stop[0]] == NULL)
+	if (cmd[0] == NULL)
 		return (false);
-	else if (ft_strnstr(cmd[start_stop[0]], "cd", 2))
+	else if (ft_strnstr(cmd[0], "cd", 2))
 		return (true);
-	else if (ft_strnstr(cmd[start_stop[0]], "echo", 4))
+	else if (ft_strnstr(cmd[0], "echo", 4))
 		return (true);
-	else if (ft_strnstr(cmd[start_stop[0]], "pwd", 3))
+	else if (ft_strnstr(cmd[0], "pwd", 3))
 		return (true);
-	else if (ft_strnstr(cmd[start_stop[0]], "export", 7))
+	else if (ft_strnstr(cmd[0], "export", 7))
 		return (true);
-	else if (ft_strnstr(cmd[start_stop[0]], "unset", 6))
+	else if (ft_strnstr(cmd[0], "unset", 6))
 		return (true);
-	else if (ft_strnstr(cmd[start_stop[0]], "env", 3))
+	else if (ft_strnstr(cmd[0], "env", 3))
 		return (true);
-	else if (ft_strnstr(cmd[start_stop[0]], "exit", 4))
+	else if (ft_strnstr(cmd[0], "exit", 4))
 		return (true);
 	return (false);
 }
 
-void	execute_own_builtin(char **cmd, int start_stop[2])
+void	execute_own_builtin(char **cmd)
 {
 	char	*path;
 	int		i;
 	int		pipe_amount;
 
 	pipe_amount = get_pipe_amount(get_token_array(cmd));
-	cmd = cut_start_stop(cmd, start_stop);
 	i = 0;
 	while (cmd[i] != NULL)
 		i++;

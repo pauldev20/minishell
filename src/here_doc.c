@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/10 23:17:47 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/13 14:13:53 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ bool	str_is_equal(char *str1, char *str2)
 	return (ft_strcmp(str1, str2) == 0);
 }
 
-void	here_doc_execute(char *limiter, char **arr)
+void	here_doc_execute(char *limiter, char *arr)
 {
 	char	*line;
 	int		fd;

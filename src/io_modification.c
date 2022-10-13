@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:26 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/07 10:37:49 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:05:39 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,54 +27,36 @@ bool	is_output_redirector(char *str)
 	return (false);
 }
 
-int	get_outfile_fd(char **token, char **arr)
+int	get_outfile_fd(char *token, char *arr, int pipe)
 {
 	int	fd;
 	int	i;
 
-	fd = STDOUT_FILENO;
-	i = -1;
-	while (token[++i] != NULL)
-	{
-		if (is_output_redirector(token[i]))
-		{
-			if (ft_strnstr(token[i], "GREAT", 5))
-				fd = open(arr[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 00700);
-			else if (ft_strnstr(token[i], "DGREAT", 6))
-				fd = open(arr[i + 1], O_WRONLY | O_CREAT | O_APPEND, 00700);
-		}
-	}
+	fd = pipe;
+	if (!token || !arr)
+		return (fd);
+	if (str_is_equal(token, "GREAT"))
+		fd = open(arr, O_WRONLY | O_CREAT | O_TRUNC, 00700);
+	else if (str_is_equal(token, "DGREAT"))
+		fd = open(arr, O_WRONLY | O_CREAT | O_APPEND, 00700);
+	printf("%d\n", fd);
 	return (fd);
 }
 
-int	get_infile_fd(char **token, char **arr)
+int	get_infile_fd(char *token, char *arr, int pipe)
 {
 	int	fd;
-	int	i;
 
-	fd = STDIN_FILENO;
-	i = -1;
-	while (token[++i] != NULL)
+	fd = pipe;
+	if (!token || !arr)
+		return (fd);
+	if (str_is_equal(token, "LESS"))
+		fd = open(arr, O_RDONLY, 0777);
+	else if (str_is_equal(token, "DLESS"))
 	{
-		if (is_input_redirector(token[i]))
-		{
-			if (ft_strnstr(token[i], "LESS", 4))
-				fd = open(arr[i + 1], O_RDONLY, 0777);
-			else if (ft_strnstr(token[i], "DLESS", 5))
-			{
-				here_doc_execute(arr[i + 1], arr);
-				fd = open("/tmp/here_doc", O_RDONLY, 0777);
-				return (fd);
-			}
-		}
+		here_doc_execute(arr, arr);
+		fd = open("/tmp/here_doc", O_RDONLY, 0777);
+		return (fd);
 	}
-	// i = -1;
-	// while (token[++i] != NULL)
-	// {
-	// 	if (is_input_redirector(token[i]))
-	// 	{
-		
-	// 	}
-	// }
 	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/06 09:45:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:01:37 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,22 @@ char	**cut_start_stop(char **cmd, int start_stop[2])
 
 /* Function that take the command and send it to find_path
  before executing it. */
-void	execute(char **cmd, char **envp, int start_stop[2])
+void	execute(char **cmd, char **envp)
 {
 	int		i;
 	char	*path;
 
 	i = -1;
-	if (is_own_builtin(cmd, start_stop))
+	if (is_own_builtin(cmd))
 	{
-		execute_own_builtin(cmd, start_stop);
+		execute_own_builtin(cmd);
 		return ;
 	}
-	if (access(cmd[start_stop[0]], X_OK | F_OK) == -1)
-		path = find_path(cmd[start_stop[0]]);
+	if (access(cmd[0], X_OK | F_OK) == -1)
+		path = find_path(cmd[0]);
 	else
-		path = cmd[start_stop[0]];
-	if (cmd[start_stop[0]] == NULL)
+		path = cmd[0];
+	if (cmd[0] == NULL)
 		return ;
 	if (!path)
 	{
@@ -97,15 +97,15 @@ void	execute(char **cmd, char **envp, int start_stop[2])
 		free(cmd);
 		error();
 	}
-	cmd = cut_start_stop(cmd, start_stop);
 	if (execve(path, cmd, envp) == -1)
 		return ;
 }
 
-void	child_process(char **cmd_args, char **envp, int start_stop[2])
+void	child_process(t_execute_table *execute_table, char **envp, int i)
 {
 	pid_t	pid;
 	int		fd[2];
+	int		in_out[2];
 
 	if (pipe(fd) == -1)
 		error();
@@ -115,14 +115,15 @@ void	child_process(char **cmd_args, char **envp, int start_stop[2])
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		execute(cmd_args, envp, start_stop);
+		in_out[0] = get_outfile_fd(execute_table->outfile_type[i], execute_table->outfiles[i], fd[1]);
+		dup2(in_out[0], STDOUT_FILENO);
+		execute(ft_split(execute_table->cmd_array[i], ' '), envp);
 	}
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		// waitpid(pid, NULL, 0);
+		in_out[1] = get_infile_fd(execute_table->infile_type[i], execute_table->infiles[i], fd[0]);
+		dup2(in_out[1], STDIN_FILENO);
 		close(fd[0]);
 	}
 }

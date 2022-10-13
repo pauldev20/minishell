@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 11:32:29 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:14:04 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ typedef struct s_execute_table
 {
 	char		**cmd_array;
 	char		**infiles;
+	char		**infile_type;
 	char		**outfiles;
+	char		**outfile_type;
 }	t_execute_table;
 
 typedef struct s_minishell
@@ -111,8 +113,8 @@ char	**cut_start_stop(char **cmd, int start_stop[2]);
 char	**execute_prejobs(char **arr);
 
 // IO MODIFICATION
-int		get_infile_fd(char **token, char **arr);
-int		get_outfile_fd(char **token, char **arr);
+int		get_infile_fd(char *token, char *arr, int pipe);
+int		get_outfile_fd(char *token, char *arr, int pipe);
 bool	is_output_redirector(char *str);
 bool	is_input_redirector(char *str);
 
@@ -123,16 +125,16 @@ char	**get_token_array(char **arr);
 char	**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
-void	here_doc_execute(char *limiter, char **arr);
+void	here_doc_execute(char *limiter, char *arr);
 bool	str_is_equal(char *str1, char *str2);
 
 // BUILTIN EXECUTER
-bool	is_own_builtin(char **cmd, int start_stop[2]);
-void	execute_own_builtin(char **cmd, int start_stop[2]);
+bool	is_own_builtin(char **cmd);
+void	execute_own_builtin(char **cmd);
 
 // PIPEX
-void	child_process(char **cmd_args, char **envp, int start_stop[2]);
-void	execute(char **cmd, char **envp, int start_stop[2]);
+void	child_process(t_execute_table *execute_table, char **envp, int i);
+void	execute(char **cmd, char **envp);
 
 // TTY
 char	*catch_tty(char *prompt);
