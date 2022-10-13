@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/11 00:21:41 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/13 12:27:56 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 	- free arr_correctly | NEW | 🔮
 	- change concept of start_execute !!! (env wont work if functions are called inside fork)
 	- LEAKS?? WHERE? | NEW |
+	- MORE SPACES BEFORE IO MODIFICATION
+	- echo hi | exit -> shoudl exit the pipe and not the programm
 	*/
 
 static int	if_chars(char *str)

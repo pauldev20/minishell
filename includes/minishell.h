@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/11 00:18:42 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/13 11:32:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 }	t_env;
+
+typedef struct s_execute_table
+{
+	char		**cmd_array;
+	char		**infiles;
+	char		**outfiles;
+}	t_execute_table;
 
 typedef struct s_minishell
 {
