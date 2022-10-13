@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 15:07:15 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:09:10 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ t_execute_table	*memory_allocation_arrays(t_execute_table *execute_table, char *
 	execute_table->cmd_array = (char **)ft_calloc((get_pipe_amount(token_array) + 1), sizeof(char *));
 	execute_table->infiles =  (char **)ft_calloc((get_pipe_amount(token_array) + 1), sizeof(char *));
 	execute_table->infile_type = (char **)ft_calloc((get_pipe_amount(token_array) + 1), sizeof(char *));
+	execute_table->here_docs = (char **)ft_calloc((get_pipe_amount(token_array) + 1), sizeof(char *));
 	execute_table->outfiles =  (char **)ft_calloc((get_pipe_amount(token_array) + 1), sizeof(char *));
 	execute_table->outfile_type = (char **)ft_calloc((get_pipe_amount(token_array) + 1), sizeof(char *));
 	return (execute_table);
@@ -150,6 +151,7 @@ t_execute_table	*get_execute_table(char **token_array, char **cmd_array)
 	execute_table->cmd_array[i] = get_cmd_array(cmd_array, token_array, start, stop);
 	execute_table->infiles[i] = get_infile(cmd_array, token_array, start, stop);
 	execute_table->infile_type[i] = get_infile_type(cmd_array, token_array, start, stop);
+	execute_table->here_docs = get_here_doc_limiters(cmd_array);
 	execute_table->outfiles[i] = get_outfile(cmd_array, token_array, start, stop);
 	execute_table->outfile_type[i] = get_outfile_type(cmd_array, token_array, start, stop);
 	// printf("NUMBER[%d]\nCMD [%s], IN [%s], OUT[%s]\n\tIN_T [%s] OUT_T [%s]\n", i, execute_table->cmd_array[i], execute_table->infiles[i], execute_table->outfiles[i], execute_table->infile_type[i], execute_table->outfile_type[i]);
@@ -165,7 +167,7 @@ void	execute_pipeline(t_execute_table *execute_table, char **token_array)
 
 	env = get_env_arr(g_minishell.envp);
 	i = 0;
-	io_modifier[0] = get_infile_fd(execute_table->infile_type[i], execute_table->infiles[i], STDIN_FILENO);
+	io_modifier[0] = get_infile_fd(execute_table, execute_table->infile_type[i], execute_table->infiles[i], STDIN_FILENO);
 	dup2(io_modifier[0], STDIN_FILENO);
 	i = -1;
 	while (++i < get_pipe_amount(token_array))

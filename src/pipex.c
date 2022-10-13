@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 15:01:37 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:59:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	child_process(t_execute_table *execute_table, char **envp, int i)
 	else
 	{
 		close(fd[1]);
-		in_out[1] = get_infile_fd(execute_table->infile_type[i], execute_table->infiles[i], fd[0]);
+		in_out[1] = get_infile_fd(execute_table, execute_table->infile_type[i], execute_table->infiles[i], fd[0]);
 		dup2(in_out[1], STDIN_FILENO);
 		close(fd[0]);
 	}

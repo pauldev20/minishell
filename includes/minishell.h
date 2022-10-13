@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 14:14:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:19:56 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_execute_table
 	char		**cmd_array;
 	char		**infiles;
 	char		**infile_type;
+	char		**here_docs;
 	char		**outfiles;
 	char		**outfile_type;
 }	t_execute_table;
@@ -113,7 +114,7 @@ char	**cut_start_stop(char **cmd, int start_stop[2]);
 char	**execute_prejobs(char **arr);
 
 // IO MODIFICATION
-int		get_infile_fd(char *token, char *arr, int pipe);
+int		get_infile_fd(t_execute_table *exe_table, char *token, char *arr, int pipe);
 int		get_outfile_fd(char *token, char *arr, int pipe);
 bool	is_output_redirector(char *str);
 bool	is_input_redirector(char *str);
@@ -125,7 +126,8 @@ char	**get_token_array(char **arr);
 char	**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
-void	here_doc_execute(char *limiter, char *arr);
+void	here_doc_execute(t_execute_table *exe_table, char *limiter, char **arr);
+char	**get_here_doc_limiters(char **arr);
 bool	str_is_equal(char *str1, char *str2);
 
 // BUILTIN EXECUTER
