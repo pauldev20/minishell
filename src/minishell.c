@@ -3,38 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 13:41:50 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 20:47:00 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* TO DO:
-	- handle spaces between [" "] echo "hi " -> more spaces should be deleted"
-	- CATCH ^C AND ^\ | 🔮
-	- HANDLE QUOTATION TO PARSER | 🔮
 	- CHECK IF "> > || < <" OR "<< | >>" ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P
+	- SEE /tests/cmds/mand/1_builtins.sh line 28 to line 42
+	- wunder dich nicht der Tester sah auf den schul macs deutlich besser aus :D
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
-	- REPLACE CHAR **ENVIRON IN EXECUTE.C (HOW TO HANDLE ENVP LIST OR ARRAY?) | 🔮
-	- FIX UNSET | 🔮
-	- in heredoc when ^C quit whole thing | 🔮
 	- in heredoc when ^D no output + leaks | P
 	- ADD $? | M
 	- SET ERROR STATUS AND EXIT CODES | M
 	- leaks | M
-	- ADD ERROR HANDELING IN EXECVE | ✅
-	- echo | cat -e -> gives ^@$ should give $ | ✅
-	- cat /dev/urandom | ls | ✅
-	- chmod 000 -> check for permissions | ✅ 
-	- in heredoc << eof cat -> also stops on "eof " (with space) | ✅ 
-	- only cd should go into home directory | ✅
 	- global error code | NEW | 
-	- fix start_execute forking | NEW | 🔮
 	- call correct exit | NEW | 
-	- free arr_correctly | NEW | 🔮
 	- change concept of start_execute !!! (env wont work if functions are called inside fork)
 	- LEAKS?? WHERE? | NEW |
 	- MORE SPACES BEFORE IO MODIFICATION 

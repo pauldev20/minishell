@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_prejobs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 11:26:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 20:42:14 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	check_syntax(char **tokens)
 				|| ft_strnstr(tokens[i - 1], "PIPE", 4)
 				|| ft_strnstr(tokens[i + 1], "PIPE", 4))
 			{
-				printf("\033[31mminishell: syntax error near pipe\n");
+				write(2, "\033[31mminishell: syntax error near pipe\n", 40);
 				return (false);
 			}
 		}
@@ -79,7 +79,7 @@ bool	check_syntax(char **tokens)
 		{
 			if (tokens[i + 1] == NULL || is_input_redirector(tokens[i + 1]) || is_input_redirector(tokens[i + 1]))
 			{
-				printf("\033[31mminishell: syntax error near io-modifier\n");
+				write(2, "\033[31mminishell: syntax error near io-modifier\n", 47);
 				return (false);
 			}
 		}
