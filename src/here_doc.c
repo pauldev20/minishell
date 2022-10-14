@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 16:29:09 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:38:46 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	here_doc_execute(t_execute_table *exe_table, char *limiter, char **arr)
 	i = 0;
 	fd = open("/tmp/here_doc", O_WRONLY | O_CREAT | O_TRUNC, 00777);
 	here_doc_limiters = exe_table->here_docs;
-	print_arr(here_doc_limiters);
 	while (1)
 	{
 		write(1, "\e[1;34mheredoc> \e[0m", 21);

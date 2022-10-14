@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/10 21:00:32 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/14 15:29:03 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	len_of_expanded(char *str)
+{
+	if (ft_strnstr(str, "PWD", 3) || ft_strnstr(str, "ZSH", 3))
+		return (3);
+	else if (ft_strnstr(str, "TERM_PROGRAM", 13))
+		return (13);
+	else if (ft_strnstr(str, "TERM", 4))
+		return (4);
+	else if (ft_strnstr(str, "HOMEBREW_TEMP", 14))
+		return (14);
+	return (1);
+}
 
 char	*get_substr_var(char *str, int index)
 {
@@ -30,7 +43,7 @@ char	*get_substr_var(char *str, int index)
 			str = str + i + 1;
 			if (str)
 			{
-				to_replace = ft_substr(str, 0, ft_word_len(str));
+				to_replace = ft_substr(str, 0, len_of_expanded(str));
 				env = get_env_var(g_minishell.envp, to_replace);
 			}
 			if (env != NULL)

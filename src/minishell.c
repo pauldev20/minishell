@@ -6,13 +6,14 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 11:16:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:41:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* TO DO:
+	- handle spaces between [" "] echo "hi " -> more spaces should be deleted"
 	- CATCH ^C AND ^\ | 🔮
 	- HANDLE QUOTATION TO PARSER | 🔮
 	- CHECK IF "> > || < <" OR "<< | >>" ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P
@@ -79,11 +80,13 @@ static void	init_env(char **argv)
 		set_env_var(&g_minishell.envp, "_", argv[0]);
 }
 
-void	minishell(int argc, char **argv, char **envp)
+int	minishell(int argc, char **argv, char **envp)
 {
 	char	*cache[2];
 	char	**cmd_array;
+	int		ret;
 	
+	ret = 1;
 	(void)argc;
 	g_minishell.envp = NULL;
 	g_minishell.envp = parse_array_to_env(envp, g_minishell.envp);
@@ -105,8 +108,9 @@ void	minishell(int argc, char **argv, char **envp)
 		free(cache[0]);
 		if (cache[1] != NULL)
 			cmd_array = parse_input(cache[1]);
-		start_execute(cmd_array);
+		ret = start_execute(cmd_array);
 		free_array(cmd_array);
 		free (cache[1]);
 	}
+	return (ret);
 }

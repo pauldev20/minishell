@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:22:32 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 11:32:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 11:36:02 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char	**get_token_array(char **arr)
 	i = 0;
 	while (arr[i] != NULL)
 		i++;
-	tokens = (char **)malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (arr[i] != NULL)
+	tokens = (char **)ft_calloc(i + 1, sizeof(char *));
+	i = -1;
+	while (arr[++i] != NULL)
 	{
 		if (arr[i][0] == '|')
 			tokens[i] = ft_strdup("PIPE");
@@ -64,10 +64,7 @@ char	**get_token_array(char **arr)
 			tokens[i] = ft_strdup("WEIRDFILE");
 		else
 			tokens[i] = ft_strdup("WORD");
-		i++;
 	}
-	print_arr(tokens);
-	tokens[i] = NULL;
 	return (tokens);
 }
 

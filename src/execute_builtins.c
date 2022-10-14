@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 13:42:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:17:53 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	is_own_builtin(char **cmd)
 	return (false);
 }
 
-void	execute_own_builtin(char **cmd)
+int	execute_own_builtin(char **cmd)
 {
 	char	*path;
 	int		i;
@@ -45,5 +45,5 @@ void	execute_own_builtin(char **cmd)
 	i = 0;
 	while (cmd[i] != NULL)
 		i++;
-	builtin_parser(cmd, i, pipe_amount);
+	return (builtin_parser(cmd, i, pipe_amount));
 }

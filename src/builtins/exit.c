@@ -6,13 +6,13 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:30:59 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/14 10:22:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:00:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_exit(int exit_code)
+int	builtin_exit(int exit_code)
 {
 	int	i;
 

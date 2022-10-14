@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:31:47 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/08/22 00:38:00 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/14 13:41:28 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (0);
 	else
-		minishell(argc, argv, envp);
-	return (1);
+		return (minishell(argc, argv, envp));
+	return (0);
 }

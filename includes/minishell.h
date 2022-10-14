@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 10:23:35 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:00:39 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ enum	e_minishell_errors {
 
 void	print_arr(char **arr);
 
-void	minishell(int argc, char **argv, char **envp);
+int		minishell(int argc, char **argv, char **envp);
 char	**arr_dup(char **enviroment);
 
 // BUILTINS
@@ -71,7 +71,7 @@ int		builtin_export(char	**argv, int argc);
 int		builtin_unset(char **argv, int argc);
 int		builtin_pwd(void);
 int		builtin_cd(char *path, int pipe_amount);
-void	builtin_exit(int exit_code);
+int		builtin_exit(int exit_code);
 
 char	**parse_input(char *input);
 
@@ -132,11 +132,11 @@ bool	str_is_equal(char *str1, char *str2);
 
 // BUILTIN EXECUTER
 bool	is_own_builtin(char **cmd);
-void	execute_own_builtin(char **cmd);
+int		execute_own_builtin(char **cmd);
 
 // PIPEX
-void	child_process(t_execute_table *execute_table, char **envp, int i);
-void	execute(char **cmd, char **envp);
+int		child_process(t_execute_table *execute_table, char **envp, int i);
+int		execute(char **cmd, char **envp);
 
 // TTY
 char	*catch_tty(char *prompt);

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 11:33:15 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:57:57 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ t_execute_table	*get_execute_table(char **token_array, char **cmd_array)
 	return (execute_table);
 }
 
-void	execute_pipeline(t_execute_table *execute_table, char **token_array)
+int	execute_pipeline(t_execute_table *execute_table, char **token_array)
 {
 	int	io_modifier[2];
 	int	i;
@@ -187,7 +187,7 @@ void	execute_pipeline(t_execute_table *execute_table, char **token_array)
 	}
 	io_modifier[1] = get_outfile_fd(execute_table->outfile_type[i], execute_table->outfiles[i], STDOUT_FILENO);
 	dup2(io_modifier[1], STDOUT_FILENO);
-	execute(ft_split(execute_table->cmd_array[i], ' '), env);
+	return (execute(ft_split(execute_table->cmd_array[i], ' '), env));
 }
 
 /*	"MAIN" RETURNS ERRORS ETC. */
@@ -205,10 +205,12 @@ int	start_execute(char **cmd_arr)
 	{
 		cmd_arr = execute_prejobs(cmd_arr);
 		if (!cmd_arr)
-			exit(258);
+			exit(2);
+		if (cmd_arr[0] == NULL || cmd_arr[0][0] == '\0')
+			exit(127);
 		token_array = get_token_array(cmd_arr);
 		execute_table = get_execute_table(token_array, cmd_arr);
-		execute_pipeline(execute_table, token_array);
+		status = execute_pipeline(execute_table, token_array);
 	}
 	else
 	{
@@ -216,5 +218,5 @@ int	start_execute(char **cmd_arr)
 		g_minishell.executing = 0;
 		return ((status >> 8) & 0x000000ff);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

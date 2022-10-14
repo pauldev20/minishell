@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/06 10:53:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:58:28 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,4 @@ int	builtin_echo(char **argv, int argc)
 	if (!(argc > 0 && ft_strncmp(argv[0], "-n", 3) == 0))
 		write(1, "\n", 1);
 	exit (EXIT_SUCCESS);
-	return (EXIT_SUCCESS);
 }

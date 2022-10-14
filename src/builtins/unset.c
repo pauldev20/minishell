@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 10:24:21 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/11 00:10:24 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/14 13:15:02 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ int	builtin_unset(char **argv, int argc)
 		}
 		j++;
 	}
-	exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

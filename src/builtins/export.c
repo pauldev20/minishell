@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/05 13:22:38 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:27:06 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	builtin_export(char	**argv, int argc)
 	if (argc < 1)
 	{
 		builtin_env();
-		exit (EXIT_SUCCESS);
+		return (1);
 	}
 	while (env)
 	{
@@ -71,5 +71,5 @@ int	builtin_export(char	**argv, int argc)
 		if (env)
 			add_at_index(&g_minishell.envp, env, i++);
 	}
-	exit (EXIT_SUCCESS);
+	return (1);
 }
