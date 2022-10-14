@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 17:09:10 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 11:33:15 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,21 @@ char	*get_infile(char **cmd_array, char **token_array, int start, int stop)
 char	*get_outfile(char **cmd_array, char **token_array, int start, int stop)
 {
 	char	*outfile;
-	
+	int	 	create;
 	outfile = NULL;
 	while (start < stop)
 	{
 		if (str_is_equal(token_array[start], "OUTFILE"))
+		{
+			create = open(cmd_array[start], O_WRONLY | O_CREAT | O_TRUNC, 00700);
 			outfile = ft_strdup(cmd_array[start]);
+			close(create);
+		}
+		else if (str_is_equal(token_array[start], "WEIRDFILE"))
+		{
+			create = open(cmd_array[start], O_WRONLY | O_CREAT | O_TRUNC, 00700);
+			close(create);	
+		}
 		start++;
 	}
 	return (outfile);
@@ -121,6 +130,19 @@ t_execute_table	*memory_allocation_arrays(t_execute_table *execute_table, char *
 	return (execute_table);
 }
 
+t_execute_table *init_execute_table(t_execute_table *execute_table, char **cmd_array, int start, int stop, int i)
+{
+	char	**token_array;
+
+	token_array = get_token_array(cmd_array);
+	execute_table->cmd_array[i] = get_cmd_array(cmd_array, token_array, start, stop);
+	execute_table->infiles[i] = get_infile(cmd_array, token_array, start, stop);
+	execute_table->infile_type[i] = get_infile_type(cmd_array, token_array, start, stop);
+	execute_table->outfiles[i] = get_outfile(cmd_array, token_array, start, stop);
+	execute_table->outfile_type[i] = get_outfile_type(cmd_array, token_array, start, stop);
+	return (execute_table);
+}
+
 t_execute_table	*get_execute_table(char **token_array, char **cmd_array)
 {
 	t_execute_table	*execute_table;
@@ -137,24 +159,14 @@ t_execute_table	*get_execute_table(char **token_array, char **cmd_array)
 	{
 		if (str_is_equal(token_array[stop], "PIPE"))
 		{
-			execute_table->cmd_array[i] = get_cmd_array(cmd_array, token_array, start, stop);
-			execute_table->infiles[i] = get_infile(cmd_array, token_array, start, stop);
-			execute_table->infile_type[i] = get_infile_type(cmd_array, token_array, start, stop);
-			execute_table->outfiles[i] = get_outfile(cmd_array, token_array, start, stop);
-			execute_table->outfile_type[i] = get_outfile_type(cmd_array, token_array, start, stop);
-			// printf("NUMBER[%d]\nCMD [%s], IN [%s], OUT[%s]\n\tIN_T [%s] OUT_T [%s]\n", i, execute_table->cmd_array[i], execute_table->infiles[i], execute_table->outfiles[i], execute_table->infile_type[i], execute_table->outfile_type[i]);
+			execute_table = init_execute_table(execute_table, cmd_array, start, stop, i);
 			i++;
 			start = stop;
 		}
 		stop++;
 	}
-	execute_table->cmd_array[i] = get_cmd_array(cmd_array, token_array, start, stop);
-	execute_table->infiles[i] = get_infile(cmd_array, token_array, start, stop);
-	execute_table->infile_type[i] = get_infile_type(cmd_array, token_array, start, stop);
 	execute_table->here_docs = get_here_doc_limiters(cmd_array);
-	execute_table->outfiles[i] = get_outfile(cmd_array, token_array, start, stop);
-	execute_table->outfile_type[i] = get_outfile_type(cmd_array, token_array, start, stop);
-	// printf("NUMBER[%d]\nCMD [%s], IN [%s], OUT[%s]\n\tIN_T [%s] OUT_T [%s]\n", i, execute_table->cmd_array[i], execute_table->infiles[i], execute_table->outfiles[i], execute_table->infile_type[i], execute_table->outfile_type[i]);
+	execute_table = init_execute_table(execute_table, cmd_array, start, stop, i);
 	return (execute_table);
 }
 
@@ -162,17 +174,16 @@ void	execute_pipeline(t_execute_table *execute_table, char **token_array)
 {
 	int	io_modifier[2];
 	int	i;
-	int	max;
 	char	**env;
 
 	env = get_env_arr(g_minishell.envp);
 	i = 0;
 	io_modifier[0] = get_infile_fd(execute_table, execute_table->infile_type[i], execute_table->infiles[i], STDIN_FILENO);
 	dup2(io_modifier[0], STDIN_FILENO);
-	i = -1;
-	while (++i < get_pipe_amount(token_array))
+	while (i < get_pipe_amount(token_array))
 	{
 		child_process(execute_table, env, i);
+		i++;
 	}
 	io_modifier[1] = get_outfile_fd(execute_table->outfile_type[i], execute_table->outfiles[i], STDOUT_FILENO);
 	dup2(io_modifier[1], STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 12:27:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 11:16:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /* TO DO:
 	- CATCH ^C AND ^\ | 🔮
 	- HANDLE QUOTATION TO PARSER | 🔮
-	- CHECK IF "> > || < <" OR "<< | >>" AND ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P
+	- CHECK IF "> > || < <" OR "<< | >>" ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P
+	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
 	- REPLACE CHAR **ENVIRON IN EXECUTE.C (HOW TO HANDLE ENVP LIST OR ARRAY?) | 🔮
 	- FIX UNSET | 🔮
 	- in heredoc when ^C quit whole thing | 🔮
@@ -23,7 +24,6 @@
 	- ADD $? | M
 	- SET ERROR STATUS AND EXIT CODES | M
 	- leaks | M
-	- to do is added to execute.c | M
 	- ADD ERROR HANDELING IN EXECVE | ✅
 	- echo | cat -e -> gives ^@$ should give $ | ✅
 	- cat /dev/urandom | ls | ✅
@@ -36,7 +36,7 @@
 	- free arr_correctly | NEW | 🔮
 	- change concept of start_execute !!! (env wont work if functions are called inside fork)
 	- LEAKS?? WHERE? | NEW |
-	- MORE SPACES BEFORE IO MODIFICATION
+	- MORE SPACES BEFORE IO MODIFICATION 
 	- echo hi | exit -> shoudl exit the pipe and not the programm
 	*/
 

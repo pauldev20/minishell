@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:26 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 16:32:15 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 11:18:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	get_outfile_fd(char *token, char *arr, int pipe)
 	int	fd;
 	int	i;
 
-	fd = pipe;
+	fd = STDOUT_FILENO;
 	if (!token || !arr)
-		return (fd);
-	if (str_is_equal(token, "GREAT"))
+		return (pipe);
+	else if (str_is_equal(token, "GREAT"))
 		fd = open(arr, O_WRONLY | O_CREAT | O_TRUNC, 00700);
 	else if (str_is_equal(token, "DGREAT"))
 		fd = open(arr, O_WRONLY | O_CREAT | O_APPEND, 00700);
@@ -47,10 +47,10 @@ int	get_infile_fd(t_execute_table *exe_table, char *token, char *arr, int pipe)
 	int	fd;
 	static int	here_doc;
 
-	fd = pipe;
+	fd = STDIN_FILENO;
 	if (!token || !arr)
-		return (fd);
-	if (str_is_equal(token, "LESS"))
+		return (pipe);
+	else if (str_is_equal(token, "LESS"))
 		fd = open(arr, O_RDONLY, 0777);
 	else if (str_is_equal(token, "DLESS"))
 	{

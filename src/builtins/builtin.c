@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/05 14:45:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 10:22:47 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	builtin_parser(char **argv, int argc, int pipe_amount)
 	if (ft_strncmp(*argv, "echo", 5) == 0)
 		fail = builtin_echo(argv + 1, argc - 1);
 	if (ft_strncmp(*argv, "exit", 5) == 0)
-		builtin_exit();
+		builtin_exit(ft_atoi(argv[0]));
 	if (ft_strncmp(*argv, "env", 4) == 0)
 		builtin_env();
 	if (ft_strncmp(*argv, "export", 7) == 0)

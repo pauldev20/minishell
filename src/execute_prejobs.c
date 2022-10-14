@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 13:27:18 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 11:26:04 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ char	**join_io_modifier(char **arr)
 				old_i++;
 			}
 			else if (arr[old_i][0] == '>' && arr[old_i + 1][0] == '>')
+			{
+				arr[new_i] = ft_strjoin(arr[old_i], ">");
+				old_i++;
+			}
+			else if (arr[old_i][0] == '<' && arr[old_i + 1][0] == '>')
 			{
 				arr[new_i] = ft_strjoin(arr[old_i], ">");
 				old_i++;

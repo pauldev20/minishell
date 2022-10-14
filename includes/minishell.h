@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 16:19:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 10:23:35 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		builtin_export(char	**argv, int argc);
 int		builtin_unset(char **argv, int argc);
 int		builtin_pwd(void);
 int		builtin_cd(char *path, int pipe_amount);
-void	builtin_exit(void);
+void	builtin_exit(int exit_code);
 
 char	**parse_input(char *input);
 

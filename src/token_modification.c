@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:22:32 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/13 12:07:24 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 11:32:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,27 @@ char	**get_token_array(char **arr)
 	{
 		if (arr[i][0] == '|')
 			tokens[i] = ft_strdup("PIPE");
-		else if (arr[i][0] == '<')
-		{
-			if (arr[i][1] == '<')
-				tokens[i] = ft_strdup("DLESS");
-			else
-				tokens[i] = ft_strdup("LESS");
-		}
-		else if (arr[i][0] == '>')
-		{
-			if (arr[i][1] == '>')
-				tokens[i] = ft_strdup("DGREAT");
-			else
-				tokens[i] = ft_strdup("GREAT");
-		}
+		else if (str_is_equal(arr[i], "<"))
+			tokens[i] = ft_strdup("LESS");
+		else if (str_is_equal(arr[i], "<<"))
+			tokens[i] = ft_strdup("DLESS");
+		else if (str_is_equal(arr[i], "<>"))
+			tokens[i] = ft_strdup("WEIRDIO");
+		else if (str_is_equal(arr[i], ">"))
+			tokens[i] = ft_strdup("GREAT");
+		else if (str_is_equal(arr[i], ">>"))
+			tokens[i] = ft_strdup("DGREAT");
 		else if (i > 0 && (str_is_equal(tokens[i -1], "LESS") || str_is_equal(tokens[i -1], "DLESS")))
 			tokens[i] = ft_strdup("INFILE");
 		else if (i > 0 && (str_is_equal(tokens[i -1], "GREAT") || str_is_equal(tokens[i -1], "DGREAT")))
 			tokens[i] = ft_strdup("OUTFILE");
+		else if (i > 0 && (str_is_equal(tokens[i -1], "WEIRDIO")))
+			tokens[i] = ft_strdup("WEIRDFILE");
 		else
 			tokens[i] = ft_strdup("WORD");
 		i++;
 	}
+	print_arr(tokens);
 	tokens[i] = NULL;
 	return (tokens);
 }
