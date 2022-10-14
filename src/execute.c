@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 15:57:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:13:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,37 @@ int	execute_pipeline(t_execute_table *execute_table, char **token_array)
 }
 
 /*	"MAIN" RETURNS ERRORS ETC. */
+
+char	**check_for_unset(char **cmd_array)
+{
+	int	i;
+	int offset;
+	int len;
+	offset = 0;
+	i = 0;
+	len = 0;
+	while (cmd_array[len] != NULL)
+		len++;
+	while (cmd_array[i] != NULL)
+	{
+		if (str_is_equal(cmd_array[i], "unset"))
+		{
+			builtin_parser(cmd_array + i, 2, 0);
+			offset += 2;
+		}
+		cmd_array[i] = cmd_array[i + offset];
+		i++;
+	}
+	printf("TEST\n");
+	while (i < len)
+	{
+		cmd_array[i] = NULL;
+		i++;
+	}
+	return (cmd_array);
+	
+}
+
 int	start_execute(char **cmd_arr)
 {
 	pid_t			id;
@@ -199,6 +230,9 @@ int	start_execute(char **cmd_arr)
 	int 			status;
 
 	g_minishell.executing = 1;
+	print_arr(cmd_arr);
+	cmd_arr = check_for_unset(cmd_arr);
+	print_arr(cmd_arr);
 	id = fork();
 	status = 0;
 	if (id == 0)
