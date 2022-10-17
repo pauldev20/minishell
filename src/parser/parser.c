@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/11 00:22:14 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/17 14:59:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,15 @@ char	**parse_input(char *input)
 	c = 0;
 	while (splitted[c] != NULL)
 	{
+		if (str_is_equal(splitted[0], "exit"))
+		{
+			if (splitted[1] == NULL)
+				builtin_exit("0");
+			else
+				builtin_exit(splitted[1]);				
+		}
 		splitted[c] = expand_vars(splitted[c]);
 		c++;
 	}
-	c = 0;
-	while (splitted[c])
-		if (ft_strnstr(splitted[c++], "exit", 5))
-			exit(0); // wrong exit!!!
 	return (splitted);
 }

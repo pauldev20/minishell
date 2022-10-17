@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 15:00:39 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:59:30 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,20 @@ typedef struct s_execute_table
 
 typedef struct s_minishell
 {
-	t_env	*envp;
-	char	**cmd_array;
-	int		sigint;
-	int		executing;
+	t_env		*envp;
+	char		**cmd_array;
+	int			sigint;
+	int			exit_code;
+	int			executing;
 }	t_minishell;
 
 t_minishell		g_minishell;
 
 enum	e_minishell_errors {
-	QUOTE = 1
+	QUOTE = 1,
+	BAD_FILE = 2,
+	EXECUTE_ERROR = 3,
+	CD = 4
 };
 
 void	print_arr(char **arr);
@@ -71,7 +75,7 @@ int		builtin_export(char	**argv, int argc);
 int		builtin_unset(char **argv, int argc);
 int		builtin_pwd(void);
 int		builtin_cd(char *path, int pipe_amount);
-int		builtin_exit(int exit_code);
+int		builtin_exit(char *exit_code);
 
 char	**parse_input(char *input);
 

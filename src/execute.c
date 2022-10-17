@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 16:13:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:37:47 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,6 @@ char	**check_for_unset(char **cmd_array)
 		cmd_array[i] = cmd_array[i + offset];
 		i++;
 	}
-	printf("TEST\n");
 	while (i < len)
 	{
 		cmd_array[i] = NULL;
@@ -230,9 +229,7 @@ int	start_execute(char **cmd_arr)
 	int 			status;
 
 	g_minishell.executing = 1;
-	print_arr(cmd_arr);
-	cmd_arr = check_for_unset(cmd_arr);
-	print_arr(cmd_arr);
+	// cmd_arr = check_for_unset(cmd_arr);
 	id = fork();
 	status = 0;
 	if (id == 0)
@@ -244,12 +241,13 @@ int	start_execute(char **cmd_arr)
 			exit(127);
 		token_array = get_token_array(cmd_arr);
 		execute_table = get_execute_table(token_array, cmd_arr);
-		status = execute_pipeline(execute_table, token_array);
+		execute_pipeline(execute_table, token_array);
 	}
 	else
 	{
 		waitpid(id, &status, 0);
 		g_minishell.executing = 0;
+		g_minishell.exit_code = (status >> 8) & 0x000000ff;
 		return ((status >> 8) & 0x000000ff);
 	}
 	return (EXIT_SUCCESS);

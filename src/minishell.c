@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 20:47:00 by max              ###   ########.fr       */
+/*   Updated: 2022/10/17 14:46:30 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 /* TO DO:
 	- CHECK IF "> > || < <" OR "<< | >>" ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P
 	- SEE /tests/cmds/mand/1_builtins.sh line 28 to line 42
-	- wunder dich nicht der Tester sah auf den schul macs deutlich besser aus :D
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
+	- MORE SPACES BEFORE IO MODIFICATION e.g. "<             src/main.c cat"        
 	- in heredoc when ^D no output + leaks | P
-	- ADD $? | M
-	- SET ERROR STATUS AND EXIT CODES | M
-	- leaks | M
-	- global error code | NEW | 
-	- call correct exit | NEW | 
-	- change concept of start_execute !!! (env wont work if functions are called inside fork)
-	- LEAKS?? WHERE? | NEW |
-	- MORE SPACES BEFORE IO MODIFICATION 
-	- echo hi | exit -> shoudl exit the pipe and not the programm
+	- when ^C just display a new line and dont show ^C also | P
+	- when ^C throws more than one new line sometimes | P
+	- "echo -nnnnnn" or "echo -n -n -n -n -n -n" should be seen as one flag but "echo hello -n" shouldnt be handled as a flag | P
+	- " \ " should not be displayed | P
+	
+	- "cat src/main.c" should be handled as a string and not as cmd + arg | P
+	
+	- handle unset and expand | M
+	- LEAKS?? WHERE? | NEW | M
 	*/
 
 static int	if_chars(char *str)

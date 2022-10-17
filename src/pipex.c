@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 15:53:51 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:36:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ char	*find_path(char *cmd)
 		free(paths[i]);
 	free(paths);
 	return (0);
-}
-
-/* A simple error displaying function. */
-void	error(int error_code)
-{
-	perror("\033[31mminishell");
-	exit(error_code);
 }
 
 /* A simple function to cut the cmd array in the right amount neede*/
@@ -95,10 +88,10 @@ int	execute(char **cmd, char **envp)
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		error(127);
+		print_error(3, NULL, 127);
 	}
 	if (execve(path, cmd, envp) == -1)
-		error (127);
+		print_error(3, NULL, 127);
 	return (127);
 }
 
@@ -109,14 +102,13 @@ int	child_process(t_execute_table *execute_table, char **envp, int i)
 	int		in_out[2];
 
 	if (pipe(fd) == -1)
-		error(127);
+		print_error(3, NULL, 127);
 	pid = fork();
 	if (pid == -1)
-		error(127);
+		print_error(3, NULL, 127);
 	if (pid == 0)
 	{
 		close(fd[0]);
-		// printf("TYPE [%s] OUT [%s]\n", execute_table->outfile_type[i], execute_table->outfiles[i]);
 		in_out[0] = get_outfile_fd(execute_table->outfile_type[i], execute_table->outfiles[i], fd[1]);
 		dup2(in_out[0], STDOUT_FILENO);
 		return (execute(ft_split(execute_table->cmd_array[i], ' '), envp));
@@ -124,8 +116,7 @@ int	child_process(t_execute_table *execute_table, char **envp, int i)
 	else
 	{
 		close(fd[1]);
-		// printf("TYPE [%s] IN [%s]\n", execute_table->infile_type[i], execute_table->infiles[i]);
-		in_out[1] = get_infile_fd(execute_table, execute_table->infile_type[i], execute_table->infiles[i], fd[0]);
+		in_out[1] = get_infile_fd(execute_table, execute_table->infile_type[i + 1], execute_table->infiles[i + 1], fd[0]);
 		dup2(in_out[1], STDIN_FILENO);
 		close(fd[0]);
 	}

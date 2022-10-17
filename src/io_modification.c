@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:26 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 15:39:41 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/17 10:00:27 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	get_outfile_fd(char *token, char *arr, int pipe)
 		fd = open(arr, O_WRONLY | O_CREAT | O_TRUNC, 00700);
 	else if (str_is_equal(token, "DGREAT"))
 		fd = open(arr, O_WRONLY | O_CREAT | O_APPEND, 00700);
+	if (fd == -1)
+		print_error(2, NULL, 1);
 	return (fd);
 }
 
@@ -60,7 +62,11 @@ int	get_infile_fd(t_execute_table *exe_table, char *token, char *arr, int pipe)
 			here_doc = 1;
 		}
 		fd = open("/tmp/here_doc", O_RDONLY, 0777);
+		if (fd == -1)
+			print_error(2, NULL, 0);
 		return (fd);
 	}
+	if (fd == -1)
+		print_error(2, NULL, 1);
 	return (fd);
 }
