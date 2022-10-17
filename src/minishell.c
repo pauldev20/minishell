@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/17 14:46:30 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:11:06 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 	- when ^C throws more than one new line sometimes | P
 	- "echo -nnnnnn" or "echo -n -n -n -n -n -n" should be seen as one flag but "echo hello -n" shouldnt be handled as a flag | P
 	- " \ " should not be displayed | P
-	
 	- "cat src/main.c" should be handled as a string and not as cmd + arg | P
-	
+	- add "$PWD/xyz" to expander | M
+	- change quotation handeling in expander | M
+	- fix set path in finding ./ls or .ls
 	- handle unset and expand | M
 	- LEAKS?? WHERE? | NEW | M
 	*/
