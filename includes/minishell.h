@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 14:06:58 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:16:36 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,12 @@ void	handle_signal(int sig);
 int		start_execute(char **arr);
 int		get_pipe_amount(char **tokens);
 char	**cut_start_stop(char **cmd, int start_stop[2]);
+
+// EXECUTE PREJOBS
 char	**execute_prejobs(char **arr);
+char	*join_ios(char **arr, int *old_i);
+bool	syntax_pipe_error(char **tokens, int i);
+bool	syntax_io_error(char **tokens, int i);
 
 // IO MODIFICATION
 int		get_infile_fd(t_execute_table *exe_table, char *token, char *arr, int pipe);
