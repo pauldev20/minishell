@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 13:17:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:50:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ bool	is_own_builtin(char **cmd)
 
 int	execute_own_builtin(char **cmd)
 {
-	char	*path;
 	int		i;
 	int		pipe_amount;
 

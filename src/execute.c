@@ -6,27 +6,11 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 11:48:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:50:15 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	get_start(char	**tokens, int start, int stop)
-{
-	if (stop != 0)
-		start = stop + 1;
-	return (start);
-}
-
-int	get_stop(char **tokens, int stop, int start)
-{
-	if (stop != 0)
-		stop++;
-	while (tokens[stop] != NULL && ft_strnstr(tokens[stop], "PIPE", 4) == NULL)
-		stop++;
-	return (stop);
-}
 
 char	*get_cmd_array(char **cmd_array, char **token_array, int start, int stop)
 {
@@ -87,7 +71,7 @@ char	*get_outfile(char **cmd_array, char **token_array, int start, int stop)
 	return (outfile);
 }
 
-char	*get_infile_type(char **cmd_array, char **token_array, int start, int stop)
+char	*get_infile_type(char **token_array, int start, int stop)
 {
 	char	*infile;
 	
@@ -103,7 +87,7 @@ char	*get_infile_type(char **cmd_array, char **token_array, int start, int stop)
 	return (infile);
 }
 
-char	*get_outfile_type(char **cmd_array, char **token_array, int start, int stop)
+char	*get_outfile_type(char **token_array, int start, int stop)
 {
 		char	*outfile;
 	
@@ -137,9 +121,9 @@ t_execute_table *init_execute_table(t_execute_table *execute_table, char **cmd_a
 	token_array = get_token_array(cmd_array);
 	execute_table->cmd_array[i] = get_cmd_array(cmd_array, token_array, start, stop);
 	execute_table->infiles[i] = get_infile(cmd_array, token_array, start, stop);
-	execute_table->infile_type[i] = get_infile_type(cmd_array, token_array, start, stop);
+	execute_table->infile_type[i] = get_infile_type(token_array, start, stop);
 	execute_table->outfiles[i] = get_outfile(cmd_array, token_array, start, stop);
-	execute_table->outfile_type[i] = get_outfile_type(cmd_array, token_array, start, stop);
+	execute_table->outfile_type[i] = get_outfile_type(token_array, start, stop);
 	return (execute_table);
 }
 

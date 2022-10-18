@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 15:38:46 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:51:38 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ bool	str_is_equal(char *str1, char *str2)
 	return (ft_strcmp(str1, str2) == 0);
 }
 
-void	here_doc_execute(t_execute_table *exe_table, char *limiter, char **arr)
+void	here_doc_execute(t_execute_table *exe_table)
 {
 	char	*line;
 	int		fd;

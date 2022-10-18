@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/17 14:59:30 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:51:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char	**get_token_array(char **arr);
 char	**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
-void	here_doc_execute(t_execute_table *exe_table, char *limiter, char **arr);
+void	here_doc_execute(t_execute_table *exe_table);
 char	**get_here_doc_limiters(char **arr);
 bool	str_is_equal(char *str1, char *str2);
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/10 11:18:58 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/18 13:44:56 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ LIBFT = libft/libft.a
 DOWNLOADFOLDER = dwnlds
 
 # compiler flags
-CFLAGS	= #-Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra
 
 # the compiler to be used
 CC	= cc
 
 INCLUDES = -I$(DOWNLOADFOLDER)/readline_out/include -Ilibft -Iincludes
-LDFLAGS = -L$(DOWNLOADFOLDER)/readline_out/lib -lreadline -Llibft -lft
+LDFLAGS = -L$(DOWNLOADFOLDER)/readline_out/lib -lreadline -Llibft -lft 
 
 # all the src/.c files that need to be compiled
 SRCS =	src/main.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:11:18 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/04 15:10:24 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/18 13:52:54 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	*free_arr(char **arr, int arr_count)
 	return (NULL);
 }
 
-static char	**fill_array(char *s, int words, char del, char **arr)
+static char	**fill_array(char *s, char del, char **arr)
 {
 	int		i[4];
 	char	*word_start;
@@ -51,7 +51,7 @@ static char	**fill_array(char *s, int words, char del, char **arr)
 	i[2] = 0;
 	i[3] = 0;
 	word_start = NULL;
-	while (i[3] <= ft_strlen(s))
+	while (i[3] <= (int)ft_strlen(s))
 	{
 		if (s[i[3]] != del && !word_start && !i[1] && !i[2])
 			word_start = s + i[3];
@@ -84,7 +84,7 @@ char	**lexer(char const *s, char c)
 	if (!arr)
 		return (NULL);
 	arr[words] = NULL;
-	if (!fill_array((char *)s, words, c, arr))
+	if (!fill_array((char *)s, c, arr))
 		return (NULL);
 	return (arr);
 }

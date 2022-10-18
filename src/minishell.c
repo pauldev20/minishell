@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 13:16:12 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:49:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@
 	- LEAKS?? WHERE? | NEW | M
 	*/
 
-static int	if_chars(char *str)
-{
-	int	chars;
+// static int	if_chars(char *str)
+// {
+// 	int	chars;
 
-	chars = 0;
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		if (*str <= 124 && *str >= 33)
-			chars++;
-		str++;
-	}
-	return (chars > 0);
-}
+// 	chars = 0;
+// 	if (!str)
+// 		return (0);
+// 	while (*str)
+// 	{
+// 		if (*str <= 124 && *str >= 33)
+// 			chars++;
+// 		str++;
+// 	}
+// 	return (chars > 0);
+// }
 
 static void	init_env(char **argv)
 {

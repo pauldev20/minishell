@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 13:21:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:53:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_key_len(char *str)
 
 char	*get_new_str(char *str)
 {
-	int		key_len;
+	size_t	key_len;
 	char	*key;
 	t_env	*envvar;
 	
@@ -53,11 +53,9 @@ char	*expand_vars(char *str)
 	int		i;
 	int		doubleq;
 	int		singleq;
-	char	*to_replace;
 	char	*out;
 	char	*new;
 	char	*old;
-	t_env	*envvar;
 
 	i = 0;
 	doubleq = 0;
