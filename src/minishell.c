@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 13:49:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:22:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 	- "          " throws parsign error but should display new line | P
 	- in heredoc when ^D no output + leaks | P
 	- when ^C just display a new line and dont show ^C also | P
-	- when ^C throws more than one new line sometimes | P
+	- when ^C throws more than one new line sometimes | P -> sorry my bad habe in der minishell ./minishell gemacht <:D
 	- "echo -nnnnnn" or "echo -n -n -n -n -n -n" should be seen as one flag but "echo hello -n" shouldnt be handled as a flag | P
 	- " \ " should not be displayed | P
 	- "cat src/main.c" should be handled as a string and not as cmd + arg | P
