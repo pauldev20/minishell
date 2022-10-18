@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 13:51:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:06:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ enum	e_minishell_errors {
 	QUOTE = 1,
 	BAD_FILE = 2,
 	EXECUTE_ERROR = 3,
-	CD = 4
+	CD = 4,
+	SYNTAX_PIPE = 5,
+	SYNTAX_IO = 6
 };
 
 void	print_arr(char **arr);

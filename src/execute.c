@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 13:50:15 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:42:06 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_outfile(char **cmd_array, char **token_array, int start, int stop)
 	{
 		if (str_is_equal(token_array[start], "OUTFILE"))
 		{
-			create = open(cmd_array[start], O_WRONLY | O_CREAT | O_TRUNC, 00700);
+			create = open(cmd_array[start], O_WRONLY | O_CREAT , 00700);
 			outfile = ft_strdup(cmd_array[start]);
 			close(create);
 		}

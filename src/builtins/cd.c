@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 11:20:10 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/17 14:51:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:55:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	builtin_cd(char *path, int pipe_amount)
 	if (chdir_success == -1)
 		print_error(4, NULL, 0);
 	if (pipe_amount > 0)
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
