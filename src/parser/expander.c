@@ -6,17 +6,11 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 11:29:33 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:21:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*catch_questionmark(char *str)
-{
-	write(1, ft_itoa(g_minishell.exit_code), ft_strlen(ft_itoa(g_minishell.exit_code)));
-	return (NULL);
-}
 
 int	get_key_len(char *str)
 {
@@ -90,7 +84,7 @@ char	*expand_vars(char *str)
 				if (str[i] == 0)
 					return (ft_strdup("$"));
 				if (str[i] == '?')
-					return (catch_questionmark(str));
+					return (ft_itoa(g_minishell.exit_code));
 				new = get_new_str(str + i);
 				if (new)
 					out = ft_strjoin(out, new);
