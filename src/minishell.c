@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 11:53:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:16:12 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 	- CHECK IF "> > || < <" OR "<< | >>" ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P
 	- SEE /tests/cmds/mand/1_builtins.sh line 28 to line 42
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
-	- MORE SPACES BEFORE IO MODIFICATION e.g. "<             src/main.c cat"        
+	- MORE SPACES BEFORE IO MODIFICATION e.g. "<             src/main.c cat" | P
+	- "          " throws parsign error but should display new line | P
 	- in heredoc when ^D no output + leaks | P
 	- when ^C just display a new line and dont show ^C also | P
 	- when ^C throws more than one new line sometimes | P
