@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:56:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:59:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 	- in heredoc when ^D no output + leaks | P
 	- when ^C just display a new line and dont show ^C also | P
 	- "cat src/main.c" should be handled as a string and not as cmd + arg | P
+	- if "unset LANG(just an example)" env doenst work anymore but if we export X=abc and then unset X everything works
 	- when ^C throws more than one new line sometimes | P -> sorry my bad habe in der minishell ./minishell gemacht :D
 	- add "$PWD/xyz" to expander | M
 	- fix set path in finding ./ls or .ls | M
