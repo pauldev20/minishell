@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 15:16:36 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:02:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_env
 	char			*value;
 }	t_env;
 
-typedef struct s_execute_table
+typedef struct s_exetable
 {
 	char		**cmd_array;
 	char		**infiles;
@@ -42,7 +42,7 @@ typedef struct s_execute_table
 	char		**here_docs;
 	char		**outfiles;
 	char		**outfile_type;
-}	t_execute_table;
+}	t_exetable;
 
 typedef struct s_minishell
 {
@@ -64,93 +64,105 @@ enum	e_minishell_errors {
 	SYNTAX_IO = 6
 };
 
-void	print_arr(char **arr);
+void		print_arr(char **arr);
 
-int		minishell(int argc, char **argv, char **envp);
-char	**arr_dup(char **enviroment);
+int			minishell(int argc, char **argv, char **envp);
+char		**arr_dup(char **enviroment);
 
 // BUILTINS
-int		builtin_parser(char **argv, int argc, int pipe_amount);
-int		builtin_echo(char **argv, int argc);
-void	builtin_env(void);
-int		builtin_export(char	**argv, int argc);
-int		builtin_unset(char **argv, int argc);
-int		builtin_pwd(void);
-int		builtin_cd(char *path, int pipe_amount);
-int		builtin_exit(char *exit_code);
+int			builtin_parser(char **argv, int argc, int pipe_amount);
+int			builtin_echo(char **argv, int argc);
+void		builtin_env(void);
+int			builtin_export(char	**argv, int argc);
+int			builtin_unset(char **argv, int argc);
+int			builtin_pwd(void);
+int			builtin_cd(char *path, int pipe_amount);
+int			builtin_exit(char *exit_code);
 
-char	**parse_input(char *input);
+char		**parse_input(char *input);
 
-void	*print_error(int errtype, char *params, int err);
+void		*print_error(int errtype, char *params, int err);
 
 // ENV
-char	**get_env_arr(t_env *list);
-void	add_back(t_env **env, t_env *new);
-t_env	*get_last(t_env *env);
-void	add_at_index(t_env **list, t_env *el, int index);
-void	remove_at_index(t_env **list, int index);
-void	free_array(char	**array);
-t_env	*parse_array_to_env(char **env, t_env *minienviro);
-void	print_env(t_env	*env);
-t_env	*get_env_var(t_env *env, char *key);
-int		in_list(t_env *env, char *key);
-int		set_env_var(t_env **env, char *key, char *value);
+char		**get_env_arr(t_env *list);
+void		add_back(t_env **env, t_env *new);
+t_env		*get_last(t_env *env);
+void		add_at_index(t_env **list, t_env *el, int index);
+void		remove_at_index(t_env **list, int index);
+void		free_array(char	**array);
+t_env		*parse_array_to_env(char **env, t_env *minienviro);
+void		print_env(t_env	*env);
+t_env		*get_env_var(t_env *env, char *key);
+int			in_list(t_env *env, char *key);
+int			set_env_var(t_env **env, char *key, char *value);
 
-char	**lexer(char const *s, char c);
-void	**pipe_expander(char ***arr);
-void	*free_arr(char **arr, int arr_count);
+char		**lexer(char const *s, char c);
+void		**pipe_expander(char ***arr);
+void		*free_arr(char **arr, int arr_count);
 
 // EXPANDER
-int		ft_word_len(char *str);
-bool	check_dquotes(char *str);
-bool	squotes_first(char *str, int limit);
-bool	check_squotes(char *str);
-char	*expand_vars(char *str);
+int			ft_word_len(char *str);
+bool		check_dquotes(char *str);
+bool		squotes_first(char *str, int limit);
+bool		check_squotes(char *str);
+char		*expand_vars(char *str);
 
 // PROMT
-char	*get_prompt(t_env *usr, t_env *pwd, t_env *home);
+char		*get_prompt(t_env *usr, t_env *pwd, t_env *home);
 
 // SIGNAL
-void	handle_signal(int sig);
+void		handle_signal(int sig);
 
 // EXECUTE
-int		start_execute(char **arr);
-int		get_pipe_amount(char **tokens);
-char	**cut_start_stop(char **cmd, int start_stop[2]);
+int			start_execute(char **arr);
+int			get_pipe_amount(char **tokens);
+char		**cut_start_stop(char **cmd, int start_stop[2]);
+
+// EXECUTE INITS
+t_exetable	*memory_allocation_arrays(t_exetable *exetable, char **tokens);
+t_exetable	*init_exetable(t_exetable *exetable, char **cmd_array, int st_st[2], int i);
+t_exetable	*get_exetable(char **token_array, char **cmd_array);
+char		*get_cmd_array(char **cmds, char **tokens, int start, int stop);
 
 // EXECUTE PREJOBS
-char	**execute_prejobs(char **arr);
-char	*join_ios(char **arr, int *old_i);
-bool	syntax_pipe_error(char **tokens, int i);
-bool	syntax_io_error(char **tokens, int i);
+char		**execute_prejobs(char **arr);
+char		*join_ios(char **arr, int *old_i);
+bool		syntax_pipe_error(char **tokens, int i);
+bool		syntax_io_error(char **tokens, int i);
+
+// IO INIT
+char		*get_infile(char **cmd_array, char **token_array, int start, int stop);
+char		*get_outfile(char **cmd_array, char **token_array, int start, int stop);
+char		*get_infile_type(char **token_array, int start, int stop);
+char		*get_outfile_type(char **token_array, int start, int stop);
 
 // IO MODIFICATION
-int		get_infile_fd(t_execute_table *exe_table, char *token, char *arr, int pipe);
-int		get_outfile_fd(char *token, char *arr, int pipe);
-bool	is_output_redirector(char *str);
-bool	is_input_redirector(char *str);
+int			get_infile_fd(t_exetable *exe_table, char *token, char *arr, int pipe);
+int			get_outfile_fd(char *token, char *arr, int pipe);
+bool		is_output_redirector(char *str);
+bool		is_input_redirector(char *str);
 
 // TOKEN MODIFICATION
-char	**join_io_modifier(char **arr);
-int		get_pipe_amount(char **tokens);
-char	**get_token_array(char **arr);
-char	**delete_io(char **arr, char **tokens, int *fd);
+char		**join_io_modifier(char **arr);
+int			get_pipe_amount(char **tokens);
+char		**get_token_array(char **arr);
+char		**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
-void	here_doc_execute(t_execute_table *exe_table);
-char	**get_here_doc_limiters(char **arr);
-bool	str_is_equal(char *str1, char *str2);
+void		here_doc_execute(t_exetable *exe_table);
+char		**get_here_doc_limiters(char **arr);
+bool		str_is_equal(char *str1, char *str2);
 
 // BUILTIN EXECUTER
-bool	is_own_builtin(char **cmd);
-int		execute_own_builtin(char **cmd);
+bool		is_own_builtin(char **cmd);
+int			execute_own_builtin(char **cmd);
 
 // PIPEX
-int		child_process(t_execute_table *execute_table, char **envp, int i);
-int		execute(char **cmd, char **envp);
+int			child_process(t_exetable *execute_table, char **envp, int i);
+int			execute(char **cmd, char **envp);
 
 // TTY
-char	*catch_tty(char *prompt);
-char	*get_terminal_line(int fd);
+char		*catch_tty(char *prompt);
+char		*get_terminal_line(int fd);
 
 #endif

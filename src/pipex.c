@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 11:49:54 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:16:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	execute(char **cmd, char **envp)
 	return (127);
 }
 
-int	child_process(t_execute_table *execute_table, char **envp, int i)
+int	child_process(t_exetable *execute_table, char **envp, int i)
 {
 	pid_t	pid;
 	int		fd[2];
