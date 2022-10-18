@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:02:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:34:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ typedef struct s_env
 	char			*value;
 }	t_env;
 
-typedef struct s_exetable
+typedef struct s_cmd_table
 {
 	char		**cmd_array;
-	char		**infiles;
-	char		**infile_type;
+	char		**in;
+	char		**in_type;
 	char		**here_docs;
-	char		**outfiles;
-	char		**outfile_type;
-}	t_exetable;
+	char		**out;
+	char		**out_type;
+}	t_ct;
 
 typedef struct s_minishell
 {
@@ -119,9 +119,9 @@ int			get_pipe_amount(char **tokens);
 char		**cut_start_stop(char **cmd, int start_stop[2]);
 
 // EXECUTE INITS
-t_exetable	*memory_allocation_arrays(t_exetable *exetable, char **tokens);
-t_exetable	*init_exetable(t_exetable *exetable, char **cmd_array, int st_st[2], int i);
-t_exetable	*get_exetable(char **token_array, char **cmd_array);
+t_ct		*memory_allocation_arrays(t_ct *exetable, char **tokens);
+t_ct		*init_cmd_table(t_ct *exetable, char **cmd_array, int st_st[2], int i);
+t_ct		*get_cmd_table(char **token_array, char **cmd_array);
 char		*get_cmd_array(char **cmds, char **tokens, int start, int stop);
 
 // EXECUTE PREJOBS
@@ -137,7 +137,7 @@ char		*get_infile_type(char **token_array, int start, int stop);
 char		*get_outfile_type(char **token_array, int start, int stop);
 
 // IO MODIFICATION
-int			get_infile_fd(t_exetable *exe_table, char *token, char *arr, int pipe);
+int			get_infile_fd(t_ct *exe_table, char *token, char *arr, int pipe);
 int			get_outfile_fd(char *token, char *arr, int pipe);
 bool		is_output_redirector(char *str);
 bool		is_input_redirector(char *str);
@@ -149,7 +149,7 @@ char		**get_token_array(char **arr);
 char		**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
-void		here_doc_execute(t_exetable *exe_table);
+void		here_doc_execute(t_ct *exe_table);
 char		**get_here_doc_limiters(char **arr);
 bool		str_is_equal(char *str1, char *str2);
 
@@ -158,7 +158,7 @@ bool		is_own_builtin(char **cmd);
 int			execute_own_builtin(char **cmd);
 
 // PIPEX
-int			child_process(t_exetable *execute_table, char **envp, int i);
+int			child_process(t_ct *execute_table, char **envp, int i);
 int			execute(char **cmd, char **envp);
 
 // TTY

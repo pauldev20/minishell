@@ -6,13 +6,13 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:19:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:36:47 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_pipeline(t_exetable *exetable, char **token_array)
+int	execute_pipeline(t_ct *exetable, char **token_array)
 {
 	int		io_modifier[2];
 	int		i;
@@ -20,16 +20,16 @@ int	execute_pipeline(t_exetable *exetable, char **token_array)
 
 	env = get_env_arr(g_minishell.envp);
 	i = 0;
-	io_modifier[0] = get_infile_fd(exetable, exetable->infile_type[i],
-			exetable->infiles[i], 0);
+	io_modifier[0] = get_infile_fd(exetable, exetable->in_type[i],
+			exetable->in[i], 0);
 	dup2(io_modifier[0], STDIN_FILENO);
 	while (i < get_pipe_amount(token_array))
 	{
 		child_process(exetable, env, i);
 		i++;
 	}
-	io_modifier[1] = get_outfile_fd(exetable->outfile_type[i],
-			exetable->outfiles[i], 1);
+	io_modifier[1] = get_outfile_fd(exetable->out_type[i],
+			exetable->out[i], 1);
 	dup2(io_modifier[1], STDOUT_FILENO);
 	return (execute(ft_split(exetable->cmd_array[i], ' '), env));
 }
@@ -67,7 +67,7 @@ char	**check_for_builtins(char **cmds)
 int	start_execute(char **cmd_arr)
 {
 	pid_t			id;
-	t_exetable		*exetable;
+	t_ct			*cmd_table;
 	char			**token_array;
 	int				status;
 
@@ -79,8 +79,8 @@ int	start_execute(char **cmd_arr)
 	{
 		cmd_arr = execute_prejobs(cmd_arr);
 		token_array = get_token_array(cmd_arr);
-		exetable = get_exetable(token_array, cmd_arr);
-		execute_pipeline(exetable, token_array);
+		cmd_table = get_cmd_table(token_array, cmd_arr);
+		execute_pipeline(cmd_table, token_array);
 	}
 	else
 	{

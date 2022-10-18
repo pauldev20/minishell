@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:16:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:30:01 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ int	execute(char **cmd, char **envp)
 
 	i = -1;
 	if (is_own_builtin(cmd))
-	{
-		// execute_own_builtin(cmd);
 		return (execute_own_builtin(cmd));
-	}
 	if (access(cmd[0], X_OK | F_OK) == -1)
 		path = find_path(cmd[0]);
 	else
@@ -95,7 +92,7 @@ int	execute(char **cmd, char **envp)
 	return (127);
 }
 
-int	child_process(t_exetable *execute_table, char **envp, int i)
+int	child_process(t_ct *cmdt, char **envp, int i)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -109,14 +106,15 @@ int	child_process(t_exetable *execute_table, char **envp, int i)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		in_out[0] = get_outfile_fd(execute_table->outfile_type[i], execute_table->outfiles[i], fd[1]);
+		in_out[0] = get_outfile_fd(cmdt->out_type[i], cmdt->out[i], fd[1]);
 		dup2(in_out[0], STDOUT_FILENO);
-		return (execute(ft_split(execute_table->cmd_array[i], ' '), envp));
+		return (execute(ft_split(cmdt->cmd_array[i], ' '), envp));
 	}
 	else
 	{
 		close(fd[1]);
-		in_out[1] = get_infile_fd(execute_table, execute_table->infile_type[i + 1], execute_table->infiles[i + 1], fd[0]);
+		i++;
+		in_out[1] = get_infile_fd(cmdt, cmdt->in_type[i], cmdt->in[i], fd[0]);
 		dup2(in_out[1], STDIN_FILENO);
 		close(fd[0]);
 	}

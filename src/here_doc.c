@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:16:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:31:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,14 @@ char	**duplicate_arr(char **arr)
 
 int	ft_strcmp(char *str1, char *str2)
 {
-	while(*str1)
+	while (*str1)
 	{
 		if (*str1 != *str2)
 			return ((unsigned int)*str2 - (unsigned int)*str1);
 		str1++;
 		str2++;
 	}
-	return ((unsigned int)*str2 - (unsigned int)*str1);
-	
+	return ((unsigned int)*str2 - (unsigned int)*str1);	
 }
 
 bool	str_is_equal(char *str1, char *str2)
@@ -96,7 +95,7 @@ bool	str_is_equal(char *str1, char *str2)
 	return (ft_strcmp(str1, str2) == 0);
 }
 
-void	here_doc_execute(t_exetable *exe_table)
+void	here_doc_execute(t_ct *exe_table)
 {
 	char	*line;
 	int		fd;

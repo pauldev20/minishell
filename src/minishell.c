@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 15:22:21 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:23:47 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	minishell(int argc, char **argv, char **envp)
 	char	*cache[2];
 	char	**cmd_array;
 	int		ret;
-	
+
 	ret = 1;
 	(void)argc;
 	g_minishell.envp = NULL;
@@ -83,13 +83,12 @@ int	minishell(int argc, char **argv, char **envp)
 	g_minishell.sigint = 0;
 	init_env(argv);
 	signal(SIGINT, handle_signal);
-	// signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		cache[0] = get_prompt(
-			get_env_var(g_minishell.envp, "USER"),
-			get_env_var(g_minishell.envp, "PWD"),
-			get_env_var(g_minishell.envp, "HOME"));
+				get_env_var(g_minishell.envp, "USER"),
+				get_env_var(g_minishell.envp, "PWD"),
+				get_env_var(g_minishell.envp, "HOME"));
 		g_minishell.sigint = 0;
 		cache[1] = catch_tty(cache[0]);
 		if (cache[1] == NULL)
