@@ -6,15 +6,51 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/17 13:47:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 11:29:33 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*catch_questionmark(char	*str)
+char	*catch_questionmark(char *str)
 {
 	write(1, ft_itoa(g_minishell.exit_code), ft_strlen(ft_itoa(g_minishell.exit_code)));
+	return (NULL);
+}
+
+int	get_key_len(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len] != '\0' && str[len] != '/' && str[len] != '$' && str[len] != '\"')
+		len++;
+	return (len);
+}
+
+char	*get_new_str(char *str)
+{
+	int		key_len;
+	char	*key;
+	t_env	*envvar;
+	
+	key_len = get_key_len(str);
+	if (ft_strlen(str) > key_len)
+	{
+		key = ft_substr(str, 0, key_len);
+		str = ft_substr(str, key_len, ft_strlen(str));
+		envvar = get_env_var(g_minishell.envp, key);
+		if (envvar && (str[0] == '$' || str[0] == '\"'))
+			return (ft_strdup(envvar->value));
+		else if (envvar)
+			return (ft_strjoin(envvar->value, str));
+	}
+	else
+	{
+		envvar = get_env_var(g_minishell.envp, str);
+		if (envvar)
+			return (ft_strdup(ft_strdup(envvar->value)));
+	}
 	return (NULL);
 }
 
@@ -51,18 +87,15 @@ char	*expand_vars(char *str)
 			if (!singleq && str[i] == '$')
 			{
 				i++;
+				if (str[i] == 0)
+					return (ft_strdup("$"));
 				if (str[i] == '?')
 					return (catch_questionmark(str));
-				new = ft_substr(str + i, 0, ft_word_len(str + i));
-				envvar = get_env_var(g_minishell.envp, new);
-				old = out;
-				if (envvar)
-				{
-					out = ft_strjoin(out, envvar->value);
-					free(old);
-				}
-				i += ft_word_len(str + i) - 1;
+				new = get_new_str(str + i);
+				if (new)
+					out = ft_strjoin(out, new);
 				free(new);
+				i += ft_word_len(str + i) - 1;
 			}
 			else
 			{

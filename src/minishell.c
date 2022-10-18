@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/17 15:14:48 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 11:53:23 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 	- " \ " should not be displayed | P
 	- "cat src/main.c" should be handled as a string and not as cmd + arg | P
 	- add "$PWD/xyz" to expander | M
-	- change quotation handeling in expander | M
 	- fix set path in finding ./ls or .ls | M
 	- handle unset and expand | M
 	- LEAKS?? WHERE? | NEW | M

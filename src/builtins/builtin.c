@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/17 15:00:07 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/18 11:49:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	builtin_parser(char **argv, int argc, int pipe_amount)
 	int	fail;
 
 	if (ft_strncmp(*argv, "echo", 5) == 0)
-		return (builtin_echo(argv + 1, argc - 1));
+		exit (builtin_echo(argv + 1, argc - 1));
 	if (ft_strncmp(*argv, "exit", 5) == 0)
-		return (builtin_exit(argv[1]));
+		exit (builtin_exit(argv[1]));
 	if (ft_strncmp(*argv, "env", 4) == 0)
 		builtin_env();
 	if (ft_strncmp(*argv, "export", 7) == 0)
@@ -27,8 +27,8 @@ int	builtin_parser(char **argv, int argc, int pipe_amount)
 	if (ft_strncmp(*argv, "unset", 6) == 0)
 		return (builtin_unset(argv + 1, argc - 1));
 	if (ft_strncmp(*argv, "pwd\0", 4) == 0)
-		return (builtin_pwd());
+		exit (builtin_pwd());
 	if (ft_strncmp(*argv, "cd", 2) == 0)
 		return (builtin_cd(argv[1], pipe_amount));
-	return (255);
+	exit (255);
 }

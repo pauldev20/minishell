@@ -28,11 +28,6 @@ rm -f tmp_out
 /bin/echo 'echo 42' | cat <tmp_file
 rm -f tmp_file
 
-cat /dev/urandom | head -1 > tmp_out
-bash -c "[ -s tmp_out ] && echo nice"
-/bin/echo $?
-rm -f tmp_out
-
 cat /dev/urandom | head -1 | wc -l
 
 cat /dev/null | head -1
