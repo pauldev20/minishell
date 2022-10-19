@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 11:20:10 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/18 13:55:58 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:24:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	builtin_cd(char *path, int pipe_amount)
 	}
 	chdir_success = chdir(path);
 	if (chdir_success == -1)
-		print_error(4, NULL, 0);
+	{
+		ft_putstr_fd("\033[31mminishell: no such file or directory\n", 2);
+		return (4);
+	}
 	if (pipe_amount > 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
