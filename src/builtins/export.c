@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/14 14:27:06 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:49:02 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_array(char **array)
 	int	i;
 
 	i = 0;
+	if (array == NULL)
+		return ;
 	while (array[i])
 		free(array[i++]);
 	free(array);
