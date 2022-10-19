@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:35:49 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 10:57:54 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ t_ct	*get_cmd_table(char **token_array, char **cmd_array)
 	}
 	cmd_table->here_docs = get_here_doc_limiters(cmd_array);
 	cmd_table = init_cmd_table(cmd_table, cmd_array, st_st, i);
+	free_array(token_array);
 	return (cmd_table);
 }

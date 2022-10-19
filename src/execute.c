@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:36:47 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:13:25 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	execute_pipeline(t_ct *exetable, char **token_array)
 	io_modifier[1] = get_outfile_fd(exetable->out_type[i],
 			exetable->out[i], 1);
 	dup2(io_modifier[1], STDOUT_FILENO);
-	return (execute(ft_split(exetable->cmd_array[i], ' '), env));
+	free_array(token_array);
+	return (execute(ft_split(exetable->cmd_array[i], ' '), env, i));
 }
 
 /*	"MAIN" RETURNS ERRORS ETC. */
@@ -50,7 +51,7 @@ char	**check_for_builtins(char **cmds)
 	{
 		if (str_is_equal(cmds[i], "unset") || str_is_equal(cmds[i], "export"))
 		{
-			builtin_parser(cmds + i, 2, 0);
+			builtin_parser(cmds + i, 2, 0, 0);
 			offset += 2;
 		}
 		cmds[i] = cmds[i + offset];
@@ -64,11 +65,21 @@ char	**check_for_builtins(char **cmds)
 	return (cmds);
 }
 
+void	free_cmd_table(t_ct *cmd_table)
+{
+	free_array(cmd_table->cmd_array);
+	free_array(cmd_table->in);
+	free_array(cmd_table->in_type);
+	free_array(cmd_table->out);
+	free_array(cmd_table->out_type);
+	free_array(cmd_table->here_docs);
+	free(cmd_table);
+}
+
 int	start_execute(char **cmd_arr)
 {
 	pid_t			id;
 	t_ct			*cmd_table;
-	char			**token_array;
 	int				status;
 
 	g_minishell.executing = 1;
@@ -78,9 +89,10 @@ int	start_execute(char **cmd_arr)
 	if (id == 0)
 	{
 		cmd_arr = execute_prejobs(cmd_arr);
-		token_array = get_token_array(cmd_arr);
-		cmd_table = get_cmd_table(token_array, cmd_arr);
-		execute_pipeline(cmd_table, token_array);
+		cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);
+		execute_pipeline(cmd_table, get_token_array(cmd_arr));
+		// free_array(cmd_arr);
+		free_cmd_table(cmd_table);
 	}
 	else
 	{
