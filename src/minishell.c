@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:59:21 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 10:49:00 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,18 @@
 	- "echo -nnnnnn" or "echo -n -n -n -n -n -n" should be seen as one flag but "echo hello -n" shouldnt be handled as a flag | P
 	- " \ " should not be displayed | P
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
-	- MORE SPACES BEFORE IO MODIFICATION e.g. "<             src/main.c cat" | P
-	- "          " throws parsign error but should display new line | P
 	- in heredoc when ^D no output + leaks | P
 	- when ^C just display a new line and dont show ^C also | P
-	- "cat src/main.c" should be handled as a string and not as cmd + arg | P
-	- if "unset LANG(just an example)" env doenst work anymore but if we export X=abc and then unset X everything works
-	- when ^C throws more than one new line sometimes | P -> sorry my bad habe in der minishell ./minishell gemacht :D
-	- add "$PWD/xyz" to expander | M
 	- fix set path in finding ./ls or .ls | M
-	- handle unset and expand | M
-	- LEAKS?? WHERE? | M
+
+	________________________________________________________________________
+	FÜR DAS EVAL SHEET FEHLT:
+	- RICHTIGES HANDLING BEI QUOTES -> DER EXPANDER DELETED DIE QUOTES IMMER EGAL OB $ ODER NICHT
+	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR
+	- "CAT" UND DANN ^C ZEIGT 2 MAL DIE PROMPT AN
+	- EXPORT REPLACED KEINE VORHANDENEN ENVS SONDERN FÜGT NUR NEUE HINZU
+	- WENN MAN IRGENDEINE VORHANDENE ENV-VARIABLE UNSETTET WIRD DIESE GELÖSCHT ABER ES FUNKTIONIEREN KEINE COMMANDS MEHR DANACH
+	- LEAKS
 	*/
 
 static void	init_env(char **argv)

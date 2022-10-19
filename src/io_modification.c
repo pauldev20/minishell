@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:26 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:22:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 10:25:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	get_outfile_fd(char *token, char *arr, int pipe)
 	return (fd);
 }
 
-int	get_infile_fd(t_exetable *exe_table, char *token, char *arr, int pipe)
+int	get_infile_fd(t_ct *cmd_table, char *token, char *arr, int pipe)
 {
 	int			fd;
 	static int	here_doc;
@@ -57,7 +57,7 @@ int	get_infile_fd(t_exetable *exe_table, char *token, char *arr, int pipe)
 	{
 		if (here_doc == 0)
 		{
-			here_doc_execute(exe_table);
+			here_doc_execute(cmd_table);
 			here_doc = 1;
 		}
 		fd = open("/tmp/here_doc", O_RDONLY, 0777);
