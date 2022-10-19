@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/19 11:13:25 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:21:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	execute_pipeline(t_ct *exetable, char **token_array)
 			exetable->out[i], 1);
 	dup2(io_modifier[1], STDOUT_FILENO);
 	free_array(token_array);
-	return (execute(ft_split(exetable->cmd_array[i], ' '), env, i));
+	return (execute(ft_split(exetable->cmd_array[i], ' '), env));
 }
 
 /*	"MAIN" RETURNS ERRORS ETC. */
@@ -51,7 +51,7 @@ char	**check_for_builtins(char **cmds)
 	{
 		if (str_is_equal(cmds[i], "unset") || str_is_equal(cmds[i], "export"))
 		{
-			builtin_parser(cmds + i, 2, 0, 0);
+			builtin_parser(cmds + i, 2, 0);
 			offset += 2;
 		}
 		cmds[i] = cmds[i + offset];
@@ -91,7 +91,7 @@ int	start_execute(char **cmd_arr)
 		cmd_arr = execute_prejobs(cmd_arr);
 		cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);
 		execute_pipeline(cmd_table, get_token_array(cmd_arr));
-		// free_array(cmd_arr);
+		free_array(cmd_arr);
 		free_cmd_table(cmd_table);
 	}
 	else
