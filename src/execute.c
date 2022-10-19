@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/19 14:21:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:57:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,27 @@ int	execute_pipeline(t_ct *exetable, char **token_array)
 	return (execute(ft_split(exetable->cmd_array[i], ' '), env));
 }
 
+bool	is_last_cmd(char **cmd_arr)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_arr[i] != NULL)
+	{
+		if (str_is_equal(cmd_arr[i], "|"))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+char	**empty_arr(void)
+{
+	char	**arr;
+
+	arr = ft_calloc(1, sizeof(char));
+	return (arr);
+}
 /*	"MAIN" RETURNS ERRORS ETC. */
 char	**check_for_builtins(char **cmds)
 {
@@ -49,14 +70,22 @@ char	**check_for_builtins(char **cmds)
 		len++;
 	while (cmds[i] != NULL)
 	{
-		if (str_is_equal(cmds[i], "unset") || str_is_equal(cmds[i], "export"))
+		if (str_is_equal(cmds[i], "unset") || str_is_equal(cmds[i], "export") || str_is_equal(cmds[i], "cd"))
 		{
-			builtin_parser(cmds + i, 2, 0);
+			if (is_last_cmd(cmds + i))
+			{
+				builtin_parser(cmds + i, 2, 0);
+				return (empty_arr());
+			}
 			offset += 2;
+			if (cmds[i + offset] != NULL && cmds[i + offset][0] == '|')
+				offset++;
 		}
 		cmds[i] = cmds[i + offset];
 		i++;
 	}
+	if (cmds[i - offset] != NULL && cmds[i - offset][0] == '|')
+		cmds[i - offset] = NULL;
 	while (i < len)
 	{
 		cmds[i] = NULL;
