@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:45:40 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:15:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ char	*get_arg_array(char **args, char **tokens, int start, int stop)
 {
 	char	*arg;
 
-	start++;
 	arg = ft_strdup("");
+	while (!str_is_equal(tokens[start], "WORD"))
+		start++;
+	start++;
 	while (start < stop)
 	{
 		if (str_is_equal(tokens[start], "WORD"))
@@ -35,15 +37,15 @@ char	*get_arg_array(char **args, char **tokens, int start, int stop)
 	return (arg);
 }
 
-char	*get_cmd_array(char **cmds, char **tokens, int start)
+char	*get_cmd_array(char **cmds, char **tokens, int start, int stop)
 {
-	char	*cmd;
-
-	if (str_is_equal(tokens[start], "WORD"))
-		cmd = ft_strdup(cmds[start]);
-	else
-		cmd = ft_strdup("");
-	return (cmd);
+	while (start < stop)
+	{
+		if (str_is_equal(tokens[start], "WORD"))
+			return (ft_strdup(cmds[start]));
+		start++;
+	}
+	return (ft_strdup(""));
 }
 
 t_ct	*memory_allocation_arrays(t_ct *exetable, char **token_array)
@@ -66,7 +68,7 @@ t_ct	*init_cmd_table(t_ct *table, char **cmds, int st_st[2], int i)
 	char	**tokens;
 
 	tokens = get_token_array(cmds);
-	table->cmd_array[i] = get_cmd_array(cmds, tokens, st_st[0]);
+	table->cmd_array[i] = get_cmd_array(cmds, tokens, st_st[0], st_st[1]);
 	table->arg_array[i] = get_arg_array(cmds, tokens, st_st[0], st_st[1]);
 	table->in[i] = get_infile(cmds, tokens, st_st[0], st_st[1]);
 	table->in_type[i] = get_infile_type(tokens, st_st[0], st_st[1]);
@@ -97,6 +99,8 @@ t_ct	*get_cmd_table(char **token_array, char **cmd_array)
 		st_st[1]++;
 	}
 	cmd_table->here_docs = get_here_doc_limiters(cmd_array);
+	if (cmd_table->here_docs[0] != NULL)
+		here_doc_execute(cmd_table);
 	cmd_table = init_cmd_table(cmd_table, cmd_array, st_st, i);
 	free_array(token_array);
 	return (cmd_table);

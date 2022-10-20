@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 14:49:26 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/20 20:13:50 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /* TO DO:
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
 	- in heredoc when ^D no output + leaks | P
-	- fix set path in finding ./ls or .ls | M
 	- "<<" eof what should happen? -> cmd not found
 	- "< <" eof what should happen? -> cmd not found
 	- return exit code from every builtin -> geht bei cd, export und unset nicht weil die das directory/env 
@@ -26,8 +25,7 @@
 
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
-	- RICHTIGES HANDLING BEI QUOTES -> DER EXPANDER DELETED DIE QUOTES IMMER EGAL OB $ ODER NICHT | works
-	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR
+	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR 
 	- "CAT" UND DANN ^C ZEIGT 2 MAL DIE PROMPT AN
 	- EXPORT REPLACED KEINE VORHANDENEN ENVS SONDERN FÜGT NUR NEUE HINZU
 	- WENN MAN IRGENDEINE VORHANDENE ENV-VARIABLE UNSETTET WIRD DIESE GELÖSCHT ABER ES FUNKTIONIEREN KEINE COMMANDS MEHR DANACH

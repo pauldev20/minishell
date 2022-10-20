@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 11:45:11 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:42:25 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ char		**cut_start_stop(char **cmd, int start_stop[2]);
 t_ct		*memory_allocation_arrays(t_ct *exetable, char **tokens);
 t_ct		*init_cmd_table(t_ct *exetable, char **cmd_array, int st_st[2], int i);
 t_ct		*get_cmd_table(char **token_array, char **cmd_array);
-char		*get_cmd_array(char **cmds, char **tokens, int start);
+char		*get_cmd_array(char **cmds, char **tokens, int start, int stop);
 
 // EXECUTE PREJOBS
 char		**execute_prejobs(char **arr);

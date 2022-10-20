@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:26 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:21:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:17:38 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,15 @@ int	get_outfile_fd(char *token, char *arr, int pipe)
 int	get_infile_fd(t_ct *cmd_table, char *token, char *arr, int pipe)
 {
 	int			fd;
-	static int	here_doc;
 
 	fd = STDIN_FILENO;
+	(void)cmd_table;
 	if (!token || !arr)
 		return (pipe);
 	else if (str_is_equal(token, "LESS"))
 		fd = open(arr, O_RDONLY | O_CLOEXEC, 0777);
 	else if (str_is_equal(token, "DLESS"))
-	{
-		if (here_doc == 0)
-		{
-			here_doc_execute(cmd_table);
-			here_doc = 1;
-		}
 		fd = open("/tmp/here_doc", O_RDONLY | O_CLOEXEC, 0777);
-		if (fd == -1)
-			print_error(2, NULL, 0);
-		return (fd);
-	}
 	if (fd == -1)
 		print_error(2, NULL, 1);
 	return (fd);
