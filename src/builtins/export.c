@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 15:21:33 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/20 20:41:41 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,50 +38,33 @@ t_env	*create_new(char *str)
 
 int	builtin_export(char	**argv, int argc)
 {
-	int		i;
-	int		j;
+	int		i[2];
 	t_env	*env;
 	t_env	*newenv;
 
-	i = 0;
-	env = g_minishell.envp;
 	if (argc < 1)
+		return (builtin_env());
+	i[1] = 0;
+	while (argv[i[1]])
 	{
-		builtin_env();
-		return (1);
-	}
-	while (env)
-	{
-		env = env->next;
-		i++;
-	}
-	j = 0;
-	while (argv[j])
-	{
-		newenv = create_new(argv[j++]);
+		i[0] = 0;
 		env = g_minishell.envp;
-		if (newenv)
+		newenv = create_new(argv[i[1]++]);
+		while (newenv && env)
 		{
-			printf("NEWENV: %s\n", newenv->key);
-			while (env)
+			if (ft_strncmp(env->key, newenv->key, ft_strlen(env->key)) == 0)
 			{
-				if (ft_strncmp(env->key, newenv->key, ft_strlen(env->key)) == 0)
-				{
-					printf("Allready in ENV!! %s\n", env->key);
-					free(newenv->key);
-					free(env->value);
-					env->value = newenv->value;
-					free(newenv);
-					break ;
-				}
-				env = env->next;
+				free(newenv->key);
+				free(env->value);
+				env->value = newenv->value;
+				free(newenv);
+				break ;
 			}
-			if (env == NULL)
-			{
-				printf("Not in ENV!\n");
-				add_at_index(&g_minishell.envp, newenv, i++);
-			}
+			env = env->next;
+			i[0]++;
 		}
+		if (newenv && !env)
+			add_at_index(&g_minishell.envp, newenv, i[0]);
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }

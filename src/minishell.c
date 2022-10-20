@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 20:13:50 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 01:01:00 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,12 @@
 	- in heredoc when ^D no output + leaks | P
 	- "<<" eof what should happen? -> cmd not found
 	- "< <" eof what should happen? -> cmd not found
-	- return exit code from every builtin -> geht bei cd, export und unset nicht weil die das directory/env 
-		im main process verändern aber exit codes stimmen 
 	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ wird gelöscht und und es displayed nur test
-	- display global error in prompt?
 	- parser darf ""
 
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
-	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR 
-	- "CAT" UND DANN ^C ZEIGT 2 MAL DIE PROMPT AN
-	- EXPORT REPLACED KEINE VORHANDENEN ENVS SONDERN FÜGT NUR NEUE HINZU
-	- WENN MAN IRGENDEINE VORHANDENE ENV-VARIABLE UNSETTET WIRD DIESE GELÖSCHT ABER ES FUNKTIONIEREN KEINE COMMANDS MEHR DANACH
+	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR - 🔮 ----> Fixed, tabs konnte ich nicht testen
 	- LEAKS
 	*/
 
@@ -75,7 +69,8 @@ int	minishell(int argc, char **argv, char **envp)
 		cache[0] = get_prompt(
 				get_env_var(g_minishell.envp, "USER"),
 				get_env_var(g_minishell.envp, "PWD"),
-				get_env_var(g_minishell.envp, "HOME"));
+				get_env_var(g_minishell.envp, "HOME"),
+				g_minishell.exit_code);
 		g_minishell.sigint = 0;
 		cache[1] = catch_tty(cache[0]);
 		if (cache[1] == NULL)
@@ -83,7 +78,8 @@ int	minishell(int argc, char **argv, char **envp)
 		free(cache[0]);
 		if (cache[1] != NULL)
 			cmd_array = parse_input(cache[1]);
-		ret = start_execute(cmd_array);
+		if (cmd_array && cmd_array[0])
+			ret = start_execute(cmd_array);
 		free_array(cmd_array);
 		free (cache[1]);
 	}

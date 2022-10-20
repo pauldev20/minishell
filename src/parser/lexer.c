@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:11:18 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 11:41:36 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 00:04:35 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	**fill_array(char *s, char del, char **arr)
 	{
 		if (s[i[3]] != del && !word_start && !i[1] && !i[2])
 			word_start = s + i[3];
-		else if ((s[i[3]] == del || s[i[3]] == '\0') && !i[1] && !i[2])
+		else if ((s[i[3]] == del || s[i[3]] == '\0') && !i[1] && !i[2] && word_start)
 		{
 			arr[i[0]] = ft_substr(word_start, 0, (s + i[3]) - word_start);
 			if (!arr[i[0]++])

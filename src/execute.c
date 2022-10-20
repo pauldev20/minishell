@@ -6,11 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/20 15:16:37 by pgeeser          ###   ########.fr       */
-=======
-/*   Updated: 2022/10/20 13:30:07 by mhedtman         ###   ########.fr       */
->>>>>>> 8d2a235066c17294155b7b0455a4fc92b30f6879
+/*   Updated: 2022/10/21 00:55:20 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +51,8 @@ bool	is_last_cmd(char **cmd_arr)
 
 char	**catch_builtins(char **cmds, int *i, int *offset)
 {
+	int j;
+
 	while (cmds[*i] != NULL)
 	{
 		if (str_is_equal(cmds[*i], "unset") || str_is_equal(cmds[*i], "export")
@@ -62,7 +60,10 @@ char	**catch_builtins(char **cmds, int *i, int *offset)
 		{
 			if (is_last_cmd(cmds + (*i)))
 			{
-				builtin_parser(cmds + (*i), 2, 0); // argc count not correct? 
+				j = 0;
+				while (cmds[j] != NULL)
+					j++;
+				builtin_parser(cmds + (*i), j, 0);
 				return (empty_arr());
 			}
 			*offset += 2;

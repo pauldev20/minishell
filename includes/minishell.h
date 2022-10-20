@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 13:42:25 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 00:46:37 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char		**arr_dup(char **enviroment);
 // BUILTINS
 int			builtin_parser(char **argv, int argc, int pipe_amount);
 int			builtin_echo(char **argv, int argc);
-void		builtin_env(void);
+int			builtin_env(void);
 int			builtin_export(char	**argv, int argc);
 int			builtin_unset(char **argv, int argc);
 int			builtin_pwd(void);
@@ -119,7 +119,7 @@ bool		check_squotes(char *str);
 char		*expand_vars(char *str);
 
 // PROMT
-char		*get_prompt(t_env *usr, t_env *pwd, t_env *home);
+char		*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code);
 
 // SIGNAL
 void		handle_signal(int sig);

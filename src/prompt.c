@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/05 15:00:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 01:00:35 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*get_user(t_env *usr)
 	return (ft_strjoin(BLUE, usr->value));
 }
 
-char	*get_prompt(t_env *usr, t_env *pwd, t_env *home)
+char	*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code)
 {
 	char	*out;
 	char	*front;
@@ -60,7 +60,10 @@ char	*get_prompt(t_env *usr, t_env *pwd, t_env *home)
 	free(user);
 	front = ft_strjoin(tmp, GREEN);
 	free(tmp);
-	back = ft_strjoin(replace_pwd(home, pwd), " $ ");
+	if (rtn_code)
+		back = ft_strjoin(replace_pwd(home, pwd), "\x1b[31m $ ");
+	else
+		back = ft_strjoin(replace_pwd(home, pwd), " $ ");
 	tmp = ft_strjoin(front, back);
 	free(front);
 	free(back);

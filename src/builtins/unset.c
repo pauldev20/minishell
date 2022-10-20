@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 10:24:21 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 09:21:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 23:40:14 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	builtin_unset(char **argv, int argc)
 		while (env)
 		{
 			if (ft_strncmp(env->key, argv[j], ft_strlen(argv[j]) + 1) == 0)
+			{
 				remove_at_index(&(g_minishell.envp), i);
+				break ;
+			}
 			env = env->next;
 			i++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 22:21:41 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 11:10:03 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 23:40:04 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,22 @@ void	add_at_index(t_env **list, t_env *el, int index)
 
 void	remove_at_index(t_env **list, int index)
 {
-	int		i;
 	t_env	*env;
-	t_env	**lst;
+	t_env	*lst;
 
-	i = 0;
-	lst = list;
-	while (i++ < index && (*lst))
+	lst = *list;
+	while (index-- && lst)
 	{
-		env = (*lst);
-		lst = &((*lst)->next);
+		env = lst;
+		lst = lst->next;
 	}
-	free((*lst)->key);
-	free((*lst)->value);
-	if (index > 0)
-		env->next = (*lst)->next;
+	free(lst->key);
+	free(lst->value);
+	if (*list == lst)
+		(*list) = lst->next;
 	else
-		(*list) = (*lst)->next;
-	free((*lst));
+		env->next = lst->next;
+	free(lst);
 }
 
 t_env	*parse_array_to_env(char **env, t_env *minienviro)
