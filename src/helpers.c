@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:10:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 11:46:20 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:01:36 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**empty_arr(void)
 {
 	char	**arr;
 
-	arr = ft_calloc(1, sizeof(char));
+	arr = (char **)ft_calloc(1, sizeof(char *));
 	return (arr);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:59:22 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/09/30 13:17:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:50:37 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		ft_tolower(int ch);
 char	*ft_strchr(const char *str, int character);
 char	*ft_strrchr(const char *str, int character);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+int		ft_strcmp(char *str1, char *str2);
 void	*ft_memchr(const void *ptr, int value, size_t num);
 int		ft_memcmp(const void *ptr1, const void *ptr2, size_t num);
 char	*ft_strnstr(const char	*big, const char *little, size_t len);
