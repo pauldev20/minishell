@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:11:18 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/18 13:52:54 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 01:07:44 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	check_pipe_error(char *str)
+{
+	while (*str)
+	{
+		if (ft_strncmp(str, "< <", 3) == 0)
+			return (1);
+		if (ft_strncmp(str, "> >", 3) == 0)
+			return (1);
+		str++;
+	}
+	return (0);
+}
 
 static int	count_words(const char *str, char del)
 {
@@ -76,6 +89,8 @@ char	**lexer(char const *s, char c)
 	char	**arr;
 
 	if (!s)
+		return (NULL);
+	if (check_pipe_error((char *)s))
 		return (NULL);
 	words = count_words(s, c);
 	if (words < 0)

@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/19 10:49:00 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 02:26:55 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* TO DO:
-	- CHECK IF "> > || < <" OR "<< | >>" ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P
+	- CHECK IF "> > || < <" OR "<< | >>" ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P - 🔮
 	- SEE /tests/cmds/mand/1_builtins.sh line 28 to line 42
-	- "echo -nnnnnn" or "echo -n -n -n -n -n -n" should be seen as one flag but "echo hello -n" shouldnt be handled as a flag | P
+	- "echo -nnnnnn" or "echo -n -n -n -n -n -n" should be seen as one flag but "echo hello -n" shouldnt be handled as a flag | P - 🔮
 	- " \ " should not be displayed | P
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
 	- in heredoc when ^D no output + leaks | P
-	- when ^C just display a new line and dont show ^C also | P
+	- when ^C just display a new line and dont show ^C also | P - 🔮
 	- fix set path in finding ./ls or .ls | M
+	- "<<" eof what should happen?
+	- return exit code from every builtin!
+	- echo " \ " no space?
+	- global return error code
 
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
@@ -69,6 +73,7 @@ int	minishell(int argc, char **argv, char **envp)
 	g_minishell.sigint = 0;
 	init_env(argv);
 	signal(SIGINT, handle_signal);
+	// signal quit!!!!
 	while (1)
 	{
 		cache[0] = get_prompt(

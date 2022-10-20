@@ -3,25 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/18 13:56:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 01:54:45 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	check_n(char **argv)
+{
+	int		i;
+	int		j;
+	int		ctn;
+	int		rtn;
+
+	i = 0;
+	rtn = 0;
+	while (argv[i++])
+	{
+		j = 0;
+		if (argv[i - 1][j++] == '-')
+		{
+			ctn = 0;
+			while (argv[i - 1][j - 1])
+			{
+				if (argv[i - 1][j++ - 1] == 'n' && (rtn == i - 1))
+					ctn = 1;
+				else
+					ctn = 0;
+			}
+			if (ctn)
+				rtn++;
+		}
+	}
+	return (rtn);
+}
 
 int	builtin_echo(char **argv, int argc)
 {
 	int		i;
 	char	**array;
 
-	if (argc < 2 && (argc > 0 && ft_strncmp(argv[0], "-n", 3) == 0))
-		return (EXIT_SUCCESS);
 	if (argc < 1)
 		write(1, "", 0);
-	array = argv + (argc > 0 && ft_strncmp(argv[0], "-n", 3) == 0);
+	if (argc < 2 && (argc > 0 && check_n(argv)))
+		return (EXIT_SUCCESS);
+	array = argv + check_n(argv);
 	i = 0;
 	while (array[i++])
 	{
@@ -29,7 +58,7 @@ int	builtin_echo(char **argv, int argc)
 			write(1, " ", 1);
 		write(1, array[i - 1], ft_strlen(array[i - 1]));
 	}
-	if (!(argc > 0 && ft_strncmp(argv[0], "-n", 3) == 0))
+	if (!(argc > 0 && check_n(argv)))
 		write(1, "\n", 1);
-	exit (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
