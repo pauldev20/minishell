@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_expander.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:37:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/09/27 10:13:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:45:58 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	insert_into_arr(char ***arr, char **insert, int index)
 void	**pipe_expander(char ***arr)
 {
 	int		i;
-	int		g;
+	// int		g;
 	char	**insert;
 
 	i = 0;
@@ -121,7 +121,7 @@ void	**pipe_expander(char ***arr)
 		insert = set_split((*arr)[i], "<|>");
 		if (!insert)
 			return (NULL);
-		g = 0;
+		// g = 0;
 		insert_into_arr(arr, insert, i);
 		free(insert);
 		i++;

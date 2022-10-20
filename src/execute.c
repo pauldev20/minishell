@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 12:02:10 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:16:37 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**catch_builtins(char **cmds, int *i, int *offset)
 		{
 			if (is_last_cmd(cmds + (*i)))
 			{
-				builtin_parser(cmds + (*i), 2, 0);
+				builtin_parser(cmds + (*i), 2, 0); // argc count not correct? 
 				return (empty_arr());
 			}
 			*offset += 2;

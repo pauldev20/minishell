@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 11:40:41 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:21:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	builtin_export(char	**argv, int argc)
 	int		i;
 	int		j;
 	t_env	*env;
+	t_env	*newenv;
 
 	i = 0;
 	env = g_minishell.envp;
@@ -57,9 +58,30 @@ int	builtin_export(char	**argv, int argc)
 	j = 0;
 	while (argv[j])
 	{
-		env = create_new(argv[j++]);
-		if (env)
-			add_at_index(&g_minishell.envp, env, i++);
+		newenv = create_new(argv[j++]);
+		env = g_minishell.envp;
+		if (newenv)
+		{
+			printf("NEWENV: %s\n", newenv->key);
+			while (env)
+			{
+				if (ft_strncmp(env->key, newenv->key, ft_strlen(env->key)) == 0)
+				{
+					printf("Allready in ENV!! %s\n", env->key);
+					free(newenv->key);
+					free(env->value);
+					env->value = newenv->value;
+					free(newenv);
+					break ;
+				}
+				env = env->next;
+			}
+			if (env == NULL)
+			{
+				printf("Not in ENV!\n");
+				add_at_index(&g_minishell.envp, newenv, i++);
+			}
+		}
 	}
 	return (1);
 }
