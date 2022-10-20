@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 15:15:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:16:34 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ wird gelöscht und und es displayed nur test
 	- global return error code -> return codes gehen funktonieren schon wie in normaler bash also habe auch einen global return code in
 		das struct eingefügt der nach jedem process geupdated wird und bei jedem exit etc
-
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
 	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR 
