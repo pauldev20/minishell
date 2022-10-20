@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 02:26:55 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/20 02:29:45 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 	- when ^C just display a new line and dont show ^C also | P - 🔮
 	- fix set path in finding ./ls or .ls | M
 	- "<<" eof what should happen?
+	- "< <" eof what should happen?
 	- return exit code from every builtin!
 	- echo " \ " no space?
 	- global return error code

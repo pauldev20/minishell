@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:30:01 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:59:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	child_process(t_ct *cmdt, char **envp, int i)
 	{
 		close(fd[1]);
 		i++;
+		waitpid(0, NULL, 0);
 		in_out[1] = get_infile_fd(cmdt, cmdt->in_type[i], cmdt->in[i], fd[0]);
 		dup2(in_out[1], STDIN_FILENO);
 		close(fd[0]);
