@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 02:31:07 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/20 10:11:36 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	execute_pipeline(t_ct *exetable, char **token_array)
 			exetable->out[i], 1);
 	dup2(io_modifier[1], STDOUT_FILENO);
 	free_array(token_array);
-	return (execute(ft_split(exetable->cmd_array[i], ' '), env));
+	return (execute(exetable->cmd_array[i], exetable->arg_array[i], env));
 }
 
 bool	is_last_cmd(char **cmd_arr)
@@ -112,11 +112,14 @@ int	start_execute(char **cmd_arr)
 	int				status;
 
 	g_minishell.executing = 1;
-	cmd_arr = check_for_builtins(cmd_arr);
+	if (cmd_arr)
+		cmd_arr = check_for_builtins(cmd_arr);
 	id = fork();
 	status = 0;
 	if (id == 0)
 	{
+		if (!cmd_arr)
+			print_error(QUOTE, NULL, 1);
 		cmd_arr = execute_prejobs(cmd_arr);
 		cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);
 		execute_pipeline(cmd_table, get_token_array(cmd_arr));

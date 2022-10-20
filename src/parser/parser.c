@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 01:08:10 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/20 09:31:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**parse_input(char *input)
 
 	splitted = lexer(input, ' ');
 	if (!splitted)
-		return (print_error(QUOTE, NULL, 1));
+		return (NULL);
 	pipe_expander(&splitted);
 	c = 0;
 	while (splitted[c] != NULL)

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/19 16:59:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:23:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,55 @@ char	**cut_start_stop(char **cmd, int start_stop[2])
 	return (cmd);
 }
 
+char	**get_cmd_arg_arr(char *cmd, char *args)
+{
+	char	**part_arr;
+	char	**full_arr;
+	int		i;
+	int		c;
+
+	i = 0;
+	part_arr = ft_split(args, ' ');
+	while (part_arr[i] != NULL)
+		i++;
+	full_arr = (char **)ft_calloc(i + 2, sizeof(char *));
+	full_arr[0] = cmd;
+	i = 1;
+	c = 0;
+	while (part_arr[c] != NULL)
+	{
+		full_arr[i] = part_arr[c];
+		c++;
+		i++;
+	}
+	print_arr(full_arr);
+	free(part_arr);
+	print_arr(full_arr);
+	return (full_arr);
+}
 /* Function that take the command and send it to find_path
  before executing it. */
-int	execute(char **cmd, char **envp)
+int	execute(char *cmd, char *args, char **envp)
 {
-	int		i;
 	char	*path;
+	char	**cmd_args;
 
-	i = -1;
 	if (is_own_builtin(cmd))
-		return (execute_own_builtin(cmd));
-	if (access(cmd[0], X_OK | F_OK) == -1)
-		path = find_path(cmd[0]);
+		return (execute_own_builtin(cmd, args));
+	if (access(cmd, X_OK | F_OK) == -1)
+		path = find_path(cmd);
 	else
-		path = cmd[0];
-	if (cmd[0] == NULL || !cmd)
+		path = cmd;
+	if (str_is_equal(cmd, "") || !cmd)
 		return (127);
 	if (!path)
 	{
-		while (cmd[++i])
-			free(cmd[i]);
+		free(args);
 		free(cmd);
 		print_error(3, NULL, 127);
 	}
-	if (execve(path, cmd, envp) == -1)
+	cmd_args = get_cmd_arg_arr(cmd, args);
+	if (execve(path, cmd_args, envp) == -1)
 		print_error(3, NULL, 127);
 	return (127);
 }
@@ -108,7 +133,7 @@ int	child_process(t_ct *cmdt, char **envp, int i)
 		close(fd[0]);
 		in_out[0] = get_outfile_fd(cmdt->out_type[i], cmdt->out[i], fd[1]);
 		dup2(in_out[0], STDOUT_FILENO);
-		return (execute(ft_split(cmdt->cmd_array[i], ' '), envp));
+		return (execute(cmdt->cmd_array[i], cmdt->arg_array[i], envp));
 	}
 	else
 	{

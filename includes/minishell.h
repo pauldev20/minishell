@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:34:07 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:09:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_env
 typedef struct s_cmd_table
 {
 	char		**cmd_array;
+	char		**arg_array;
 	char		**in;
 	char		**in_type;
 	char		**here_docs;
@@ -122,7 +123,7 @@ char		**cut_start_stop(char **cmd, int start_stop[2]);
 t_ct		*memory_allocation_arrays(t_ct *exetable, char **tokens);
 t_ct		*init_cmd_table(t_ct *exetable, char **cmd_array, int st_st[2], int i);
 t_ct		*get_cmd_table(char **token_array, char **cmd_array);
-char		*get_cmd_array(char **cmds, char **tokens, int start, int stop);
+char		*get_cmd_array(char **cmds, char **tokens, int start);
 
 // EXECUTE PREJOBS
 char		**execute_prejobs(char **arr);
@@ -154,12 +155,12 @@ char		**get_here_doc_limiters(char **arr);
 bool		str_is_equal(char *str1, char *str2);
 
 // BUILTIN EXECUTER
-bool		is_own_builtin(char **cmd);
-int			execute_own_builtin(char **cmd);
+bool		is_own_builtin(char *cmd);
+int			execute_own_builtin(char *cmd, char *args);
 
 // PIPEX
 int			child_process(t_ct *execute_table, char **envp, int i);
-int			execute(char **cmd, char **envp);
+int			execute(char *cmd, char *args, char **envp);
 
 // TTY
 char		*catch_tty(char *prompt);

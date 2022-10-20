@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 02:29:45 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/20 09:32:20 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 	- in heredoc when ^D no output + leaks | P
 	- when ^C just display a new line and dont show ^C also | P - 🔮
 	- fix set path in finding ./ls or .ls | M
-	- "<<" eof what should happen?
-	- "< <" eof what should happen?
-	- return exit code from every builtin!
-	- echo " \ " no space?
-	- global return error code
+	- "<<" eof what should happen? -> cmd not found
+	- "< <" eof what should happen? -> cmd not found
+	- return exit code from every builtin -> geht bei cd, export und unset nicht weil die das directory/env 
+		im main process verändern aber exit codes stimmen 
+	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ wird gelöscht und und es displayed nur test
+	- global return error code -> return codes gehen funktonieren schon wie in normaler bash also habe auch einen global return code in
+		das struct eingefügt der nach jedem process geupdated wird und bei jedem exit etc
+	- parser darf ""
 
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:

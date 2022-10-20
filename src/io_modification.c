@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:26 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/19 16:37:11 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:21:56 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	get_outfile_fd(char *token, char *arr, int pipe)
 	int	fd;
 
 	fd = STDOUT_FILENO;
-	printf("[token %s] [arr %s]\n", token, arr);
 	if (!token || !arr)
 		return (pipe);
 	else if (str_is_equal(token, "GREAT"))

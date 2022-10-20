@@ -6,32 +6,44 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/19 10:57:54 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:22:12 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_cmd_array(char **cmds, char **tokens, int start, int stop)
+char	*get_arg_array(char **args, char **tokens, int start, int stop)
 {
-	char	*cmd_args;
+	char	*arg;
 
-	cmd_args = ft_strdup("");
+	start++;
+	arg = ft_strdup("");
 	while (start < stop)
 	{
 		if (str_is_equal(tokens[start], "WORD"))
 		{
-			if (cmd_args[0] == '\0')
-				cmd_args = ft_strjoin(cmd_args, cmds[start]);
+			if (arg[0] == '\0')
+				arg = ft_strjoin(arg, args[start]);
 			else
 			{
-				cmd_args = ft_strjoin(cmd_args, " ");
-				cmd_args = ft_strjoin(cmd_args, cmds[start]);
+				arg = ft_strjoin(arg, " ");
+				arg = ft_strjoin(arg, args[start]);
 			}
 		}
 		start++;
 	}
-	return (cmd_args);
+	return (arg);
+}
+
+char	*get_cmd_array(char **cmds, char **tokens, int start)
+{
+	char	*cmd;
+
+	if (str_is_equal(tokens[start], "WORD"))
+		cmd = ft_strdup(cmds[start]);
+	else
+		cmd = ft_strdup("");
+	return (cmd);
 }
 
 t_ct	*memory_allocation_arrays(t_ct *exetable, char **token_array)
@@ -40,6 +52,7 @@ t_ct	*memory_allocation_arrays(t_ct *exetable, char **token_array)
 
 	size = get_pipe_amount(token_array) + 1;
 	exetable->cmd_array = (char **)ft_calloc(size, sizeof(char *));
+	exetable->arg_array = (char **)ft_calloc(size, sizeof(char *));
 	exetable->in = (char **)ft_calloc(size, sizeof(char *));
 	exetable->in_type = (char **)ft_calloc(size, sizeof(char *));
 	exetable->here_docs = (char **)ft_calloc(size, sizeof(char *));
@@ -53,7 +66,8 @@ t_ct	*init_cmd_table(t_ct *table, char **cmds, int st_st[2], int i)
 	char	**tokens;
 
 	tokens = get_token_array(cmds);
-	table->cmd_array[i] = get_cmd_array(cmds, tokens, st_st[0], st_st[1]);
+	table->cmd_array[i] = get_cmd_array(cmds, tokens, st_st[0]);
+	table->arg_array[i] = get_arg_array(cmds, tokens, st_st[0], st_st[1]);
 	table->in[i] = get_infile(cmds, tokens, st_st[0], st_st[1]);
 	table->in_type[i] = get_infile_type(tokens, st_st[0], st_st[1]);
 	table->out[i] = get_outfile(cmds, tokens, st_st[0], st_st[1]);
