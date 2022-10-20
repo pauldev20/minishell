@@ -6,7 +6,7 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/18 15:42:23 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/10/20 11:49:34 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS =	src/main.c \
 		src/minishell.c \
 		src/catch_tty.c \
 		src/helpers.c	\
+		src/free.c \
 		src/prompt.c	\
 		src/signal.c	\
 		src/error.c	\

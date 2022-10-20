@@ -6,23 +6,11 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/19 11:49:02 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:40:41 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	if (array == NULL)
-		return ;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
 
 t_env	*create_new(char *str)
 {

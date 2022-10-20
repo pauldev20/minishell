@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:23:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:29:35 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,10 @@ char	**get_cmd_arg_arr(char *cmd, char *args)
 		c++;
 		i++;
 	}
-	print_arr(full_arr);
 	free(part_arr);
-	print_arr(full_arr);
 	return (full_arr);
 }
+
 /* Function that take the command and send it to find_path
  before executing it. */
 int	execute(char *cmd, char *args, char **envp)
@@ -117,7 +116,7 @@ int	execute(char *cmd, char *args, char **envp)
 	return (127);
 }
 
-int	child_process(t_ct *cmdt, char **envp, int i)
+int	child_process(t_ct *ct, char **envp, int i)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -131,16 +130,15 @@ int	child_process(t_ct *cmdt, char **envp, int i)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		in_out[0] = get_outfile_fd(cmdt->out_type[i], cmdt->out[i], fd[1]);
+		in_out[0] = get_outfile_fd(ct->out_type[i], ct->out[i], fd[1]);
 		dup2(in_out[0], STDOUT_FILENO);
-		return (execute(cmdt->cmd_array[i], cmdt->arg_array[i], envp));
+		return (execute(ct->cmd_array[i], ct->arg_array[i], envp));
 	}
 	else
 	{
 		close(fd[1]);
-		i++;
-		waitpid(0, NULL, 0);
-		in_out[1] = get_infile_fd(cmdt, cmdt->in_type[i], cmdt->in[i], fd[0]);
+		waitpid(0, NULL, WNOHANG);
+		in_out[1] = get_infile_fd(ct, ct->in_type[i + 1], ct->in[i + 1], fd[0]);
 		dup2(in_out[1], STDIN_FILENO);
 		close(fd[0]);
 	}

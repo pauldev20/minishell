@@ -6,20 +6,15 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 09:32:20 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:32:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* TO DO:
-	- CHECK IF "> > || < <" OR "<< | >>" ALREADY THROW ERROR IN PARSER IF THE FIRST HAPPENED | P - 🔮
-	- SEE /tests/cmds/mand/1_builtins.sh line 28 to line 42
-	- "echo -nnnnnn" or "echo -n -n -n -n -n -n" should be seen as one flag but "echo hello -n" shouldnt be handled as a flag | P - 🔮
-	- " \ " should not be displayed | P
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
 	- in heredoc when ^D no output + leaks | P
-	- when ^C just display a new line and dont show ^C also | P - 🔮
 	- fix set path in finding ./ls or .ls | M
 	- "<<" eof what should happen? -> cmd not found
 	- "< <" eof what should happen? -> cmd not found
@@ -32,8 +27,8 @@
 
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
-	- RICHTIGES HANDLING BEI QUOTES -> DER EXPANDER DELETED DIE QUOTES IMMER EGAL OB $ ODER NICHT
-	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR
+	- RICHTIGES HANDLING BEI QUOTES -> DER EXPANDER DELETED DIE QUOTES IMMER EGAL OB $ ODER NICHT | works
+	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR 
 	- "CAT" UND DANN ^C ZEIGT 2 MAL DIE PROMPT AN
 	- EXPORT REPLACED KEINE VORHANDENEN ENVS SONDERN FÜGT NUR NEUE HINZU
 	- WENN MAN IRGENDEINE VORHANDENE ENV-VARIABLE UNSETTET WIRD DIESE GELÖSCHT ABER ES FUNKTIONIEREN KEINE COMMANDS MEHR DANACH

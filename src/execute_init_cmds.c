@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:22:12 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:45:40 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ t_ct	*get_cmd_table(char **token_array, char **cmd_array)
 		if (str_is_equal(token_array[st_st[1]], "PIPE"))
 		{
 			cmd_table = init_cmd_table(cmd_table, cmd_array, st_st, i);
+			st_st[0] = st_st[1] + 1;
 			i++;
-			st_st[0] = st_st[1];
 		}
 		st_st[1]++;
 	}

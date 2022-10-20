@@ -6,28 +6,35 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:22:32 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/14 11:36:02 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:25:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*  RETURNS THE AMOUNT OF PIPES TO CHECK HOW MANY CMDS
-	WILL BE ADDED TO PIPEX */
-int	get_pipe_amount(char **tokens)
+char	*get_token(char **arr, char **tokens, int i)
 {
-	int	pipe_counter;
-	int	i;
-
-	pipe_counter = 0;
-	i = 0;
-	while (tokens[i] != NULL)
-	{
-		if (ft_strnstr(tokens[i], "PIPE", 4))
-			pipe_counter++;
-		i++;
-	}
-	return (pipe_counter);
+	if (str_is_equal(arr[i], "|"))
+		return (ft_strdup("PIPE"));
+	else if (str_is_equal(arr[i], "<"))
+		return (ft_strdup("LESS"));
+	else if (str_is_equal(arr[i], "<<"))
+		return (ft_strdup("DLESS"));
+	else if (str_is_equal(arr[i], "<>"))
+		return (ft_strdup("WEIRDIO"));
+	else if (str_is_equal(arr[i], ">"))
+		return (ft_strdup("GREAT"));
+	else if (str_is_equal(arr[i], ">>"))
+		return (ft_strdup("DGREAT"));
+	else if (i > 0 && (str_is_equal(tokens[i -1], "LESS")
+			|| str_is_equal(tokens[i -1], "DLESS")))
+		return (ft_strdup("INFILE"));
+	else if (i > 0 && (str_is_equal(tokens[i -1], "GREAT")
+			|| str_is_equal(tokens[i -1], "DGREAT")))
+		return (ft_strdup("OUTFILE"));
+	else if (i > 0 && (str_is_equal(tokens[i -1], "WEIRDIO")))
+		return (ft_strdup("WEIRDFILE"));
+	return (ft_strdup("WORD"));
 }
 
 /*  CREATES A TOKEN LIST TO KNOW WHAT WE ARE WORKING
@@ -44,26 +51,7 @@ char	**get_token_array(char **arr)
 	i = -1;
 	while (arr[++i] != NULL)
 	{
-		if (arr[i][0] == '|')
-			tokens[i] = ft_strdup("PIPE");
-		else if (str_is_equal(arr[i], "<"))
-			tokens[i] = ft_strdup("LESS");
-		else if (str_is_equal(arr[i], "<<"))
-			tokens[i] = ft_strdup("DLESS");
-		else if (str_is_equal(arr[i], "<>"))
-			tokens[i] = ft_strdup("WEIRDIO");
-		else if (str_is_equal(arr[i], ">"))
-			tokens[i] = ft_strdup("GREAT");
-		else if (str_is_equal(arr[i], ">>"))
-			tokens[i] = ft_strdup("DGREAT");
-		else if (i > 0 && (str_is_equal(tokens[i -1], "LESS") || str_is_equal(tokens[i -1], "DLESS")))
-			tokens[i] = ft_strdup("INFILE");
-		else if (i > 0 && (str_is_equal(tokens[i -1], "GREAT") || str_is_equal(tokens[i -1], "DGREAT")))
-			tokens[i] = ft_strdup("OUTFILE");
-		else if (i > 0 && (str_is_equal(tokens[i -1], "WEIRDIO")))
-			tokens[i] = ft_strdup("WEIRDFILE");
-		else
-			tokens[i] = ft_strdup("WORD");
+		tokens[i] = get_token(arr, tokens, i);
 	}
 	return (tokens);
 }
@@ -76,15 +64,13 @@ int	handle_empty_input(void)
 	return (fd);
 }
 
-/*  DELETES THE REDIRECTORS OUT OF THE STRING SO THAT 
-	ONLY THE CMD PIPELINES REMAINS AND WE CAN ITERATE OVER IT */
-char	**delete_io(char **arr, char **tokens, int *fd)
+char	**delete_doubles(char **arr, char **tokens)
 {
-	int		i;
-	int		new_i;
+	int	i;
+	int	new_i;
 
-	new_i = 0;
 	i = 0;
+	new_i = 0;
 	while (tokens[i] != NULL)
 	{
 		while (tokens[i] != NULL && (is_input_redirector(tokens[i])
@@ -101,15 +87,26 @@ char	**delete_io(char **arr, char **tokens, int *fd)
 		arr[new_i] = NULL;
 		new_i++;
 	}
+	return (arr);
+}
+
+/*  DELETES THE REDIRECTORS OUT OF THE STRING SO THAT 
+	ONLY THE CMD PIPELINES REMAINS AND WE CAN ITERATE OVER IT */
+char	**delete_io(char **arr, char **tokens, int *fd)
+{
+	int		i;
+
+	i = 0;
+	arr = delete_doubles(arr, tokens);
 	if (arr[0] != NULL && arr[0][0] == '|')
 	{
-		new_i = 0;
+		i = 0;
 		if (arr[0][0] == '|')
 			*fd = handle_empty_input();
-		while (arr[new_i] != NULL)
+		while (arr[i] != NULL)
 		{
-			arr[new_i] = arr[new_i + 1];
-			new_i++;
+			arr[i] = arr[i + 1];
+			i++;
 		}
 	}
 	return (arr);

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:09:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:45:11 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,26 +80,36 @@ int			builtin_pwd(void);
 int			builtin_cd(char *path, int pipe_amount);
 int			builtin_exit(char *exit_code);
 
+//PARSER
 char		**parse_input(char *input);
+char		**lexer(char const *s, char c);
+void		**pipe_expander(char ***arr);
 
+//HELPER + ERROR
+char		**empty_arr(void);
+int			get_pipe_amount(char **tokens);
+int			array_len(char **array);
 void		*print_error(int errtype, char *params, int err);
+bool		str_is_equal(char *str1, char *str2);
+
+// FREE
+void		free_cmd_table(t_ct *cmd_table);
+void		free_array(char **array);
+void		*free_arr(char **arr, int arr_count);
 
 // ENV
+t_env		*get_last(t_env *env);
+t_env		*parse_array_to_env(char **env, t_env *minienviro);
+t_env		*get_env_var(t_env *env, char *key);
 char		**get_env_arr(t_env *list);
 void		add_back(t_env **env, t_env *new);
-t_env		*get_last(t_env *env);
 void		add_at_index(t_env **list, t_env *el, int index);
 void		remove_at_index(t_env **list, int index);
 void		free_array(char	**array);
-t_env		*parse_array_to_env(char **env, t_env *minienviro);
 void		print_env(t_env	*env);
-t_env		*get_env_var(t_env *env, char *key);
 int			in_list(t_env *env, char *key);
 int			set_env_var(t_env **env, char *key, char *value);
 
-char		**lexer(char const *s, char c);
-void		**pipe_expander(char ***arr);
-void		*free_arr(char **arr, int arr_count);
 
 // EXPANDER
 int			ft_word_len(char *str);
@@ -145,14 +155,12 @@ bool		is_input_redirector(char *str);
 
 // TOKEN MODIFICATION
 char		**join_io_modifier(char **arr);
-int			get_pipe_amount(char **tokens);
 char		**get_token_array(char **arr);
 char		**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
 void		here_doc_execute(t_ct *exe_table);
 char		**get_here_doc_limiters(char **arr);
-bool		str_is_equal(char *str1, char *str2);
 
 // BUILTIN EXECUTER
 bool		is_own_builtin(char *cmd);

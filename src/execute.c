@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:11:36 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:42:33 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,15 @@ bool	is_last_cmd(char **cmd_arr)
 	return (true);
 }
 
-char	**empty_arr(void)
-{
-	char	**arr;
-
-	arr = ft_calloc(1, sizeof(char));
-	return (arr);
-}
-/*	"MAIN" RETURNS ERRORS ETC. */
-char	**check_for_builtins(char **cmds)
+char	**catch_builtins(char **cmds, int *offset)
 {
 	int	i;
-	int	offset;
-	int	len;
 
-	offset = 0;
 	i = 0;
-	len = 0;
-	while (cmds[len] != NULL)
-		len++;
 	while (cmds[i] != NULL)
 	{
-		if (str_is_equal(cmds[i], "unset") || str_is_equal(cmds[i], "export") || str_is_equal(cmds[i], "cd"))
+		if (str_is_equal(cmds[i], "unset") || str_is_equal(cmds[i], "export")
+			|| str_is_equal(cmds[i], "cd"))
 		{
 			if (is_last_cmd(cmds + i))
 			{
@@ -78,31 +65,32 @@ char	**check_for_builtins(char **cmds)
 				return (empty_arr());
 			}
 			offset += 2;
-			if (cmds[i + offset] != NULL && cmds[i + offset][0] == '|')
+			if (cmds[i + *offset] != NULL && cmds[i + *offset][0] == '|')
 				offset++;
 		}
-		cmds[i] = cmds[i + offset];
+		cmds[i] = cmds[i + *offset];
 		i++;
 	}
+}
+
+char	**check_for_builtins(char **cmds)
+{
+	int	i;
+	int	offset;
+
+	offset = 0;
+	i = 0;
+	cmds = catch_builtins(cmds, &offset);
+	if (cmds[0] != NULL)
+		return (empty_arr());
 	if (cmds[i - offset] != NULL && cmds[i - offset][0] == '|')
 		cmds[i - offset] = NULL;
-	while (i < len)
+	while (i < array_len(cmds))
 	{
 		cmds[i] = NULL;
 		i++;
 	}
 	return (cmds);
-}
-
-void	free_cmd_table(t_ct *cmd_table)
-{
-	free_array(cmd_table->cmd_array);
-	free_array(cmd_table->in);
-	free_array(cmd_table->in_type);
-	free_array(cmd_table->out);
-	free_array(cmd_table->out_type);
-	free_array(cmd_table->here_docs);
-	free(cmd_table);
 }
 
 int	start_execute(char **cmd_arr)

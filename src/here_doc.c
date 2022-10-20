@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:31:19 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:48:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,43 +78,24 @@ char	**duplicate_arr(char **arr)
 	return (new_arr);
 }
 
-int	ft_strcmp(char *str1, char *str2)
-{
-	while (*str1)
-	{
-		if (*str1 != *str2)
-			return ((unsigned int)*str2 - (unsigned int)*str1);
-		str1++;
-		str2++;
-	}
-	return ((unsigned int)*str2 - (unsigned int)*str1);	
-}
-
-bool	str_is_equal(char *str1, char *str2)
-{
-	return (ft_strcmp(str1, str2) == 0);
-}
-
 void	here_doc_execute(t_ct *exe_table)
 {
 	char	*line;
 	int		fd;
-	char	**here_doc_limiters;
 	int		i;
 
 	i = 0;
 	fd = open("/tmp/here_doc", O_WRONLY | O_CREAT | O_TRUNC, 00777);
-	here_doc_limiters = exe_table->here_docs;
 	while (1)
 	{
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
 		line = expand_vars(get_next_line(STDIN_FILENO));
 		if (*line == '\n' && g_minishell.sigint)
 			break ;
-		if (str_is_equal(here_doc_limiters[i], line))
+		if (str_is_equal(exe_table->here_docs[i], line))
 		{
 			i++;
-			if (here_doc_limiters[i] == NULL)
+			if (exe_table->here_docs[i] == NULL)
 				return ;
 			fd = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}

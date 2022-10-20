@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/17 13:31:47 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:41:45 by mhedtman         ###   ########.fr       */
+/*   Created: 2022/10/20 11:46:34 by mhedtman          #+#    #+#             */
+/*   Updated: 2022/10/20 11:47:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	print_arr(char **arr)
+int	ft_strcmp(char *str1, char *str2)
 {
-	for (int i = 0; arr[i] != NULL; i++)
-		printf("ARR [--%d--]: [--%s--]\n", i, arr[i]);	
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	if (argc != 1)
-		return (0);
-	else
-		return (minishell(argc, argv, envp));
-	return (0);
+	while (*str1)
+	{
+		if (*str1 != *str2)
+			return ((unsigned int)*str2 - (unsigned int)*str1);
+		str1++;
+		str2++;
+	}
+	return ((unsigned int)*str2 - (unsigned int)*str1);
 }
