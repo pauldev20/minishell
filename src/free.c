@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:39:42 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 11:42:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:09:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_cmd_table(t_ct *cmd_table)
 	free_array(cmd_table->out);
 	free_array(cmd_table->out_type);
 	free_array(cmd_table->here_docs);
-	if (cmd_table)
+	if (cmd_table != NULL)
 		free(cmd_table);
 }
 
@@ -29,17 +29,27 @@ void	free_array(char **array)
 	int	i;
 
 	i = 0;
-	if (array == NULL)
-		return ;
-	while (array[i])
-		free(array[i++]);
-	free(array);
+	if (array != NULL)
+	{
+		while (array[i] != NULL)
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+	}
 }
 
 void	*free_arr(char **arr, int arr_count)
 {
-	while (arr_count >= 0)
-		free(arr[arr_count--]);
-	free(arr);
+	if (arr != NULL)
+	{
+		while (arr[arr_count] != NULL && arr_count >= 0)
+		{
+			free(arr[arr_count]);
+			arr_count--;
+		}
+		free(arr);
+	}
 	return (NULL);
 }
