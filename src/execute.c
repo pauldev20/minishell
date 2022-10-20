@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 12:02:10 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:30:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	start_execute(char **cmd_arr)
 		cmd_arr = execute_prejobs(cmd_arr);
 		cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);
 		execute_pipeline(cmd_table, get_token_array(cmd_arr));
-		free_array(cmd_arr);
+		// free_array(cmd_arr);
 		free_cmd_table(cmd_table);
 	}
 	else

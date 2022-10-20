@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 11:29:35 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:48:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*find_path(char *cmd)
 	char	*part_path;
 
 	i = 0;
+	if (cmd[0] == '.' || cmd[0] == '/')
+		return (NULL);
 	env = get_env_var(g_minishell.envp, "PATH");
 	paths = ft_split(env->value + 5, ':');
 	i = 0;
@@ -98,6 +100,8 @@ int	execute(char *cmd, char *args, char **envp)
 
 	if (is_own_builtin(cmd))
 		return (execute_own_builtin(cmd, args));
+	if (str_is_equal(cmd, "."))
+		print_error(3, NULL, 2);
 	if (access(cmd, X_OK | F_OK) == -1)
 		path = find_path(cmd);
 	else

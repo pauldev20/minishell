@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 11:48:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:16:23 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,20 @@ char	**duplicate_arr(char **arr)
 	return (new_arr);
 }
 
+bool	has_dollars(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 void	here_doc_execute(t_ct *exe_table)
 {
 	char	*line;
@@ -89,14 +103,19 @@ void	here_doc_execute(t_ct *exe_table)
 	while (1)
 	{
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
-		line = expand_vars(get_next_line(STDIN_FILENO));
+		line = get_next_line(STDIN_FILENO);
+		if (has_dollars(line))
+			line = expand_vars(line);
 		if (*line == '\n' && g_minishell.sigint)
 			break ;
 		if (str_is_equal(exe_table->here_docs[i], line))
 		{
 			i++;
 			if (exe_table->here_docs[i] == NULL)
+			{
+				free_array(exe_table->here_docs);
 				return ;
+			}
 			fd = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}
 		else
