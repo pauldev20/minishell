@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:32:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:15:28 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /* TO DO:
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
 	- in heredoc when ^D no output + leaks | P
-	- fix set path in finding ./ls or .ls | M
 	- "<<" eof what should happen? -> cmd not found
 	- "< <" eof what should happen? -> cmd not found
 	- return exit code from every builtin -> geht bei cd, export und unset nicht weil die das directory/env 
@@ -23,11 +22,9 @@
 	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ wird gelöscht und und es displayed nur test
 	- global return error code -> return codes gehen funktonieren schon wie in normaler bash also habe auch einen global return code in
 		das struct eingefügt der nach jedem process geupdated wird und bei jedem exit etc
-	- parser darf ""
 
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
-	- RICHTIGES HANDLING BEI QUOTES -> DER EXPANDER DELETED DIE QUOTES IMMER EGAL OB $ ODER NICHT | works
 	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR 
 	- "CAT" UND DANN ^C ZEIGT 2 MAL DIE PROMPT AN
 	- EXPORT REPLACED KEINE VORHANDENEN ENVS SONDERN FÜGT NUR NEUE HINZU
