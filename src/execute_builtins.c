@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:09:31 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:09:38 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	execute_own_builtin(char *cmd, char *args)
 	char	**cmd_args;
 
 	cmd = ft_strjoin(cmd, " ");
+	// will also split spaces in quotations
 	cmd_args = ft_split(ft_strjoin(cmd, args), ' ');
 	pipe_amount = get_pipe_amount(get_token_array(cmd_args));
 	i = 0;

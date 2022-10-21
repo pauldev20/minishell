@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:11:18 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 00:04:35 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 03:02:06 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 static int	check_pipe_error(char *str)
 {
+	int	i[2];
+
+	i[0] = 0;
+	i[1] = 0;
 	while (*str)
 	{
-		if (ft_strncmp(str, "< <", 3) == 0)
+		i[0] += (*str == '\"') * (!i[0] + -(i[0]));
+		i[1] += (*str == '\'') * (!i[1] + -(i[1]));
+		if (ft_strncmp(str, "< <", 3) == 0 && !i[0] && !i[1])
 			return (1);
-		if (ft_strncmp(str, "> >", 3) == 0)
+		if (ft_strncmp(str, "> >", 3) == 0 && !i[0] && !i[1])
 			return (1);
 		str++;
 	}
@@ -83,7 +89,10 @@ char	**lexer(char const *s, char c)
 	if (!s)
 		return (NULL);
 	if (check_pipe_error((char *)s))
+	{
+		print_error(SYNTAX_PIPE, "", -131);
 		return (NULL);
+	}
 	words = count_words(s, c);
 	if (words < 0)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 00:46:37 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 02:58:19 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ enum	e_minishell_errors {
 	EXECUTE_ERROR = 3,
 	CD = 4,
 	SYNTAX_PIPE = 5,
-	SYNTAX_IO = 6
+	SYNTAX_IO = 6,
+	CMD_NOT_FOUND = 7
 };
 
 void		print_arr(char **arr);
@@ -89,7 +90,7 @@ void		**pipe_expander(char ***arr);
 char		**empty_arr(void);
 int			get_pipe_amount(char **tokens);
 int			array_len(char **array);
-void		*print_error(int errtype, char *params, int err);
+void		print_error(int errtype, char *params, int err);
 bool		str_is_equal(char *str1, char *str2);
 
 // FREE

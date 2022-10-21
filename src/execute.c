@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 00:55:20 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 03:21:53 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int	start_execute(char **cmd_arr)
 		if (!cmd_arr)
 			print_error(QUOTE, NULL, 1);
 		cmd_arr = execute_prejobs(cmd_arr);
+		// cmd_arr = get_token_array(cmd_arr);
+		// implement removal of quotations here!!
 		cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);
 		execute_pipeline(cmd_table, get_token_array(cmd_arr));
 		// free_array(cmd_arr);

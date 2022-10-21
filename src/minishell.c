@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 01:01:00 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 03:28:13 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 /* TO DO:
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
 	- in heredoc when ^D no output + leaks | P
-	- "<<" eof what should happen? -> cmd not found
-	- "< <" eof what should happen? -> cmd not found
 	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ wird gelöscht und und es displayed nur test
-	- parser darf ""
+	- execute_own_builtin removes spaces from commands like: echo " < "
+
+	// PIPE THINGS NEED TO BE MOVED FROM EXPANDER TO EXECUTER
+	- "< <" wokring - 🔮
+	- "<<" eof what should happen? -> cmd not found --> schwierig mit unserer implementation des lexer, parser, etc.
+	- "< <" eof what should happen? -> cmd not found
 
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:

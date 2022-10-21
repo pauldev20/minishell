@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_prejobs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 16:37:33 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:27:04 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ char	**execute_prejobs(char **arr)
 	if (!check_syntax(token_array))
 		return (NULL);
 	if (arr[0] == NULL || arr[0][0] == '\0')
-		exit(127);
+		print_error(CMD_NOT_FOUND, "", 127);
 	return (arr);
 }

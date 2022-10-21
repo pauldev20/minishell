@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 23:53:54 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 03:24:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	**parse_input(char *input)
 	splitted = lexer(input, ' ');
 	if (!splitted)
 		return (NULL);
-	pipe_expander(&splitted);
 	c = 0;
 	while (splitted[c] != NULL)
 	{
