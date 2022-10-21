@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:04:41 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:15:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	child_executer(char	**cmd_arr)
 
 	if (!cmd_arr)
 		print_error(QUOTE, NULL, 1);
+	if (cmd_arr[0][0] == '\0')
+		print_error(EXECUTE_ERROR, NULL, 127);
 	cmd_arr = execute_prejobs(cmd_arr);
 	cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);
 	execute_pipeline(cmd_table, get_token_array(cmd_arr));

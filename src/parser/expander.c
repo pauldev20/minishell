@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 11:52:37 by mhedtman         ###   ########.fr       */
+/*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
+/*   Updated: 2022/10/21 15:24:31 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	get_key_len(char *str)
 	int	len;
 
 	len = 0;
-	while (str[len] != '\0' && str[len] != '/' && str[len] != '$' && str[len] != '\"')
+	while (str[len] != '\0' && str[len] != '/'
+		&& str[len] != '$' && str[len] != '\"')
 		len++;
 	return (len);
 }
@@ -27,7 +28,7 @@ char	*get_new_str(char *str)
 	size_t	key_len;
 	char	*key;
 	t_env	*envvar;
-	
+
 	key_len = get_key_len(str);
 	if (ft_strlen(str) > key_len)
 	{
@@ -119,4 +120,3 @@ char	*expand_vars(char *str)
 	free(str);
 	return (out);
 }
-	 

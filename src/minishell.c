@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:10:47 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:14:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	minishell(char **argv, char **envp)
 			break ;
 		cmd_array = parse_input(cache[1]);
 		ret = check_pipe_error(cache[1]);
-		if (cmd_array && cmd_array[0])
+		if (cmd_array)
 			ret = start_execute(cmd_array);
 		free (cache[1]);
 	}
