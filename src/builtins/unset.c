@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 10:24:21 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 14:18:47 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:29:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ int	builtin_unset(char **argv, int argc)
 	t_env	*env;
 
 	if (argc < 1)
-		write(1, "unset: not enough arguments\n", 28);
+		write(2, "unset: not enough arguments\n", 28);
 	if (argc < 1)
 		return (EXIT_FAILURE);
 	j = -1;
 	while (argv[++j])
 	{
+		if (!ft_isalpha(argv[j][0]))
+			print_error(EXECUTE_ERROR, NULL, -1);
 		i = 0;
 		env = g_minishell.envp;
 		while (env)
