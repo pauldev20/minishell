@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:41:10 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:57:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,14 @@ int	start_execute(char **cmd_arr)
 	g_minishell.executing = 1;
 	if (cmd_arr)
 		cmd_arr = check_for_builtins(cmd_arr);
-	g_minishell.pid = fork();
 	status = 0;
+	cmd_arr = join_io_modifier(cmd_arr);
 	here_docs = get_here_doc_limiters(cmd_arr);
 	if (here_docs[0] != NULL)
 		here_doc_execute(here_docs);
 	free_array(here_docs);
-	if (id == 0)
+	g_minishell.pid = fork();
+	if (g_minishell.pid == 0)
 		child_executer(cmd_arr);
 	else
 	{
