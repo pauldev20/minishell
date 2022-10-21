@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:15:21 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 17:38:07 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:42:20 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*append_char(char *str, char c)
 		i++;
 	}
 	new_str[i] = c;
-	new_str[i + 1] = '\0';
 	free(str);
 	return (new_str);
 }
