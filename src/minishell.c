@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 17:17:17 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 17:43:52 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ static void	init_env(char **argv)
 	if (!el)
 		set_env_var(&g_minishell.envp, "SHLVL", "1");
 	else
-		set_env_var(&g_minishell.envp, "SHLVL",
-			ft_itoa(ft_atoi(el->value) + 1));
+	{
+		str = ft_itoa(ft_atoi(el->value) + 1);
+		set_env_var(&g_minishell.envp, "SHLVL", str);
+		free(str);
+	}
 	str = getcwd(NULL, 0);
 	set_env_var(&g_minishell.envp, "PWD", str);
 	free(str);
