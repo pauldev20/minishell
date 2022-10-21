@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:07:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:37:47 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void		print_env(t_env	*env);
 int			in_list(t_env *env, char *key);
 int			set_env_var(t_env **env, char *key, char *value);
 
-
 // EXPANDER
 int			ft_word_len(char *str);
 bool		check_dquotes(char *str);
@@ -163,7 +162,7 @@ char		**get_token_array(char **arr);
 char		**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
-void		here_doc_execute(t_ct *exe_table);
+void		here_doc_execute(char **limiter);
 bool		has_dollars(char *str);
 char		**get_here_doc_limiters(char **arr);
 

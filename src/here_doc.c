@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 14:35:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:38:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*get_here_doc_line(void)
 	return (line);
 }
 
-void	here_doc_execute(t_ct *exe_table)
+void	here_doc_execute(char	**limiter)
 {
 	char	*line;
 	int		fd;
@@ -97,10 +97,10 @@ void	here_doc_execute(t_ct *exe_table)
 		line = get_here_doc_line();
 		if (*line == '\n' && g_minishell.sigint)
 			break ;
-		if (str_is_equal(exe_table->here_docs[i], line))
+		if (str_is_equal(limiter[i], line))
 		{
 			i++;
-			if (exe_table->here_docs[i] == NULL)
+			if (limiter[i] == NULL)
 				return ;
 			fd = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}
