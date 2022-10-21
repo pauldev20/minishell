@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 22:21:41 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 16:26:44 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 17:40:15 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_env	*parse_array_to_env(char **env, t_env *minienviro)
 		splitted = ft_split(env[i++], '=');
 		if (!in_list(enviro[0], splitted[0]))
 		{
-			enviro[1] = (t_env *)malloc(sizeof(t_env));
+			enviro[1] = (t_env *)ft_calloc(1, sizeof(t_env));
 			enviro[1]->next = NULL;
 			enviro[1]->key = splitted[0];
 			enviro[1]->value = splitted[1];

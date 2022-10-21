@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 10:08:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/08/22 16:55:33 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 17:40:27 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	set_env_var(t_env **env, char *key, char *value)
 		el->value = ft_strdup(value);
 		return (1);
 	}
-	el = (t_env *)malloc(sizeof(t_env));
+	el = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!el)
 		return (0);
 	el->key = ft_strdup(key);

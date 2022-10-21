@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:15:21 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/05 10:51:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:38:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	*catch_tty(char *prompt)
 		str = readline(prompt);
 	else
 		str = get_terminal_line(STDIN_FILENO);
+	free(prompt);
 	if (str == NULL)
 		return (NULL);
 	if (isatty(STDIN_FILENO))
