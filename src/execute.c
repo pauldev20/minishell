@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 18:08:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:15:45 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,18 @@ void	child_executer(char	**cmd_arr)
 
 int	start_execute(char **cmd_arr)
 {
-	pid_t			id;
 	int				status;
 
 	g_minishell.executing = 1;
 	if (cmd_arr)
 		cmd_arr = check_for_builtins(cmd_arr);
-	id = fork();
+	g_minishell.pid = fork();
 	status = 0;
-	if (id == 0)
+	if (g_minishell.pid == 0)
 		child_executer(cmd_arr);
 	else
 	{
-		waitpid(id, &status, 0);
+		waitpid(g_minishell.pid, &status, 0);
 		free_array(cmd_arr);
 		g_minishell.executing = 0;
 		g_minishell.exit_code = (status >> 8) & 0x000000ff;

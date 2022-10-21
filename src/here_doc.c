@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 14:35:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:20:04 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,20 @@ void	here_doc_execute(t_ct *exe_table)
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
 		line = get_here_doc_line();
 		if (*line == '\n' && g_minishell.sigint)
+		{
+			free(line);
 			break ;
+		}
 		if (str_is_equal(exe_table->here_docs[i], line))
 		{
-			i++;
-			if (exe_table->here_docs[i] == NULL)
+			if (exe_table->here_docs[i++] == NULL)
+				free(line);
+			if (exe_table->here_docs[i++] == NULL)
 				return ;
 			fd = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}
 		else
-		{
 			write(fd, line, ft_strlen(line));
-			free(line);
-		}
+		free(line);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:07:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:45:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include "libft.h"
 # include <sys/stat.h>
 # include <fcntl.h>
-
 
 typedef struct s_env
 {
@@ -52,6 +51,7 @@ typedef struct s_minishell
 	int			sigint;
 	int			exit_code;
 	int			executing;
+	pid_t		pid;
 }	t_minishell;
 
 t_minishell		g_minishell;
@@ -113,7 +113,6 @@ void		print_env(t_env	*env);
 int			in_list(t_env *env, char *key);
 int			set_env_var(t_env **env, char *key, char *value);
 
-
 // EXPANDER
 int			ft_word_len(char *str);
 bool		check_dquotes(char *str);
@@ -134,7 +133,8 @@ char		**cut_start_stop(char **cmd, int start_stop[2]);
 
 // EXECUTE INITS
 t_ct		*memory_allocation_arrays(t_ct *exetable, char **tokens);
-t_ct		*init_cmd_table(t_ct *exetable, char **cmd_array, int st_st[2], int i);
+t_ct		*init_cmd_table(t_ct *exetable, \
+				char **cmd_array, int st_st[2], int i);
 t_ct		*get_cmd_table(char **token_array, char **cmd_array);
 char		*get_cmd_array(char **cmds, char **tokens, int start, int stop);
 
@@ -146,8 +146,10 @@ bool		syntax_pipe_error(char **tokens, int i);
 bool		syntax_io_error(char **tokens, int i);
 
 // IO INIT
-char		*get_infile(char **cmd_array, char **token_array, int start, int stop);
-char		*get_outfile(char **cmd_array, char **token_array, int start, int stop);
+char		*get_infile(char **cmd_array, \
+				char **token_array, int start, int stop);
+char		*get_outfile(char **cmd_array, \
+				char **token_array, int start, int stop);
 char		*get_infile_type(char **token_array, int start, int stop);
 char		*get_outfile_type(char **token_array, int start, int stop);
 
