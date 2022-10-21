@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 11:20:10 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 18:04:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:13:01 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	get_old_pwd(void)
 	char	cwd[PATH_MAX];
 
 	getcwd(cwd, PATH_MAX);
-	arr = (char **)ft_calloc(2, sizeof(char *));
+	arr = (char **)ft_calloc(3, sizeof(char *));
 	arr[0] = ft_strdup(cwd);
 	pre = ft_strdup("OLDPWD=");
-	arr[0] = ft_strjoin(pre, arr[0]);
+	arr[1] = ft_strjoin(pre, arr[0]);
 	builtin_export(arr, 1);
 	free(pre);
 	free_array(arr);
@@ -51,10 +51,10 @@ void	get_new_pwd(void)
 	char	cwd[PATH_MAX];
 
 	getcwd(cwd, PATH_MAX);
-	arr = (char **)ft_calloc(2, sizeof(char *));
+	arr = (char **)ft_calloc(3, sizeof(char *));
 	arr[0] = ft_strdup(cwd);
 	pre = ft_strdup("PWD=");
-	arr[0] = ft_strjoin(pre, arr[0]);
+	arr[1] = ft_strjoin(pre, arr[0]);
 	builtin_export(arr, 1);
 	free(pre);
 	free_array(arr);
@@ -75,6 +75,7 @@ int	builtin_cd(char *path)
 		chdir_success = chdir(env->value);
 	else
 		chdir_success = chdir(path);
+	free(path);
 	get_new_pwd();
 	if (chdir_success == -1)
 		ft_putstr_fd("\033[31mminishell: no such file or directory\n", 2);

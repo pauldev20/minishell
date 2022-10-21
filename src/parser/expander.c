@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:24:47 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 19:26:46 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ char	*expand_vars(char *str)
 	i[0] = 0;
 	i[1] = 0;
 	i[2] = 0;
-	chars[0] = ft_calloc(1, sizeof(char));
 	if (has_delimiter(str))
 		return (str);
+	chars[0] = ft_calloc(1, sizeof(char));
 	while (str[i[0]])
 	{
 		rtn = check_expand(&i, &chars, str);

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:22:32 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 11:38:50 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:08:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	*get_token(char **arr, char **tokens, int i)
 		return (ft_strdup("OUTFILE"));
 	else if (i > 0 && (str_is_equal(tokens[i -1], "WEIRDIO")))
 		return (ft_strdup("WEIRDFILE"));
-	return (ft_strdup("WORD"));
+	else
+		return (ft_strdup("WORD"));
 }
 
 /*  CREATES A TOKEN LIST TO KNOW WHAT WE ARE WORKING
@@ -48,10 +49,11 @@ char	**get_token_array(char **arr)
 	while (arr[i] != NULL)
 		i++;
 	tokens = (char **)ft_calloc(i + 1, sizeof(char *));
-	i = -1;
-	while (arr[++i] != NULL)
+	i = 0;
+	while (arr[i] != NULL)
 	{
 		tokens[i] = get_token(arr, tokens, i);
+		i++;
 	}
 	return (tokens);
 }
@@ -86,28 +88,6 @@ char	**delete_doubles(char **arr, char **tokens)
 	{
 		arr[new_i] = NULL;
 		new_i++;
-	}
-	return (arr);
-}
-
-/*  DELETES THE REDIRECTORS OUT OF THE STRING SO THAT 
-	ONLY THE CMD PIPELINES REMAINS AND WE CAN ITERATE OVER IT */
-char	**delete_io(char **arr, char **tokens, int *fd)
-{
-	int		i;
-
-	i = 0;
-	arr = delete_doubles(arr, tokens);
-	if (arr[0] != NULL && arr[0][0] == '|')
-	{
-		i = 0;
-		if (arr[0][0] == '|')
-			*fd = handle_empty_input();
-		while (arr[i] != NULL)
-		{
-			arr[i] = arr[i + 1];
-			i++;
-		}
 	}
 	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 14:25:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:10:50 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_cmd_array(char **cmds, char **tokens, int start, int stop)
 		if (str_is_equal(tokens[start], "WORD"))
 			return (ft_strdup(cmds[start]));
 		start++;
-	}
+	}	
 	return (ft_strdup(""));
 }
 
@@ -71,6 +71,7 @@ t_ct	*init_cmd_table(t_ct *table, char **cmds, int st_st[2], int i)
 	table->in_type[i] = get_infile_type(tokens, st_st[0], st_st[1]);
 	table->out[i] = get_outfile(cmds, tokens, st_st[0], st_st[1]);
 	table->out_type[i] = get_outfile_type(tokens, st_st[0], st_st[1]);
+	free(tokens);
 	return (table);
 }
 

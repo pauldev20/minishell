@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:15:45 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 19:26:32 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ int	execute_pipeline(t_ct *exetable, char **token_array)
 	int		io_modifier[2];
 	int		i;
 	char	**env;
+	int		pipes;
 
+	pipes = get_pipe_amount(token_array);
 	env = get_env_arr(g_minishell.envp);
 	i = 0;
 	io_modifier[0] = get_infile_fd(exetable, exetable->in_type[i],
 			exetable->in[i], 0);
 	dup2(io_modifier[0], STDIN_FILENO);
-	while (i < get_pipe_amount(token_array))
+	while (i < pipes)
 	{
 		child_process(exetable, env, i);
 		i++;
