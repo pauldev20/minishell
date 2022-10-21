@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 22:21:41 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 23:40:04 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:26:44 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ char	**get_env_arr(t_env *list)
 	while (lst)
 	{
 		str = ft_strjoin(lst->key, "=");
-		arr[v] = ft_strjoin(str, lst->value);
+		arr[v++] = ft_strjoin(str, lst->value);
 		free(str);
-		v++;
 		lst = lst->next;
 	}
 	arr[v] = NULL;
@@ -86,21 +85,20 @@ t_env	*parse_array_to_env(char **env, t_env *minienviro)
 {
 	int		i;
 	char	**splitted;
-	t_env	*enviro;
-	t_env	*new;
+	t_env	*enviro[2];
 
 	i = 0;
-	enviro = minienviro;
+	enviro[0] = minienviro;
 	while (env[i])
 	{
 		splitted = ft_split(env[i++], '=');
-		if (!in_list(enviro, splitted[0]))
+		if (!in_list(enviro[0], splitted[0]))
 		{
-			new = (t_env *)malloc(sizeof(t_env));
-			new->next = NULL;
-			new->key = splitted[0];
-			new->value = splitted[1];
-			add_back(&enviro, new);
+			enviro[1] = (t_env *)malloc(sizeof(t_env));
+			enviro[1]->next = NULL;
+			enviro[1]->key = splitted[0];
+			enviro[1]->value = splitted[1];
+			add_back(&enviro[0], enviro[1]);
 		}
 		else
 		{
@@ -109,7 +107,7 @@ t_env	*parse_array_to_env(char **env, t_env *minienviro)
 		}
 		free(splitted);
 	}
-	return (enviro);
+	return (enviro[0]);
 }
 
 void	print_env(t_env	*env)
