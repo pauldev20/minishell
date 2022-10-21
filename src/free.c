@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:39:42 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 13:50:45 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:00:02 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_array(char **array)
 		{
 			free(array[i]);
 			i++;
-		} 
+		}
 		free(array);
 	}
 }
