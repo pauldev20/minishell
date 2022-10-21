@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 13:34:09 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:55:01 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int			builtin_unset(char **argv, int argc);
 int			builtin_pwd(void);
 int			builtin_cd(char *path);
 int			builtin_exit(char *exit_code);
+char		**catch_builtins(char **cmds, int *i, int *offset);
 
 //PARSER
 char		**parse_input(char *input);
