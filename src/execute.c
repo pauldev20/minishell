@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 20:21:33 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 20:33:57 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,20 @@ int	start_execute(char **cmd_arr)
 	if (here_docs[0] != NULL)
 		here_doc_execute(here_docs);
 	free_array(here_docs);
-	g_minishell.pid = fork();
-	if (g_minishell.pid == 0)
-		child_executer(cmd_arr);
-	else
+	if (!g_minishell.sigint)
 	{
-		waitpid(g_minishell.pid, &status, 0);
-		free_array(cmd_arr);
-		g_minishell.executing = 0;
-		g_minishell.exit_code = (status >> 8) & 0x000000ff;
-		return ((status >> 8) & 0x000000ff);
+		printf("forking\n");
+		g_minishell.pid = fork();
+		if (g_minishell.pid == 0)
+			child_executer(cmd_arr);
+		else
+		{
+			waitpid(g_minishell.pid, &status, 0);
+			free_array(cmd_arr);
+			g_minishell.exit_code = (status >> 8) & 0x000000ff;
+			return ((status >> 8) & 0x000000ff);
+		}
 	}
+	g_minishell.executing = 0;
 	return (EXIT_SUCCESS);
 }
