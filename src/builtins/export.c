@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 14:20:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:36:40 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ t_env	*create_new(char *str)
 	if (array[1])
 		new->value = array[1];
 	else
-	{
 		new->value = (char *)ft_calloc(1, sizeof(char));
-		if (!new->value)
-			print_error(MALLOC, NULL, 127);
-	}
 	free(array);
 	return (new);
 }
