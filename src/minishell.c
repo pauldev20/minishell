@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:06:55 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:10:47 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,14 @@ int	minishell(char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		cache[0] = get_quick_prompt();
 		g_minishell.sigint = 0;
-		cache[1] = catch_tty(cache[0]);
+		cache[1] = catch_tty(get_quick_prompt());
 		if (cache[1] == NULL)
 			break ;
-		free(cache[0]);
-		if (cache[1] != NULL)
-			cmd_array = parse_input(cache[1]);
+		cmd_array = parse_input(cache[1]);
+		ret = check_pipe_error(cache[1]);
 		if (cmd_array && cmd_array[0])
 			ret = start_execute(cmd_array);
-		else
-			ret = check_pipe_error(cache[1]);
 		free (cache[1]);
 	}
 	return (ret);
