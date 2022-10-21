@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 14:29:14 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:13:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	execute(char *cmd, char **args, char **envp)
 		print_error(3, NULL, 127);
 	}
 	cmd_args = get_cmd_arg_arr(cmd, args);
+	print_arr(cmd_args);
+	printf("PATH [%s]\n", path);
 	if (execve(path, cmd_args, envp) == -1)
 		print_error(3, NULL, 127);
 	return (127);

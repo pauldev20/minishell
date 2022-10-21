@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/21 01:46:54 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/21 17:09:18 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT = libft/libft.a
 DOWNLOADFOLDER = dwnlds
 
 # compiler flags
-CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address,undefined
+CFLAGS	= -Wall -Werror -Wextra -fsanitize=address,undefined
 
 # the compiler to be used
 CC	= cc
