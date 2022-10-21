@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:48:10 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:53:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ char	*get_new_str(char *str)
 	char	*key;
 	t_env	*envvar;
 
-	printf("get new str [%s]\n", str);
 	key_len = get_key_len(str);
 	if (ft_strlen(str) > key_len)
 	{
 		key = ft_substr(str, 0, key_len);
 		str = ft_substr(str, key_len, ft_strlen(str));
 		envvar = get_env_var(g_minishell.envp, key);
-		if (envvar && (str[0] == '$' || str[0] == '\"'))
+		if (envvar && (str[0] == '$' || str[0] == '\"' || str[0] == '\''))
 			return (ft_strdup(envvar->value));
 		else if (envvar)
 			return (ft_strjoin(envvar->value, str));
@@ -75,7 +74,6 @@ char	*expand_vars(char *str)
 	char	*old;
 
 	i = 0;
-	printf("str [%s]\n", str);
 	doubleq = 0;
 	singleq = 0;
 	out = ft_calloc(1, sizeof(char));
@@ -121,6 +119,5 @@ char	*expand_vars(char *str)
 		i++;
 	}
 	free(str);
-	printf("OUT [%s]\n", out);
 	return (out);
 }
