@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 15:36:40 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:51:32 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,28 @@ t_env	*create_new(char *str)
 	return (new);
 }
 
+static int	replace_existing(t_env	**newenv, t_env	**env)
+{
+	int	i;
+
+	i = 0;
+	while (*newenv && *env)
+	{
+		if (ft_strncmp((*env)->key,
+				(*newenv)->key, ft_strlen((*env)->key)) == 0)
+		{
+			free((*newenv)->key);
+			free((*env)->value);
+			(*env)->value = (*newenv)->value;
+			free(*newenv);
+			break ;
+		}
+		(*env) = (*env)->next;
+		i++;
+	}
+	return (i);
+}
+
 int	builtin_export(char	**argv, int argc)
 {
 	int		i[2];
@@ -47,22 +69,9 @@ int	builtin_export(char	**argv, int argc)
 	i[1] = 0;
 	while (argv[i[1]])
 	{
-		i[0] = 0;
 		env = g_minishell.envp;
 		newenv = create_new(argv[i[1]++]);
-		while (newenv && env)
-		{
-			if (ft_strncmp(env->key, newenv->key, ft_strlen(env->key)) == 0)
-			{
-				free(newenv->key);
-				free(env->value);
-				env->value = newenv->value;
-				free(newenv);
-				break ;
-			}
-			env = env->next;
-			i[0]++;
-		}
+		i[0] = replace_existing(&newenv, &env);
 		if (newenv && !env)
 			add_at_index(&g_minishell.envp, newenv, i[0]);
 	}
