@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 18:45:33 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 19:40:23 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ char		**get_token_array(char **arr);
 char		**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
-void		here_doc_execute(t_ct *exe_table);
+void		here_doc_execute(char **limiter);
 bool		has_dollars(char *str);
 char		**get_here_doc_limiters(char **arr);
 

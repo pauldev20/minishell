@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:36:26 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 20:21:33 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ char	**check_for_builtins(char **cmds)
 	cmds = catch_builtins(cmds, &i, &offset);
 	if (cmds == NULL || cmds[0] == NULL)
 	{
-		free(cmds);
+		if (cmds)
+			free(cmds);
 		return (empty_arr());
 	}
 	if (cmds[i - offset] != NULL && cmds[i - offset][0] == '|')
@@ -78,12 +79,18 @@ void	child_executer(char	**cmd_arr)
 int	start_execute(char **cmd_arr)
 {
 	int				status;
+	char			**here_docs;
 
 	g_minishell.executing = 1;
 	if (cmd_arr)
 		cmd_arr = check_for_builtins(cmd_arr);
-	g_minishell.pid = fork();
 	status = 0;
+	cmd_arr = join_io_modifier(cmd_arr);
+	here_docs = get_here_doc_limiters(cmd_arr);
+	if (here_docs[0] != NULL)
+		here_doc_execute(here_docs);
+	free_array(here_docs);
+	g_minishell.pid = fork();
 	if (g_minishell.pid == 0)
 		child_executer(cmd_arr);
 	else

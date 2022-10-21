@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 20:15:17 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 20:21:23 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	get_here_doc_amount(char **arr)
 			ret++;
 		i++;
 	}
+	free_array(tokens);
 	return (ret);
 }
 
@@ -44,7 +45,7 @@ char	**get_here_doc_limiters(char **arr)
 	i = 0;
 	tokens = get_token_array(arr);
 	here_doc_amount = get_here_doc_amount(arr);
-	limiter = (char **)malloc(sizeof(char *) * (here_doc_amount + 1));
+	limiter = (char **)ft_calloc((here_doc_amount + 1), sizeof(char *));
 	while (tokens[i] != NULL)
 	{
 		if (ft_strnstr(tokens[i], "DLESS", 5))
@@ -55,7 +56,7 @@ char	**get_here_doc_limiters(char **arr)
 		}
 		i++;
 	}
-	limiter[limiter_i] = NULL;
+	free_array(tokens);
 	return (limiter);
 }
 
@@ -83,7 +84,7 @@ char	*get_here_doc_line(void)
 	return (line);
 }
 
-void	here_doc_execute(t_ct *exe_table)
+void	here_doc_execute(char **limiter)
 {
 	char	*line;
 	int		i[2];
@@ -96,9 +97,9 @@ void	here_doc_execute(t_ct *exe_table)
 		line = get_here_doc_line();
 		if (g_minishell.sigint)
 			return (free(line));
-		if (str_is_equal(exe_table->here_docs[i[0]], line))
+		if (str_is_equal(limiter[i[0]], line))
 		{
-			if (exe_table->here_docs[i[0]++] == NULL)
+			if (limiter[i[0]++] == NULL)
 				return (free(line));
 			i[1] = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}
