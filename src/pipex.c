@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 11:36:10 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:29:14 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*find_path(char *cmd)
 	int		i;
 	char	*part_path;
 
-	i = 0;
 	if (cmd[0] == '.' || cmd[0] == '/')
 		return (NULL);
 	env = get_env_var(g_minishell.envp, "PATH");
@@ -38,10 +37,7 @@ char	*find_path(char *cmd)
 		free(path);
 		i++;
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
+	free_array(paths);
 	return (0);
 }
 

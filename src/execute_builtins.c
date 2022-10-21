@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 12:41:39 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:24:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,45 @@ int	execute_own_builtin(char *cmd, char **args)
 	while (cmd_args[i] != NULL)
 		i++;
 	return (builtin_parser(cmd_args, i));
+}
+
+bool	is_last_cmd(char **cmd_arr)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_arr[i] != NULL)
+	{
+		if (str_is_equal(cmd_arr[i], "|"))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+char	**catch_builtins(char **cmds, int *i, int *offset)
+{
+	int	j;
+
+	while (cmds[*i] != NULL)
+	{
+		if (str_is_equal(cmds[*i], "unset") || str_is_equal(cmds[*i], "export")
+			|| str_is_equal(cmds[*i], "cd"))
+		{
+			if (is_last_cmd(cmds + (*i)))
+			{
+				j = 0;
+				while (cmds[j] != NULL)
+					j++;
+				builtin_parser(cmds + (*i), j);
+				return (empty_arr());
+			}
+			*offset += 2;
+			if (cmds[*i + *offset] != NULL && cmds[*i + *offset][0] == '|')
+				*offset += 1;
+		}
+		cmds[*i] = cmds[*i + *offset];
+		*i += 1;
+	}
+	return (cmds);
 }

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 11:21:20 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:25:53 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_ct	*get_cmd_table(char **token_array, char **cmd_array)
 	int			st_st[2];
 	int			i;
 
-	cmd_table = (t_ct *)malloc(sizeof(t_ct));
+	cmd_table = (t_ct *)ft_calloc(1, sizeof(t_ct));
 	cmd_table = memory_allocation_arrays(cmd_table, token_array);
 	st_st[0] = 0;
 	st_st[1] = 0;

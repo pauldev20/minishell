@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 01:00:35 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 14:48:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char	*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code)
 	char	*user;
 	char	*tmp;
 
+	if (!usr || !pwd || !home)
+		return (ft_strdup("\033[31mguest@minishell $ \033[0m"));
 	user = get_user(usr);
 	tmp = ft_strjoin(user, "@minishell ");
 	free(user);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 10:24:21 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 23:40:14 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 14:18:47 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	builtin_unset(char **argv, int argc)
 		write(1, "unset: not enough arguments\n", 28);
 	if (argc < 1)
 		return (EXIT_FAILURE);
-	j = 0;
-	while (argv[j])
+	j = -1;
+	while (argv[++j])
 	{
 		i = 0;
 		env = g_minishell.envp;
@@ -37,7 +37,6 @@ int	builtin_unset(char **argv, int argc)
 			env = env->next;
 			i++;
 		}
-		j++;
 	}
 	return (EXIT_SUCCESS);
 }

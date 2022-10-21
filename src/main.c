@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:31:47 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:41:45 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:37:06 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_arr(char **arr)
 {
 	for (int i = 0; arr[i] != NULL; i++)
-		printf("ARR [--%d--]: [--%s--]\n", i, arr[i]);	
+		printf("ARR [--%d--]: [--%s--]\n", i, arr[i]);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -23,6 +23,6 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (0);
 	else
-		return (minishell(argc, argv, envp));
+		return (minishell(argv, envp));
 	return (0);
 }

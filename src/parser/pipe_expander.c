@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_expander.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:37:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 14:45:58 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 14:16:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ static char	**set_split(char const *s, char *c)
 	words = count_words(s, c);
 	if (words < 0)
 		return (NULL);
-	arr = (char **)malloc(sizeof(char *) * (words + 1));
-	if (!arr)
-		return (NULL);
-	arr[words] = NULL;
+	arr = (char **)ft_calloc((words + 1), sizeof(char *));
 	if (!fill_array((char *)s, c, arr))
 		return (NULL);
 	return (arr);
@@ -92,8 +89,7 @@ int	insert_into_arr(char ***arr, char **insert, int index)
 	i[1] = 0;
 	while (insert[i[1]])
 		i[1]++;
-	outarr = (char **)malloc(sizeof(char *) * (i[0] + i[1] + 1 - (i[1] > 0)));
-	outarr[i[0] + i[1] - (i[1] > 0)] = NULL;
+	outarr = (char **)ft_calloc((i[0] + i[1] + 1 - (i[1] > 0)), sizeof(char *));
 	i[1] = 0;
 	i[0] = 0;
 	while (i[0]++ < index)
@@ -112,7 +108,6 @@ int	insert_into_arr(char ***arr, char **insert, int index)
 void	**pipe_expander(char ***arr)
 {
 	int		i;
-	// int		g;
 	char	**insert;
 
 	i = 0;
@@ -121,7 +116,6 @@ void	**pipe_expander(char ***arr)
 		insert = set_split((*arr)[i], "<|>");
 		if (!insert)
 			return (NULL);
-		// g = 0;
 		insert_into_arr(arr, insert, i);
 		free(insert);
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 20:41:41 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 14:20:17 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ t_env	*create_new(char *str)
 		free_array(array);
 		return (NULL);
 	}
-	new = (t_env *)malloc(sizeof(t_env));
+	new = (t_env *)ft_calloc(1, sizeof(t_env));
 	new->next = NULL;
 	new->key = array[0];
 	if (array[1])
 		new->value = array[1];
 	else
+	{
 		new->value = (char *)ft_calloc(1, sizeof(char));
+		if (!new->value)
+			print_error(MALLOC, NULL, 127);
+	}
 	free(array);
 	return (new);
 }

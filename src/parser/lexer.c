@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:11:18 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 13:34:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:17:31 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,23 @@ static int	count_words(const char *str, char del)
 static char	**fill_array(char *s, char del, char **arr)
 {
 	int		i[4];
-	char	*word_start;
+	char	*w_st;
 
 	i[0] = 0;
 	i[1] = 0;
 	i[2] = 0;
 	i[3] = 0;
-	word_start = NULL;
+	w_st = NULL;
 	while (i[3] <= (int)ft_strlen(s))
 	{
-		if (s[i[3]] != del && !word_start && !i[1] && !i[2])
-			word_start = s + i[3];
-		else if ((s[i[3]] == del || s[i[3]] == '\0') && !i[1] && !i[2] && word_start)
+		if (s[i[3]] != del && !w_st && !i[1] && !i[2])
+			w_st = s + i[3];
+		else if ((s[i[3]] == del || s[i[3]] == '\0') && !i[1] && !i[2] && w_st)
 		{
-			arr[i[0]] = ft_substr(word_start, 0, (s + i[3]) - word_start);
+			arr[i[0]] = ft_substr(w_st, 0, (s + i[3]) - w_st);
 			if (!arr[i[0]++])
 				return (free_arr(arr, i[0] - 1));
-			word_start = NULL;
+			w_st = NULL;
 		}
 		i[1] += (s[i[3]] == '\"') * (!i[1] + -(i[1]));
 		i[2] += (s[i[3]++] == '\'') * (!i[2] + -(i[2]));
@@ -96,10 +96,7 @@ char	**lexer(char const *s, char c)
 	words = count_words(s, c);
 	if (words < 0)
 		return (NULL);
-	arr = (char **)malloc(sizeof(char *) * (words + 1));
-	if (!arr)
-		return (NULL);
-	arr[words] = NULL;
+	arr = (char **)ft_calloc((words + 1), sizeof(char *));
 	if (!fill_array((char *)s, c, arr))
 		return (NULL);
 	return (arr);
