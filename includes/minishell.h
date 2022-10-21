@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 14:55:01 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:07:04 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ enum	e_minishell_errors {
 
 void		print_arr(char **arr);
 
-int			minishell(int argc, char **argv, char **envp);
+int			minishell(char **argv, char **envp);
 char		**arr_dup(char **enviroment);
 
 // BUILTINS

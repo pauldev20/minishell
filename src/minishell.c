@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:06:10 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:06:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,13 @@ char	*get_quick_prompt(void)
 	return (prompt);
 }
 
-int	minishell(int argc, char **argv, char **envp)
+int	minishell(char **argv, char **envp)
 {
 	char	*cache[2];
 	char	**cmd_array;
 	int		ret;
 
 	ret = 1;
-	(void)argc;
 	g_minishell.envp = NULL;
 	g_minishell.envp = parse_array_to_env(envp, g_minishell.envp);
 	g_minishell.executing = 0;
