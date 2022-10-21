@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 13:51:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:06:10 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /* TO DO:
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
 	- in heredoc when ^D no output + leaks | P
-	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ wird gelöscht und und es displayed nur test
+	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ 
+		wird gelöscht und und es displayed nur test
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
 	- UNSET PWD
@@ -45,6 +46,18 @@ static void	init_env(char **argv)
 		set_env_var(&g_minishell.envp, "_", argv[0]);
 }
 
+char	*get_quick_prompt(void)
+{
+	char	*prompt;
+
+	prompt = get_prompt(
+			get_env_var(g_minishell.envp, "USER"),
+			get_env_var(g_minishell.envp, "PWD"),
+			get_env_var(g_minishell.envp, "HOME"),
+			g_minishell.exit_code);
+	return (prompt);
+}
+
 int	minishell(int argc, char **argv, char **envp)
 {
 	char	*cache[2];
@@ -62,11 +75,7 @@ int	minishell(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		cache[0] = get_prompt(
-				get_env_var(g_minishell.envp, "USER"),
-				get_env_var(g_minishell.envp, "PWD"),
-				get_env_var(g_minishell.envp, "HOME"),
-				g_minishell.exit_code);
+		cache[0] = get_quick_prompt();
 		g_minishell.sigint = 0;
 		cache[1] = catch_tty(cache[0]);
 		if (cache[1] == NULL)
