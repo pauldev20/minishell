@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:24:31 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:48:10 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	get_key_len(char *str)
 
 	len = 0;
 	while (str[len] != '\0' && str[len] != '/'
-		&& str[len] != '$' && str[len] != '\"')
+		&& str[len] != '$' && str[len] != '\"'
+		&& str[len] != '\'')
 		len++;
 	return (len);
 }
@@ -29,6 +30,7 @@ char	*get_new_str(char *str)
 	char	*key;
 	t_env	*envvar;
 
+	printf("get new str [%s]\n", str);
 	key_len = get_key_len(str);
 	if (ft_strlen(str) > key_len)
 	{
@@ -73,6 +75,7 @@ char	*expand_vars(char *str)
 	char	*old;
 
 	i = 0;
+	printf("str [%s]\n", str);
 	doubleq = 0;
 	singleq = 0;
 	out = ft_calloc(1, sizeof(char));
@@ -118,5 +121,6 @@ char	*expand_vars(char *str)
 		i++;
 	}
 	free(str);
+	printf("OUT [%s]\n", out);
 	return (out);
 }
