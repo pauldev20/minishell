@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:57:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 20:09:52 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ char	**check_for_builtins(char **cmds)
 	cmds = catch_builtins(cmds, &i, &offset);
 	if (cmds == NULL || cmds[0] == NULL)
 	{
-		free(cmds);
+		if (cmds)
+			free(cmds);
 		return (empty_arr());
 	}
 	if (cmds[i - offset] != NULL && cmds[i - offset][0] == '|')
