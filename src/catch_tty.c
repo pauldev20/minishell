@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   catch_tty.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:15:21 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 17:42:20 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:58:28 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*catch_tty(char *prompt)
 	free(prompt);
 	if (str == NULL)
 		return (NULL);
-	if (isatty(STDIN_FILENO))
+	if (*str != '\0' && isatty(STDIN_FILENO))
 		add_history(str);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 18:20:04 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 20:15:17 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,30 +86,24 @@ char	*get_here_doc_line(void)
 void	here_doc_execute(t_ct *exe_table)
 {
 	char	*line;
-	int		fd;
-	int		i;
+	int		i[2];
 
-	i = 0;
-	fd = open("/tmp/here_doc", O_WRONLY | O_CREAT | O_TRUNC, 00777);
+	i[0] = 0;
+	i[1] = open("/tmp/here_doc", O_WRONLY | O_CREAT | O_TRUNC, 00777);
 	while (1)
 	{
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
 		line = get_here_doc_line();
-		if (*line == '\n' && g_minishell.sigint)
+		if (g_minishell.sigint)
+			return (free(line));
+		if (str_is_equal(exe_table->here_docs[i[0]], line))
 		{
-			free(line);
-			break ;
-		}
-		if (str_is_equal(exe_table->here_docs[i], line))
-		{
-			if (exe_table->here_docs[i++] == NULL)
-				free(line);
-			if (exe_table->here_docs[i++] == NULL)
-				return ;
-			fd = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
+			if (exe_table->here_docs[i[0]++] == NULL)
+				return (free(line));
+			i[1] = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}
 		else
-			write(fd, line, ft_strlen(line));
+			write(i[1], line, ft_strlen(line));
 		free(line);
 	}
 }
