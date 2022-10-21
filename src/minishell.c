@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:14:22 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:17:17 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 	- UNSET PWD
 	- LEAKS
 	*/
+
+static void	init_minishell(char **envp)
+{
+	g_minishell.envp = NULL;
+	g_minishell.envp = parse_array_to_env(envp, g_minishell.envp);
+	g_minishell.executing = 0;
+	g_minishell.sigint = 0;
+}
 
 static void	init_env(char **argv)
 {
@@ -65,10 +73,7 @@ int	minishell(char **argv, char **envp)
 	int		ret;
 
 	ret = 1;
-	g_minishell.envp = NULL;
-	g_minishell.envp = parse_array_to_env(envp, g_minishell.envp);
-	g_minishell.executing = 0;
-	g_minishell.sigint = 0;
+	init_minishell(envp);
 	init_env(argv);
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
@@ -80,8 +85,10 @@ int	minishell(char **argv, char **envp)
 			break ;
 		cmd_array = parse_input(cache[1]);
 		ret = check_pipe_error(cache[1]);
-		if (cmd_array)
+		if (cmd_array && cmd_array[0])
 			ret = start_execute(cmd_array);
+		else if (!cmd_array)
+			print_error(QUOTE, NULL, -1);
 		free (cache[1]);
 	}
 	return (ret);

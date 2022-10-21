@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 15:53:07 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:03:58 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	get_key_len(char *str)
-{
-	int	len;
-
-	len = 0;
-	while (str[len] != '\0' && str[len] != '/'
-		&& str[len] != '$' && str[len] != '\"'
-		&& str[len] != '\'')
-		len++;
-	return (len);
-}
 
 char	*get_new_str(char *str)
 {
@@ -30,7 +18,10 @@ char	*get_new_str(char *str)
 	char	*key;
 	t_env	*envvar;
 
-	key_len = get_key_len(str);
+	key_len = 0;
+	while (str[key_len] != '\0' && str[key_len] != '/' && str[key_len] != '$'
+		&& str[key_len] != '\"' && str[key_len] != '\'')
+		key_len++;
 	if (ft_strlen(str) > key_len)
 	{
 		key = ft_substr(str, 0, key_len);
@@ -64,60 +55,73 @@ bool	has_delimiter(char *str)
 	return (false);
 }
 
+static char	*handle_expand(int (*i)[3], char *(*chars)[3], char *str)
+{
+	if (!(*i)[2] && str[(*i)[0]] == '$')
+	{
+		(*i)[0]++;
+		if (str[(*i)[0]] == 0)
+			return (ft_strdup("$"));
+		if (str[(*i)[0]] == '?')
+			return (ft_itoa(g_minishell.exit_code));
+		(*chars)[1] = get_new_str(str + (*i)[0]);
+		if ((*chars)[1])
+			(*chars)[0] = ft_strjoin((*chars)[0], (*chars)[1]);
+		free((*chars)[1]);
+		(*i)[0] += ft_word_len(str + (*i)[0]) - 1;
+	}
+	else
+	{
+		(*chars)[1] = ft_substr(str, (*i)[0], 1);
+		(*chars)[2] = (*chars)[0];
+		(*chars)[0] = ft_strjoin((*chars)[0], (*chars)[1]);
+		free((*chars)[2]);
+		free((*chars)[1]);
+	}
+	return (NULL);
+}
+
+static char	*check_expand(int (*i)[3], char *(*chars)[3], char *str)
+{
+	char	*rtn;
+
+	(*i)[1] += (str[(*i)[0]] == '\"') * (!(*i)[1] + -((*i)[1]));
+	(*i)[2] += (str[(*i)[0]] == '\'' && !(*i)[1]) * (!(*i)[2] + -((*i)[2]));
+	if (i[1] && str[(*i)[0]] == '\'')
+	{
+		(*chars)[2] = (*chars)[0];
+		(*chars)[0] = ft_strjoin((*chars)[0], "'");
+		free((*chars)[2]);
+	}
+	else if ((str[(*i)[0]] != '\'' && str[(*i)[0]] != '\"')
+		|| (str[(*i)[0]] != '\'' && (*i)[2]))
+	{
+		rtn = handle_expand(i, chars, str);
+		if (rtn)
+			return (rtn);
+	}
+	return (NULL);
+}
+
 char	*expand_vars(char *str)
 {
-	int		i;
-	int		doubleq;
-	int		singleq;
-	char	*out;
-	char	*new;
-	char	*old;
+	int		i[3];
+	char	*chars[3];
+	char	*rtn;
 
-	i = 0;
-	doubleq = 0;
-	singleq = 0;
-	out = ft_calloc(1, sizeof(char));
+	i[0] = 0;
+	i[1] = 0;
+	i[2] = 0;
+	chars[0] = ft_calloc(1, sizeof(char));
 	if (has_delimiter(str))
 		return (str);
-	while (str[i])
+	while (str[i[0]])
 	{
-		if (str[i] == '\"')
-			doubleq = !doubleq;
-		if (str[i] == '\'' && !doubleq)
-			singleq = !singleq;
-		if (doubleq && str[i] == '\'')
-		{
-			old = out;
-			out = ft_strjoin(out, "'");
-			free(old);
-		}
-		else if ((str[i] != '\'' && str[i] != '\"')
-			|| (str[i] != '\'' && singleq))
-		{
-			if (!singleq && str[i] == '$')
-			{
-				i++;
-				if (str[i] == 0)
-					return (ft_strdup("$"));
-				if (str[i] == '?')
-					return (ft_itoa(g_minishell.exit_code));
-				new = get_new_str(str + i);
-				if (new)
-					out = ft_strjoin(out, new);
-				free(new);
-				i += ft_word_len(str + i) - 1;
-			}
-			else
-			{
-				new = ft_substr(str, i, 1);
-				old = out;
-				out = ft_strjoin(out, new);
-				free(old);
-				free(new);
-			}
-		}
-		i++;
+		rtn = check_expand(&i, &chars, str);
+		if (rtn)
+			return (rtn);
+		i[0]++;
 	}
 	free(str);
-	return (out);
+	return (chars[0]);
 }
