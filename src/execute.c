@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 11:28:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:51:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	is_last_cmd(char **cmd_arr)
 
 char	**catch_builtins(char **cmds, int *i, int *offset)
 {
-	int j;
+	int	j;
 
 	while (cmds[*i] != NULL)
 	{
@@ -63,7 +63,7 @@ char	**catch_builtins(char **cmds, int *i, int *offset)
 				j = 0;
 				while (cmds[j] != NULL)
 					j++;
-				builtin_parser(cmds + (*i), j, 0);
+				builtin_parser(cmds + (*i), j);
 				return (empty_arr());
 			}
 			*offset += 2;
@@ -112,8 +112,6 @@ int	start_execute(char **cmd_arr)
 		if (!cmd_arr)
 			print_error(QUOTE, NULL, 1);
 		cmd_arr = execute_prejobs(cmd_arr);
-		// cmd_arr = get_token_array(cmd_arr);
-		// implement removal of quotations here!!
 		cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);
 		execute_pipeline(cmd_table, get_token_array(cmd_arr));
 		free_array(cmd_arr);
@@ -122,6 +120,7 @@ int	start_execute(char **cmd_arr)
 	else
 	{
 		waitpid(id, &status, 0);
+		free_array(cmd_arr);
 		g_minishell.executing = 0;
 		g_minishell.exit_code = (status >> 8) & 0x000000ff;
 		return ((status >> 8) & 0x000000ff);

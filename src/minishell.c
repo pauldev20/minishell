@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 11:39:44 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:51:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,9 @@
 	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
 	- in heredoc when ^D no output + leaks | P
 	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ wird gelöscht und und es displayed nur test
-	- execute_own_builtin removes spaces from commands like: echo " < "
-
-	// PIPE THINGS NEED TO BE MOVED FROM EXPANDER TO EXECUTER
-	- "< <" wokring - 🔮
-	- "<<" eof what should happen? -> cmd not found --> schwierig mit unserer implementation des lexer, parser, etc. | fixed
-	- "< <" eof what should happen? -> cmd not found
-
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
 	- UNSET PWD
-	- <src/main.c cat 
-	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR - 🔮 ----> Fixed, tabs konnte ich nicht testen
 	- LEAKS
 	*/
 
@@ -68,7 +59,7 @@ int	minishell(int argc, char **argv, char **envp)
 	g_minishell.sigint = 0;
 	init_env(argv);
 	signal(SIGINT, handle_signal);
-	// signal quit!!!!
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		cache[0] = get_prompt(
@@ -85,7 +76,8 @@ int	minishell(int argc, char **argv, char **envp)
 			cmd_array = parse_input(cache[1]);
 		if (cmd_array && cmd_array[0])
 			ret = start_execute(cmd_array);
-		free_array(cmd_array);
+		else
+			ret = check_pipe_error(cache[1]);
 		free (cache[1]);
 	}
 	return (ret);

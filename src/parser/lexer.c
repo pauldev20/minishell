@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:11:18 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 03:02:06 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 13:34:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_pipe_error(char *str)
+int	check_pipe_error(char *str)
 {
 	int	i[2];
 
@@ -23,9 +23,9 @@ static int	check_pipe_error(char *str)
 		i[0] += (*str == '\"') * (!i[0] + -(i[0]));
 		i[1] += (*str == '\'') * (!i[1] + -(i[1]));
 		if (ft_strncmp(str, "< <", 3) == 0 && !i[0] && !i[1])
-			return (1);
+			return (2);
 		if (ft_strncmp(str, "> >", 3) == 0 && !i[0] && !i[1])
-			return (1);
+			return (2);
 		str++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 11:02:20 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 12:41:39 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ bool	is_own_builtin(char *cmd)
 int	execute_own_builtin(char *cmd, char **args)
 {
 	int		i;
-	int		pipe_amount;
 	char	**cmd_args;
 
 	cmd_args = get_cmd_arg_arr(cmd, args);
-	pipe_amount = get_pipe_amount(get_token_array(cmd_args));
 	i = 0;
 	while (cmd_args[i] != NULL)
 		i++;
-	return (builtin_parser(cmd_args, i, pipe_amount));
+	return (builtin_parser(cmd_args, i));
 }

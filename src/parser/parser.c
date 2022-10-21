@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 12:22:42 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:09:31 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**parse_input(char *input)
 	splitted = lexer(input, ' ');
 	if (!splitted)
 		return (NULL);
+	pipe_expander(&splitted);
 	c = 0;
 	while (splitted[c] != NULL)
 	{
