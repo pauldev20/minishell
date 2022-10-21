@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 10:24:21 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 16:29:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:19:49 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	builtin_unset(char **argv, int argc)
 	j = -1;
 	while (argv[++j])
 	{
-		if (!ft_isalpha(argv[j][0]))
-			print_error(EXECUTE_ERROR, NULL, -1);
 		i = 0;
 		env = g_minishell.envp;
 		while (env)
