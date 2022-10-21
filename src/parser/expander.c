@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 17:03:58 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 19:24:28 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ char	*expand_vars(char *str)
 	i[0] = 0;
 	i[1] = 0;
 	i[2] = 0;
-	chars[0] = ft_calloc(1, sizeof(char));
 	if (has_delimiter(str))
 		return (str);
+	chars[0] = ft_calloc(1, sizeof(char));
 	while (str[i[0]])
 	{
 		rtn = check_expand(&i, &chars, str);

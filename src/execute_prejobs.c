@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 14:26:17 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:19:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ char	**execute_prejobs(char **arr)
 	token_array = get_token_array(arr);
 	if (!check_syntax(token_array))
 		return (NULL);
+	free_array(token_array);
 	return (arr);
 }
