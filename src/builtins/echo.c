@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 12:30:48 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:52:59 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*delete_quotes(char *old_str)
 
 	i = 0;
 	new_i = 0;
-	new_str = ft_strdup("");
+	new_str = (char *)ft_calloc(ft_strlen(old_str) + 1, sizeof(char));
 	while (old_str[i] != '\0')
 	{
 		if (old_str[i] == '\"' || old_str[i] == '\'')
