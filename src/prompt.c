@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 14:48:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:39:02 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ char	*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code)
 	free(user);
 	front = ft_strjoin(tmp, GREEN);
 	free(tmp);
+	tmp = replace_pwd(home, pwd);
 	if (rtn_code)
-		back = ft_strjoin(replace_pwd(home, pwd), "\x1b[31m $ ");
+		back = ft_strjoin(tmp, "\x1b[31m $ ");
 	else
-		back = ft_strjoin(replace_pwd(home, pwd), " $ ");
+		back = ft_strjoin(tmp, " $ ");
+	free(tmp);
 	tmp = ft_strjoin(front, back);
 	free(front);
 	free(back);
