@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 14:48:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:36:10 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*find_path(char *cmd)
 	if (cmd[0] == '.' || cmd[0] == '/')
 		return (NULL);
 	env = get_env_var(g_minishell.envp, "PATH");
+	if (env == NULL)
+		return (NULL);
 	paths = ft_split(env->value + 5, ':');
 	i = 0;
 	while (paths[i])
@@ -43,57 +45,31 @@ char	*find_path(char *cmd)
 	return (0);
 }
 
-/* A simple function to cut the cmd array in the right amount neede*/
-char	**cut_start_stop(char **cmd, int start_stop[2])
+char	**get_cmd_arg_arr(char *cmd, char **args)
 {
-	int	i;
-	int	start_reset;
-
-	start_reset = start_stop[0];
-	i = 0;
-	while (start_stop[0] < start_stop[1])
-	{
-		cmd[i] = cmd[start_stop[0]];
-		i++;
-		start_stop[0]++;
-	}
-	while (cmd[i] != NULL)
-	{
-		cmd[i] = NULL;
-		i++;
-	}
-	start_stop[0] = start_reset;
-	return (cmd);
-}
-
-char	**get_cmd_arg_arr(char *cmd, char *args)
-{
-	char	**part_arr;
 	char	**full_arr;
 	int		i;
 	int		c;
 
 	i = 0;
-	part_arr = ft_split(args, ' ');
-	while (part_arr[i] != NULL)
+	while (args[i] != NULL)
 		i++;
 	full_arr = (char **)ft_calloc(i + 2, sizeof(char *));
 	full_arr[0] = cmd;
 	i = 1;
 	c = 0;
-	while (part_arr[c] != NULL)
+	while (args[c] != NULL)
 	{
-		full_arr[i] = part_arr[c];
+		full_arr[i] = args[c];
 		c++;
 		i++;
 	}
-	free(part_arr);
 	return (full_arr);
 }
 
 /* Function that take the command and send it to find_path
  before executing it. */
-int	execute(char *cmd, char *args, char **envp)
+int	execute(char *cmd, char **args, char **envp)
 {
 	char	*path;
 	char	**cmd_args;

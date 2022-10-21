@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/20 01:54:45 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 12:30:48 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ static int	check_n(char **argv)
 	return (rtn);
 }
 
+char	*delete_quotes(char *old_str)
+{
+	int		i;
+	int		new_i;
+	char	*new_str;
+
+	i = 0;
+	new_i = 0;
+	new_str = ft_strdup("");
+	while (old_str[i] != '\0')
+	{
+		if (old_str[i] == '\"' || old_str[i] == '\'')
+			i++;
+		new_str[new_i] = old_str[i];
+		new_i++;
+		i++;
+	}
+	return (new_str);
+}
+
 int	builtin_echo(char **argv, int argc)
 {
 	int		i;
@@ -56,6 +76,7 @@ int	builtin_echo(char **argv, int argc)
 	{
 		if (i - 1 > 0)
 			write(1, " ", 1);
+		array[i - 1] = delete_quotes(array[i - 1]);
 		write(1, array[i - 1], ft_strlen(array[i - 1]));
 	}
 	if (!(argc > 0 && check_n(argv)))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 03:09:38 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:02:20 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,13 @@ bool	is_own_builtin(char *cmd)
 	return (false);
 }
 
-int	execute_own_builtin(char *cmd, char *args)
+int	execute_own_builtin(char *cmd, char **args)
 {
 	int		i;
 	int		pipe_amount;
 	char	**cmd_args;
 
-	cmd = ft_strjoin(cmd, " ");
-	// will also split spaces in quotations
-	cmd_args = ft_split(ft_strjoin(cmd, args), ' ');
+	cmd_args = get_cmd_arg_arr(cmd, args);
 	pipe_amount = get_pipe_amount(get_token_array(cmd_args));
 	i = 0;
 	while (cmd_args[i] != NULL)

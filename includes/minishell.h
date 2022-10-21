@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 02:58:19 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:41:01 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_env
 typedef struct s_cmd_table
 {
 	char		**cmd_array;
-	char		**arg_array;
+	char		***arg_array;
 	char		**in;
 	char		**in_type;
 	char		**here_docs;
@@ -138,6 +138,7 @@ char		*get_cmd_array(char **cmds, char **tokens, int start, int stop);
 
 // EXECUTE PREJOBS
 char		**execute_prejobs(char **arr);
+char		**get_cmd_arg_arr(char *cmd, char **args);
 char		*join_ios(char **arr, int *old_i);
 bool		syntax_pipe_error(char **tokens, int i);
 bool		syntax_io_error(char **tokens, int i);
@@ -161,15 +162,16 @@ char		**delete_io(char **arr, char **tokens, int *fd);
 
 // HERE_DOCS
 void		here_doc_execute(t_ct *exe_table);
+bool		has_dollars(char *str);
 char		**get_here_doc_limiters(char **arr);
 
 // BUILTIN EXECUTER
 bool		is_own_builtin(char *cmd);
-int			execute_own_builtin(char *cmd, char *args);
+int			execute_own_builtin(char *cmd, char **args);
 
 // PIPEX
 int			child_process(t_ct *execute_table, char **envp, int i);
-int			execute(char *cmd, char *args, char **envp);
+int			execute(char *cmd, char **args, char **envp);
 
 // TTY
 char		*catch_tty(char *prompt);

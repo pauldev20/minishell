@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:19:15 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 10:28:55 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:52:37 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,20 @@ char	*get_new_str(char *str)
 	return (NULL);
 }
 
+bool	has_delimiter(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '|' || str[i] == '<' || str[i] == '>')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 char	*expand_vars(char *str)
 {
 	int		i;
@@ -61,6 +75,8 @@ char	*expand_vars(char *str)
 	doubleq = 0;
 	singleq = 0;
 	out = ft_calloc(1, sizeof(char));
+	if (has_delimiter(str))
+		return (str);
 	while (str[i])
 	{
 		if (str[i] == '\"')

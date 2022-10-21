@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 03:28:13 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:39:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 
 	// PIPE THINGS NEED TO BE MOVED FROM EXPANDER TO EXECUTER
 	- "< <" wokring - 🔮
-	- "<<" eof what should happen? -> cmd not found --> schwierig mit unserer implementation des lexer, parser, etc.
+	- "<<" eof what should happen? -> cmd not found --> schwierig mit unserer implementation des lexer, parser, etc. | fixed
 	- "< <" eof what should happen? -> cmd not found
 
 	________________________________________________________________________
 	FÜR DAS EVAL SHEET FEHLT:
+	- UNSET PWD
+	- <src/main.c cat 
 	- TABS ODER SPACES ALS INPUT GEBEN IMMER EINEN PARSER ERROR - 🔮 ----> Fixed, tabs konnte ich nicht testen
 	- LEAKS
 	*/

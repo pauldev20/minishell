@@ -6,31 +6,28 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/20 14:15:34 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:21:20 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_arg_array(char **args, char **tokens, int start, int stop)
+char	**get_arg_array(char **args, char **tokens, int start, int stop)
 {
-	char	*arg;
+	char	**arg;
+	int		i;
 
-	arg = ft_strdup("");
+	i = 0;
 	while (!str_is_equal(tokens[start], "WORD"))
 		start++;
 	start++;
+	arg = ft_calloc((stop - start) + 1, sizeof(char *));
 	while (start < stop)
 	{
 		if (str_is_equal(tokens[start], "WORD"))
 		{
-			if (arg[0] == '\0')
-				arg = ft_strjoin(arg, args[start]);
-			else
-			{
-				arg = ft_strjoin(arg, " ");
-				arg = ft_strjoin(arg, args[start]);
-			}
+			arg[i] = args[start];
+			i++;
 		}
 		start++;
 	}
@@ -54,7 +51,7 @@ t_ct	*memory_allocation_arrays(t_ct *exetable, char **token_array)
 
 	size = get_pipe_amount(token_array) + 1;
 	exetable->cmd_array = (char **)ft_calloc(size, sizeof(char *));
-	exetable->arg_array = (char **)ft_calloc(size, sizeof(char *));
+	exetable->arg_array = (char ***)ft_calloc(size, sizeof(char **));
 	exetable->in = (char **)ft_calloc(size, sizeof(char *));
 	exetable->in_type = (char **)ft_calloc(size, sizeof(char *));
 	exetable->here_docs = (char **)ft_calloc(size, sizeof(char *));

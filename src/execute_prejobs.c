@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_prejobs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 03:27:04 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:27:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**execute_prejobs(char **arr)
 	token_array = get_token_array(arr);
 	if (!check_syntax(token_array))
 		return (NULL);
-	if (arr[0] == NULL || arr[0][0] == '\0')
-		print_error(CMD_NOT_FOUND, "", 127);
+	// if (arr[0] == NULL || arr[0][0] == '\0')
+	// 	print_error(CMD_NOT_FOUND, "", 127); kill das programm bei cd unset und export
 	return (arr);
 }
