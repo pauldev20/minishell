@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:38:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:40:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	here_doc_execute(char	**limiter)
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
 		line = get_here_doc_line();
 		if (*line == '\n' && g_minishell.sigint)
+		{
+			free(line);
 			break ;
 		if (str_is_equal(limiter[i], line))
 		{
@@ -105,9 +107,7 @@ void	here_doc_execute(char	**limiter)
 			fd = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}
 		else
-		{
 			write(fd, line, ft_strlen(line));
-			free(line);
-		}
+		free(line);
 	}
 }

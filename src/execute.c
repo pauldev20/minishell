@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:39:06 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:41:10 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,13 @@ void	child_executer(char	**cmd_arr)
 
 int	start_execute(char **cmd_arr)
 {
-	pid_t			id;
 	int				status;
 	char			**here_docs;
 
 	g_minishell.executing = 1;
 	if (cmd_arr)
 		cmd_arr = check_for_builtins(cmd_arr);
-	id = fork();
+	g_minishell.pid = fork();
 	status = 0;
 	here_docs = get_here_doc_limiters(cmd_arr);
 	if (here_docs[0] != NULL)
@@ -94,7 +93,7 @@ int	start_execute(char **cmd_arr)
 		child_executer(cmd_arr);
 	else
 	{
-		waitpid(id, &status, 0);
+		waitpid(g_minishell.pid, &status, 0);
 		free_array(cmd_arr);
 		g_minishell.executing = 0;
 		g_minishell.exit_code = (status >> 8) & 0x000000ff;

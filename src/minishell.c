@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 17:43:52 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/21 19:25:00 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	minishell(char **argv, char **envp)
 	while (1)
 	{
 		g_minishell.sigint = 0;
+		g_minishell.pid = -1;
 		cache[1] = catch_tty(get_quick_prompt());
 		if (cache[1] == NULL)
 			break ;
