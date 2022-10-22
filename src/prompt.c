@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 17:39:02 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/22 17:13:10 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*replace_pwd(t_env *home, t_env *pwd)
 	while (home->value[i] && pwd->value[i] && i < (int)ft_strlen(home->value))
 	{
 		if (home->value[i] != pwd->value[i])
-			return (pwd->value);
+			return (ft_strdup(pwd->value));
 		i++;
 	}
 	j = 0;
