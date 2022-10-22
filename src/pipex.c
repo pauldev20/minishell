@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 17:18:27 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 14:36:23 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ char	*find_path(char *cmd)
 	int		i;
 	char	*part_path;
 
-	if (cmd[0] == '.' || cmd[0] == '/')
-		return (NULL);
 	env = get_env_var(g_minishell.envp, "PATH");
-	if (env == NULL)
+	if (access(cmd, X_OK | F_OK) != -1)
+		return (cmd);
+	if (!env || cmd[0] == '.' || cmd[0] == '/')
 		return (NULL);
 	paths = ft_split(env->value + 5, ':');
-	i = 0;
-	while (paths[i])
+	i = -1;
+	while (paths[++i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
@@ -35,7 +35,6 @@ char	*find_path(char *cmd)
 		if (access(path, F_OK) == 0)
 			return (path);
 		free(path);
-		i++;
 	}
 	free_array(paths);
 	return (0);
@@ -74,18 +73,12 @@ int	execute(char *cmd, char **args, char **envp)
 		return (execute_own_builtin(cmd, args));
 	if (str_is_equal(cmd, "."))
 		print_error(3, NULL, 2);
-	if (access(cmd, X_OK | F_OK) == -1)
-		path = find_path(cmd);
-	else
-		path = cmd;
+	cmd = delete_quotes(cmd);
+	path = find_path(cmd);
 	if (str_is_equal(cmd, "") || !cmd)
 		return (127);
 	if (!path)
-	{
-		free(args);
-		free(cmd);
 		print_error(3, NULL, 127);
-	}
 	cmd_args = get_cmd_arg_arr(cmd, args);
 	if (execve(path, cmd_args, envp) == -1)
 		print_error(3, NULL, 127);

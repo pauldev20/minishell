@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 12:07:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 13:29:26 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void		**pipe_expander(char ***arr);
 
 //HELPER + ERROR
 char		**empty_arr(void);
+char		*delete_quotes(char *old_str);
 int			get_pipe_amount(char **tokens);
 int			array_len(char **array);
 void		print_error(int errtype, char *params, int err);

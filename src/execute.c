@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 11:57:16 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 14:30:21 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int	execute_pipeline(t_ct *exetable, char **token_array)
 	io_modifier[1] = get_outfile_fd(exetable->out_type[i],
 			exetable->out[i], 1);
 	dup2(io_modifier[1], STDOUT_FILENO);
-	if (token_array)
-		free_array(token_array);
+	free_array(token_array);
 	return (execute(exetable->cmd_array[i], exetable->arg_array[i], env));
 }
 
