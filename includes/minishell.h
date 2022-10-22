@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 17:10:58 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 22:16:52 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char		*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code);
 void		handle_signal(int sig);
 
 // EXECUTE
-int			start_execute(char **arr);
+int			start_execute(char ***cmd_arr);
 int			get_pipe_amount(char **tokens);
 char		**cut_start_stop(char **cmd, int start_stop[2]);
 

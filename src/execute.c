@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 16:39:11 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 22:22:57 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,26 +98,25 @@ char	**handle_here_docs(char **cmd_arr)
 	return (cmd_arr);
 }
 
-int	start_execute(char **cmd_arr)
+int	start_execute(char ***cmd_arr)
 {
-	int				status;
+	int		status;
 
-	g_minishell.executing = 1;
-	if (cmd_arr)
-	{
-		cmd_arr = check_for_builtins(cmd_arr);
-		cmd_arr = handle_here_docs(cmd_arr);
-	}
 	status = 0;
+	g_minishell.executing = 1;
+	if (*cmd_arr)
+	{
+		*cmd_arr = check_for_builtins(*cmd_arr);
+		*cmd_arr = handle_here_docs(*cmd_arr);
+	}
 	if (!g_minishell.sigint)
 	{
 		g_minishell.pid = fork();
 		if (g_minishell.pid == 0)
-			child_executer(cmd_arr);
+			child_executer(*cmd_arr);
 		else
 		{
 			waitpid(g_minishell.pid, &status, 0);
-			free_array(cmd_arr);
 			g_minishell.executing = 0;
 			g_minishell.exit_code = (status >> 8) & 0x000000ff;
 			return ((status >> 8) & 0x000000ff);

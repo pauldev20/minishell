@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:30:59 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/22 12:11:05 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 22:26:15 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	is_number(char *string)
 int	builtin_exit(char *exit_code)
 {
 	if (is_number(exit_code))
-		exit (ft_atoi(exit_code));
+		exit(ft_atoi(exit_code));
 	ft_putstr_fd("numeric argument required\n", 2);
-	exit (255);
+	exit(255);
 }
