@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 20:21:23 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/22 02:17:20 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	has_dollars(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (str && str[i])
 	{
 		if (str[i] == '$')
 			return (true);
@@ -81,6 +81,8 @@ char	*get_here_doc_line(void)
 	line = get_next_line(STDIN_FILENO);
 	if (has_dollars(line))
 		line = expand_vars(line);
+	if (g_minishell.sigint && line)
+		free(line);
 	return (line);
 }
 
@@ -96,11 +98,14 @@ void	here_doc_execute(char **limiter)
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
 		line = get_here_doc_line();
 		if (g_minishell.sigint)
-			return (free(line));
-		if (str_is_equal(limiter[i[0]], line))
+			return ;
+		if (str_is_equal(limiter[i[0]], line) || line == NULL)
 		{
-			if (limiter[i[0]++] == NULL)
-				return (free(line));
+			i[0]++;
+			if (limiter[i[0]] == NULL)
+				free(line);
+			if (limiter[i[0]] == NULL || line == NULL)
+				return ;
 			i[1] = open("/tmp/here_doc", O_WRONLY | O_TRUNC, 00777);
 		}
 		else
