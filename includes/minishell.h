@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 16:39:51 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 17:09:41 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ bool		check_dquotes(char *str);
 bool		squotes_first(char *str, int limit);
 bool		check_squotes(char *str);
 char		*expand_vars(char *str);
+char		*get_dollars(char *str);
 
 // PROMT
 char		*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code);

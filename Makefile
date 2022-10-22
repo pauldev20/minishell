@@ -6,7 +6,7 @@
 #    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/22 10:49:10 by mhedtman         ###   ########.fr        #
+#    Updated: 2022/10/22 17:09:57 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRCS =	src/main.c \
 		src/parser/parser.c \
 		src/parser/lexer.c \
 		src/parser/expander.c \
+		src/parser/dollar_expander.c \
 		src/parser/expander_utils.c \
 		src/parser/pipe_expander.c \
 		src/builtins/builtin.c	\
