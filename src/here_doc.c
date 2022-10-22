@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 11:11:52 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:26:04 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char	**get_here_doc_limiters(char **arr)
 
 	limiter_i = 0;
 	i = 0;
-	tokens = get_token_array(arr);
 	here_doc_amount = get_here_doc_amount(arr);
 	limiter = (char **)ft_calloc((here_doc_amount + 1), sizeof(char *));
+	tokens = get_token_array(arr);
 	while (tokens[i] != NULL)
 	{
 		if (ft_strnstr(tokens[i], "DLESS", 5))

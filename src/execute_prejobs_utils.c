@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:13:14 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 11:06:55 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:20:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	syntax_io_error(char **tokens, int i)
 {
 	if (tokens[i + 1] == NULL || is_input_redirector(tokens[i + 1])
-		|| is_input_redirector(tokens[i + 1]))
+		|| is_output_redirector(tokens[i + 1]))
 		return (false);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 13:29:26 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:39:51 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ char		**delete_io(char **arr, char **tokens, int *fd);
 // HERE_DOCS
 void		here_doc_execute(char **limiter);
 bool		has_dollars(char *str);
+bool		check_pre_syntax(char **tokens);
 char		**get_here_doc_limiters(char **arr);
 
 // BUILTIN EXECUTER

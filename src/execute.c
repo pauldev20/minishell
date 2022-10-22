@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 14:30:21 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:39:11 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,17 @@ void	child_executer(char	**cmd_arr)
 
 char	**handle_here_docs(char **cmd_arr)
 {
-	char			**here_docs;
+	char		**here_docs;
+	char		**tokens;
 
 	cmd_arr = join_io_modifier(cmd_arr);
+	tokens = get_token_array(cmd_arr);
+	if (!check_pre_syntax(tokens))
+	{
+		free_array(tokens);
+		return (cmd_arr);
+	}
+	free_array(tokens);
 	here_docs = get_here_doc_limiters(cmd_arr);
 	if (here_docs[0] != NULL)
 		here_doc_execute(here_docs);

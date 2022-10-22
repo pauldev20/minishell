@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 11:16:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:39:27 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,24 @@ char	**join_io_modifier(char **arr)
 	}
 	free_array(arr);
 	return (new_arr);
+}
+
+bool	check_pre_syntax(char **tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i] != NULL)
+	{
+		if (is_input_redirector(tokens[i])
+			|| is_output_redirector(tokens[i]))
+		{
+			if (!syntax_io_error(tokens, i))
+				return (false);
+		}
+		i++;
+	}
+	return (true);
 }
 
 /* CHECKS FOR GRAMMAR MISTAKES IN THE SYNTAX*/
@@ -65,7 +83,10 @@ char	**execute_prejobs(char **arr)
 
 	token_array = get_token_array(arr);
 	if (!check_syntax(token_array))
+	{
+		free_array(token_array);
 		return (NULL);
+	}
 	free_array(token_array);
 	return (arr);
 }
