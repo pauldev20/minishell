@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:54:57 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 15:51:32 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/22 12:02:40 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	builtin_export(char	**argv, int argc)
 
 	if (argc < 1)
 		return (builtin_env());
+	if (argv[0][0] == '=')
+		print_error(SYNTAX_IO, NULL, -1);
 	i[1] = 0;
 	while (argv[i[1]])
 	{

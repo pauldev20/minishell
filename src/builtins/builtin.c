@@ -6,14 +6,29 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/21 12:41:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 12:11:18 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*delete_caps(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] >= 'A' && str[i] <= 'Z')
+			str[i] -= 32;
+		i++;
+	}
+	return (str);
+}
+
 int	builtin_parser(char **argv, int argc)
 {
+	*argv = delete_caps(*argv);
 	if (ft_strncmp(*argv, "echo", 5) == 0)
 		exit (builtin_echo(argv + 1, argc - 1));
 	if (ft_strncmp(*argv, "exit", 5) == 0)

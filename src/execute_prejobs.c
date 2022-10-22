@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 11:13:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 11:16:13 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	**join_io_modifier(char **arr)
 		new_i++;
 		old_i++;
 	}
-	print_arr(new_arr);
 	free_array(arr);
 	return (new_arr);
 }
