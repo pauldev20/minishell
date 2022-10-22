@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 02:19:45 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/22 11:08:16 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,29 @@ void	child_executer(char	**cmd_arr)
 	free_cmd_table(cmd_table);
 }
 
-int	start_execute(char **cmd_arr)
+char	**handle_here_docs(char **cmd_arr)
 {
-	int				status;
 	char			**here_docs;
 
-	g_minishell.executing = 1;
-	if (cmd_arr)
-		cmd_arr = check_for_builtins(cmd_arr);
-	status = 0;
 	cmd_arr = join_io_modifier(cmd_arr);
 	here_docs = get_here_doc_limiters(cmd_arr);
 	if (here_docs[0] != NULL)
 		here_doc_execute(here_docs);
 	free_array(here_docs);
+	return (cmd_arr);
+}
+
+int	start_execute(char **cmd_arr)
+{
+	int				status;
+
+	g_minishell.executing = 1;
+	if (cmd_arr)
+	{
+		cmd_arr = check_for_builtins(cmd_arr);
+		cmd_arr = handle_here_docs(cmd_arr);
+	}
+	status = 0;
 	if (!g_minishell.sigint)
 	{
 		g_minishell.pid = fork();

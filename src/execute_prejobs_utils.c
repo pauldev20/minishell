@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_prejob_utils.c                             :+:      :+:    :+:   */
+/*   execute_prejobs_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:13:14 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/18 15:13:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 11:06:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ char	*join_ios(char **arr, int *old_i)
 	if (arr[*old_i][0] == '<' && arr[*old_i + 1][0] == '<')
 	{
 		*old_i = *old_i + 1;
-		return (ft_strjoin(arr[*old_i - 1], "<"));
+		return (ft_strdup("<<"));
 	}
 	else if (arr[*old_i][0] == '>' && arr[*old_i + 1][0] == '>')
 	{
 		*old_i = *old_i + 1;
-		return (ft_strjoin(arr[*old_i - 1], ">"));
+		return (ft_strdup(">>"));
 	}
 	else if (arr[*old_i][0] == '<' && arr[*old_i + 1][0] == '>')
 	{
 		*old_i = *old_i + 1;
-		return (ft_strjoin(arr[*old_i], ">"));
+		return (ft_strdup("<>"));
 	}
 	else
-		return (arr[*old_i]);
+		return (ft_strdup(arr[*old_i]));
 }

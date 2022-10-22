@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:04:54 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 20:00:18 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/22 11:13:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,25 @@
 /*	JOINS '>' + '>' AND '<' + '<' IF NEEDED */
 char	**join_io_modifier(char **arr)
 {
-	int	old_i;
-	int	new_i;
+	int		old_i;
+	int		new_i;
+	char	**new_arr;
 
 	old_i = 0;
 	new_i = 0;
+	new_arr = (char **)ft_calloc(array_len(arr) + 1, sizeof(char *));
 	while (arr[old_i] != NULL)
 	{
 		if (arr[old_i + 1] != NULL)
-			arr[new_i] = join_ios(arr, &old_i);
+			new_arr[new_i] = join_ios(arr, &old_i);
 		else
-			arr[new_i] = arr[old_i];
+			new_arr[new_i] = ft_strdup(arr[old_i]);
 		new_i++;
 		old_i++;
 	}
-	while (new_i <= old_i)
-	{
-		arr[new_i] = NULL;
-		new_i++;
-	}
-	return (arr);
+	print_arr(new_arr);
+	free_array(arr);
+	return (new_arr);
 }
 
 /* CHECKS FOR GRAMMAR MISTAKES IN THE SYNTAX*/

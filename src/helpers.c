@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:10:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/22 02:13:22 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/22 11:12:59 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**empty_arr(void)
 
 bool	str_is_equal(char *str1, char *str2)
 {
-	if(!str1 || !str2)
+	if (!str1 || !str2)
 		return (false);
 	return (ft_strcmp(str1, str2) == 0);
 }
