@@ -9,3 +9,4 @@ dwnlds
 .vscode
 save.c
 Dockerfile
+.tests
