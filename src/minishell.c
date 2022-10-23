@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/23 17:09:15 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 01:32:37 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// cd not working: cd ~/Desktop
+// echo -nnnnn hihias asldjkasldjkasjde jklae -n -> echo -nnnn-n hihias asldjkasldjkasjde jklae -n
+// export TEST = 3: no errors
+// errors if too many arguments??
+// env -i ./minishell: text compleatly red ?
+// echo \i get not removed?
+
+// bei unset und export leaks
+// free everything correctly on exit
+// echo $? -> 2 memory leaks per call
+// heredoc leaks extremly
 
 static void	init_env(char **argv)
 {
