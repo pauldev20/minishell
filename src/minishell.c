@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 22:22:08 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/23 17:09:15 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* TO DO:
-	- HANDLE "< > + FILE" = ERROR AND "<> + FILE" NO ERROR | P
-	- in heredoc when ^D no output + leaks | P
-	- echo " \ " |  wenn man "echo \" -> nur ein space wenn "echo \test" \ 
-		wird gelöscht und und es displayed nur test
-	________________________________________________________________________
-	FÜR DAS EVAL SHEET FEHLT:
-	- UNSET PWD
-	- LEAKS
-	*/
-
-static void	init_minishell(char **envp)
-{
-	g_minishell.envp = NULL;
-	g_minishell.envp = parse_array_to_env(envp, g_minishell.envp);
-	g_minishell.executing = 0;
-	g_minishell.sigint = 0;
-}
 
 static void	init_env(char **argv)
 {
@@ -57,6 +38,15 @@ static void	init_env(char **argv)
 		set_env_var(&g_minishell.envp, "_", argv[0]);
 }
 
+static void	init_minishell(char **envp, char **argv)
+{
+	g_minishell.envp = NULL;
+	g_minishell.envp = parse_array_to_env(envp, g_minishell.envp);
+	g_minishell.executing = 0;
+	g_minishell.sigint = 0;
+	init_env(argv);
+}
+
 char	*get_quick_prompt(void)
 {
 	char	*prompt;
@@ -76,8 +66,7 @@ int	minishell(char **argv, char **envp)
 	int		ret;
 
 	ret = 1;
-	init_minishell(envp);
-	init_env(argv);
+	init_minishell(envp, argv);
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -93,8 +82,7 @@ int	minishell(char **argv, char **envp)
 			ret = start_execute(&cmd_array);
 		else if (!cmd_array)
 			print_error(QUOTE, NULL, -1);
-		if (cmd_array)
-			free_array(cmd_array);
+		free_array(cmd_array);
 		free (cache[1]);
 	}
 	return (ret);

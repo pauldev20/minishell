@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 23:34:45 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/22 02:04:09 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/23 17:09:59 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,7 @@ void	handle_signal(int sig)
 	{
 		if (g_minishell.executing)
 		{
-			// ioctl(STDIN_FILENO, TIOCSTI, "\n");
-			// rl_on_new_line();
-			// // rl_on_new_line();
-			// // rl_replace_line("", 0);
-			// // rl_redisplay();
 			ioctl(STDIN_FILENO, TIOCSTI, "\r");
-			// write(STDIN_FILENO, "aaa\r", 5);
 			return ;
 		}
 		rl_on_new_line();
