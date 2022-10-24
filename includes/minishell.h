@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 15:32:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:22:06 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_cmd_table
 	char		***arg_array;
 	char		**in;
 	char		**in_type;
-	char		**here_docs;
 	char		**out;
 	char		**out_type;
 }	t_ct;

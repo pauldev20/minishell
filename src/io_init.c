@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:42:34 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 16:52:08 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:20:07 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_infile_type(char **token_array, int start, int stop)
 	char	*infile;
 
 	infile = NULL;
-	while (start < stop)
+	while (start <= stop)
 	{
 		if (str_is_equal(token_array[start], "DLESS"))
 			infile = ft_strdup("DLESS");
