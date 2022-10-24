@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 22:16:52 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 10:03:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int			builtin_export(char	**argv, int argc);
 int			builtin_unset(char **argv, int argc);
 int			builtin_pwd(void);
 int			builtin_cd(char *path);
-int			builtin_exit(char *exit_code);
+int			builtin_exit(char *exit_code, char **argv);
 char		**catch_builtins(char **cmds, int *i, int *offset);
 
 //PARSER

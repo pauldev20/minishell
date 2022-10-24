@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 21:30:59 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/22 22:26:15 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 10:07:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,28 @@ bool	is_number(char *string)
 	return (true);
 }
 
-int	builtin_exit(char *exit_code)
+int	get_argc_exit(char **argv)
 {
+	int	i;
+
+	i = 0;
+	while (argv[i] != NULL)
+		i++;
+	return (i);
+}
+
+int	builtin_exit(char *exit_code, char **argv)
+{
+	int	argc;
+
+	argc = 0;
+	if (argv != NULL)
+		argc = get_argc_exit(argv);
+	if (argc > 1)
+	{
+		ft_putstr_fd("too many arguments\n", 2);
+		exit (1);
+	}
 	if (is_number(exit_code))
 		exit(ft_atoi(exit_code));
 	ft_putstr_fd("numeric argument required\n", 2);

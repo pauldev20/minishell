@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/22 12:11:18 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 10:03:43 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	builtin_parser(char **argv, int argc)
 	if (ft_strncmp(*argv, "echo", 5) == 0)
 		exit (builtin_echo(argv + 1, argc - 1));
 	if (ft_strncmp(*argv, "exit", 5) == 0)
-		exit (builtin_exit(argv[1]));
+		exit (builtin_exit(argv[1], argv + 1));
 	if (ft_strncmp(*argv, "env", 4) == 0)
 		exit (builtin_env());
 	if (ft_strncmp(*argv, "export", 7) == 0)

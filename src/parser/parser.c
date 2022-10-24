@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:50:16 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/23 16:54:01 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 10:00:44 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ char	**parse_input(char *input)
 		if (str_is_equal(splitted[0], "exit"))
 		{
 			if (splitted[1] == NULL)
-				builtin_exit("0");
+				builtin_exit("0", NULL);
 			else
-				builtin_exit(splitted[1]);
+				builtin_exit(splitted[1], splitted + 1);
 		}
 		splitted[c] = expand_vars(splitted[c]);
 		c++;
