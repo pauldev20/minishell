@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 02:03:40 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:53:31 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,8 @@ static char	*handle_expand(int (*i)[3], char *(*chars)[3], char *str)
 			tmp = (*chars)[0];
 			(*chars)[0] = ft_strjoin(tmp, (*chars)[1]);
 			free(tmp);
-		}
-		if ((*chars)[1])
 			free((*chars)[1]);
+		}
 		(*i)[0] += ft_word_len(str + (*i)[0]) - 1;
 	}
 	else
@@ -119,6 +118,8 @@ char	*expand_vars(char *str)
 	while (str[i[0]])
 	{
 		rtn = check_expand(&i, &chars, str);
+		if (rtn)
+			free(chars[0]);
 		if (rtn)
 			return (rtn);
 		i[0]++;
