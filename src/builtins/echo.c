@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 11:04:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:21:25 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@ static int	check_n(char **argv)
 		if (argv[i - 1][j++] == '-')
 		{
 			ctn = 0;
-			while (argv[i - 1][j - 1])
+			while (argv[i - 1][j])
 			{
-				if (argv[i - 1][j++ - 1] == 'n' && (rtn == i - 1))
+				if (argv[i - 1][j] == '-')
+					break ;
+				if (argv[i - 1][j++] == 'n' && (rtn == i - 1))
 					ctn = 1;
 				else
 					ctn = 0;
 			}
-			if (ctn)
+			if (ctn && argv[i - 1][j] != '-')
 				rtn++;
 		}
 	}
