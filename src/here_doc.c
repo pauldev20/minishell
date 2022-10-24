@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 16:26:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 03:12:54 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char	**get_here_doc_limiters(char **arr)
 
 	limiter_i = 0;
 	i = 0;
+	tokens = get_token_array(arr);
 	here_doc_amount = get_here_doc_amount(arr);
 	limiter = (char **)ft_calloc((here_doc_amount + 1), sizeof(char *));
-	tokens = get_token_array(arr);
 	while (tokens[i] != NULL)
 	{
 		if (ft_strnstr(tokens[i], "DLESS", 5))
@@ -65,7 +65,7 @@ bool	has_dollars(char *str)
 	int	i;
 
 	i = 0;
-	while (str && str[i])
+	while (str[i] != '\0')
 	{
 		if (str[i] == '$')
 			return (true);
@@ -79,10 +79,10 @@ char	*get_here_doc_line(void)
 	char	*line;
 
 	line = get_next_line(STDIN_FILENO);
+	if (!line)
+		return (NULL);
 	if (has_dollars(line))
 		line = expand_vars(line);
-	if (g_minishell.sigint && line)
-		free(line);
 	return (line);
 }
 
@@ -97,12 +97,12 @@ void	here_doc_execute(char **limiter)
 	{
 		write(1, "\e[1;34mheredoc> \e[0m", 21);
 		line = get_here_doc_line();
-		if (g_minishell.sigint)
-			return ;
+		if (g_minishell.sigint && line)
+			return (free(line));
 		if (str_is_equal(limiter[i[0]], line) || line == NULL)
 		{
 			i[0]++;
-			if (limiter[i[0]] == NULL)
+			if (limiter[i[0]] == NULL && line)
 				free(line);
 			if (limiter[i[0]] == NULL || line == NULL)
 				return ;

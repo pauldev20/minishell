@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_modification.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:22:32 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:08:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 03:20:05 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

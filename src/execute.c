@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 22:22:57 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 03:25:55 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	child_executer(char	**cmd_arr)
 
 	if (!cmd_arr)
 		print_error(QUOTE, NULL, 1);
-	if (cmd_arr[0][0] == '\0')
+	if (cmd_arr[0] && cmd_arr[0][0] == '\0')
 		print_error(EXECUTE_ERROR, NULL, 127);
 	cmd_arr = execute_prejobs(cmd_arr);
 	cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);

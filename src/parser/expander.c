@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 17:09:19 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:03:40 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,32 @@ char	*get_new_str(char *str)
 		key = ft_substr(str, 0, key_len);
 		str = ft_substr(str, key_len, ft_strlen(str));
 		envvar = get_env_var(g_minishell.envp, key);
+		free(key);
 		if (envvar && (str[0] == '$' || str[0] == '\"' || str[0] == '\''))
+		{
+			free(str);
 			return (ft_strdup(envvar->value));
+		}
 		else if (envvar)
-			return (ft_strjoin(envvar->value, str));
+		{
+			key = ft_strjoin(envvar->value, str);
+			free(str);
+			return (key);
+		}
 	}
 	else
 	{
 		envvar = get_env_var(g_minishell.envp, str);
 		if (envvar)
-			return (ft_strdup(ft_strdup(envvar->value)));
+			return (ft_strdup(envvar->value));
 	}
 	return (NULL);
 }
 
 static char	*handle_expand(int (*i)[3], char *(*chars)[3], char *str)
 {
+	char	*tmp;
+
 	if (!(*i)[2] && str[(*i)[0]] == '$')
 	{
 		(*i)[0]++;
@@ -52,8 +62,13 @@ static char	*handle_expand(int (*i)[3], char *(*chars)[3], char *str)
 			return (ft_itoa(g_minishell.exit_code));
 		(*chars)[1] = get_new_str(str + (*i)[0]);
 		if ((*chars)[1])
-			(*chars)[0] = ft_strjoin((*chars)[0], (*chars)[1]);
-		free((*chars)[1]);
+		{
+			tmp = (*chars)[0];
+			(*chars)[0] = ft_strjoin(tmp, (*chars)[1]);
+			free(tmp);
+		}
+		if ((*chars)[1])
+			free((*chars)[1]);
 		(*i)[0] += ft_word_len(str + (*i)[0]) - 1;
 	}
 	else

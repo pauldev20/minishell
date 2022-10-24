@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_init_cmds.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 19:35:45 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 03:17:55 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
