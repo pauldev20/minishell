@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 14:15:57 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:16:55 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,17 @@ static char	*replace_pwd(t_env *home, t_env *pwd)
 	int		j;
 	char	*out;
 
-	i = 0;
 	if (!home)
 		return (pwd->value);
-	while (home->value[i] && pwd->value[i] && i < (int)ft_strlen(home->value))
-	{
-		if (home->value[i] != pwd->value[i])
-			return (ft_strdup(pwd->value));
-		i++;
-	}
+	if (ft_strncmp(home->value, pwd->value, ft_strlen(home->value)) != 0)
+		return (ft_strdup(pwd->value));
 	j = 0;
 	out = (char *)malloc(sizeof(char) * ((ft_strlen(pwd->value)
 					- ft_strlen(home->value)) + 2));
 	if (!out)
 		return (NULL);
 	out[j++] = '~';
+	i = ft_strlen(home->value);
 	while (j++ < (int)(ft_strlen(pwd->value) - ft_strlen(home->value)) + 1)
 		out[j - 1] = pwd->value[i++];
 	out[j - 1] = '\0';
@@ -43,39 +39,42 @@ static char	*replace_pwd(t_env *home, t_env *pwd)
 static char	*get_user(t_env *usr)
 {
 	if (!usr)
-		return (ft_strdup("guest"));
+		return (ft_strdup("\x1b[31guest"));
 	return (ft_strjoin(BLUE, usr->value));
+}
+
+static char	*get_front(t_env *usr, t_env *pwd, t_env *home)
+{
+	char	*user;
+	char	*tmp;
+	char	*front;
+
+	user = get_user(usr);
+	tmp = user;
+	user = ft_strjoin(user, "@minishell ");
+	free(tmp);
+	tmp = user;
+	user = ft_strjoin(user, GREEN);
+	free(tmp);
+	tmp = replace_pwd(home, pwd);
+	front = ft_strjoin(user, tmp);
+	free(tmp);
+	free(user);
+	return (front);
 }
 
 char	*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code)
 {
 	char	*out;
 	char	*front;
-	char	*back;
-	char	*user;
 	char	*tmp;
 
-	if (!usr || !pwd || !home)
-		tmp = ft_strdup("\x1b[31mguest@minishell\x1b[0m");
-	else
-	{
-		user = get_user(usr);
-		tmp = ft_strjoin(user, "@minishell ");
-		free(user);
-		front = ft_strjoin(tmp, GREEN);
-		free(tmp);
-		tmp = replace_pwd(home, pwd);
-	}
+	front = get_front(usr, pwd, home);
 	if (rtn_code)
-		back = ft_strjoin(tmp, "\x1b[31m $ ");
+		tmp = ft_strjoin(front, "\x1b[31m $ ");
 	else
-		back = ft_strjoin(tmp, "\x1b[92m $ ");
-	if (!usr || !pwd || !home)
-		front = ft_strdup("");
-	free(tmp);
-	tmp = ft_strjoin(front, back);
+		tmp = ft_strjoin(front, "\x1b[92m $ ");
 	free(front);
-	free(back);
 	out = ft_strjoin(tmp, RESET);
 	free(tmp);
 	return (out);
