@@ -6,11 +6,3 @@ minishell
 minishell_tester.sh
 out
 src
-Makefile
-dwnlds
-includes
-libft
-minishell
-minishell_tester.sh
-out
-src

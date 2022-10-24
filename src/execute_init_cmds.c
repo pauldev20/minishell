@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 17:17:53 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:25:23 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ t_ct	*memory_allocation_arrays(t_ct *exetable, char **token_array)
 	exetable->arg_array = (char ***)ft_calloc(size, sizeof(char **));
 	exetable->in = (char **)ft_calloc(size, sizeof(char *));
 	exetable->in_type = (char **)ft_calloc(size, sizeof(char *));
-	exetable->here_docs = (char **)ft_calloc(size, sizeof(char *));
 	exetable->out = (char **)ft_calloc(size, sizeof(char *));
 	exetable->out_type = (char **)ft_calloc(size, sizeof(char *));
 	return (exetable);
