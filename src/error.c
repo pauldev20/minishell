@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 15:09:29 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 11:12:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:31:18 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	print_error(int errtype, char *params, int err)
 		ft_putstr_fd("\033[31mminishell: syntax error near io\033[0m", 2);
 	else if (errtype == EXPORT)
 		ft_putstr_fd("\033[31mminishell: wrong input for export\033[0m", 2);
+	else if (errtype == NO_ACCESS)
+		ft_putstr_fd("\033[31mminishell: no access to the folder\033[0m", 2);
 	ft_putendl_fd(params, 2);
 	if (err > -1)
 		exit (err);

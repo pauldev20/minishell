@@ -6,7 +6,7 @@
 #    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/24 15:28:21 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/24 16:22:11 by pgeeser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT = libft/libft.a
 DOWNLOADFOLDER = dwnlds
 
 # compiler flags
-CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address,undefined
+CFLAGS	= -Wall -Werror -Wextra -fsanitize=address,undefined
 
 # the compiler to be used
 CC	= cc

@@ -3,19 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 13:02:54 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 15:50:22 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*get_envd_str(char *str, int key_len)
+{
+	char	*key;
+	t_env	*envvar;
+
+	key = ft_substr(str, 0, key_len);
+	str = ft_substr(str, key_len, ft_strlen(str));
+	envvar = get_env_var(g_minishell.envp, key);
+	free(key);
+	if (envvar && (str[0] == '$' || str[0] == '\"' || str[0] == '\''))
+	{
+		free(str);
+		return (ft_strdup(envvar->value));
+	}
+	else if (envvar)
+	{
+		key = ft_strjoin(envvar->value, str);
+		free(str);
+		return (key);
+	}
+	return (NULL);
+}
+
 char	*get_new_str(char *str)
 {
 	size_t	key_len;
-	char	*key;
+	char	*ret;
 	t_env	*envvar;
 
 	key_len = 0;
@@ -25,14 +48,8 @@ char	*get_new_str(char *str)
 		key_len++;
 	if (ft_strlen(str) > key_len)
 	{
-		key = ft_substr(str, 0, key_len);
-		str = ft_substr(str, key_len, ft_strlen(str));
-		envvar = get_env_var(g_minishell.envp, key);
-		free(key);
-		if (envvar && (str[0] == '$' || str[0] == '\"' || str[0] == '\''))
-			return (ft_strdup(envvar->value));
-		else if (envvar)
-			return (ft_strjoin(envvar->value, str));
+		ret = get_envd_str(str, key_len);
+		return (ret);
 	}
 	else
 		envvar = get_env_var(g_minishell.envp, str);
