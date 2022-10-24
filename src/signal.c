@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 23:34:45 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 16:37:24 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 17:44:44 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	handle_signal(int sig)
 {
 	(void)sig;
-	printf("INNNNNNTTTTT\n");
 	g_minishell.sigint = 1;
 	if (g_minishell.pid == -1)
 	{
