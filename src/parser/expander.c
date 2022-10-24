@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 11:53:31 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:59:04 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ static char	*handle_expand(int (*i)[3], char *(*chars)[3], char *str)
 		if (has_only_dollars(str))
 			return (get_dollars(str));
 		if (str[(*i)[0]] == '?')
+		{
+			free(str);
 			return (ft_itoa(g_minishell.exit_code));
+		}
 		(*chars)[1] = get_new_str(str + (*i)[0]);
 		if ((*chars)[1])
 		{
