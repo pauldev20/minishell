@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 17:12:56 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:14:47 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ char	*get_here_doc_line(void)
 
 	tmp = readline("\e[1;34mheredoc> \e[0m");
 	if (!tmp)
+	{
+		printf("READLINE QUIT: [%s]\n", rl_line_buffer);
 		return (NULL);
+	}
 	line = ft_strjoin(tmp, "\n");
 	free(tmp);
 	if (has_dollars(line))
