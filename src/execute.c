@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 14:11:32 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:33:51 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ char	**handle_here_docs(char **cmd_arr)
 	here_docs = get_here_doc_limiters(cmd_arr);
 	if (here_docs[0] != NULL)
 		here_doc_execute(here_docs);
-	free_array(here_docs);
 	return (cmd_arr);
 }
 
