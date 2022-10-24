@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 12:21:25 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 12:28:31 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,30 @@
 
 static int	check_n(char **argv)
 {
-	int		i;
-	int		j;
-	int		ctn;
-	int		rtn;
+	int		i[4];
 
-	i = 0;
-	rtn = 0;
-	while (argv[i++])
+	i[0] = 0;
+	i[3] = 0;
+	while (argv[i[0]++])
 	{
-		j = 0;
-		if (argv[i - 1][j++] == '-')
+		i[1] = 0;
+		if (argv[i[0] - 1][i[1]++] == '-')
 		{
-			ctn = 0;
-			while (argv[i - 1][j])
+			i[2] = 0;
+			while (argv[i[0] - 1][i[1]])
 			{
-				if (argv[i - 1][j] == '-')
+				if (argv[i[0] - 1][i[1]] == '-')
 					break ;
-				if (argv[i - 1][j++] == 'n' && (rtn == i - 1))
-					ctn = 1;
+				if (argv[i[0] - 1][i[1]++] == 'n' && (i[3] == i - 1))
+					i[2] = 1;
 				else
-					ctn = 0;
+					i[2] = 0;
 			}
-			if (ctn && argv[i - 1][j] != '-')
-				rtn++;
+			if (i[2] && argv[i[0] - 1][i[1]] != '-')
+				i[3]++;
 		}
 	}
-	return (rtn);
+	return (i[3]);
 }
 
 char	*delete_quotes(char *old_str)
