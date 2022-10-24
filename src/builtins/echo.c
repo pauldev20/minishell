@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:25:27 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 12:32:01 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 14:05:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	*delete_quotes(char *old_str)
 	int		new_i;
 	char	*new_str;
 
+	if (!old_str)
+		return (NULL);
 	i = 0;
 	new_i = 0;
 	new_str = (char *)ft_calloc(ft_strlen(old_str) + 1, sizeof(char));

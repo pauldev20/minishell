@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 13:49:29 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 14:04:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_cmd_array(char **cmds, char **tokens, int start, int stop)
 			return (ft_strdup(cmds[start]));
 		start++;
 	}	
-	return (ft_strdup(""));
+	return (NULL);
 }
 
 t_ct	*memory_allocation_arrays(t_ct *exetable, char **token_array)

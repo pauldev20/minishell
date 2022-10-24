@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 13:58:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 03:25:55 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 14:11:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ void	child_executer(char	**cmd_arr)
 	cmd_arr = execute_prejobs(cmd_arr);
 	cmd_table = get_cmd_table(get_token_array(cmd_arr), cmd_arr);
 	execute_pipeline(cmd_table, get_token_array(cmd_arr));
-	if (cmd_arr)
-		free_array(cmd_arr);
-	if (cmd_table)
-		free_cmd_table(cmd_table);
+	free_cmd_table(cmd_table);
 }
 
 char	**handle_here_docs(char **cmd_arr)
@@ -109,7 +106,7 @@ int	start_execute(char ***cmd_arr)
 		*cmd_arr = check_for_builtins(*cmd_arr);
 		*cmd_arr = handle_here_docs(*cmd_arr);
 	}
-	if (!g_minishell.sigint)
+	if (!g_minishell.sigint && **cmd_arr)
 	{
 		g_minishell.pid = fork();
 		if (g_minishell.pid == 0)

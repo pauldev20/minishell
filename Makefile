@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/24 12:10:20 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/24 14:17:15 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,3 +118,7 @@ fclean: clean
 re: fclean all
 
 .PHONY:	all bonus clean fclean re debug
+
+
+#STD_OUT: 76  STD_ERR: 37  EXIT_CODE: 48
+#STD_OUT: 69  STD_ERR: 29  EXIT_CODE: 35 
