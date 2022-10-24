@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 15:53:19 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:29:46 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 // echo $USER & echo "$USER" leaks - 🔮
 // heredoc leaks extremly - 🔮(get_next_line)
 // cd memory leak - ✅
+// get prompt - 🔮
 
 //get_arg_array heap-buffer-overflow - ✅
 // heredoc crashes on ^D
-// get prompt
 // cd heap-buffer-overflow same error as heredoc
 
 static void	init_env(char **argv)
