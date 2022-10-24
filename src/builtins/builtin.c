@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 20:29:48 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 10:03:43 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 11:03:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	builtin_parser(char **argv, int argc)
 	if (ft_strncmp(*argv, "export", 7) == 0)
 		return (builtin_export(argv + 1, argc - 1));
 	if (ft_strncmp(*argv, "unset", 6) == 0)
-		return (builtin_unset(argv + 1, argc - 1));
+		return (builtin_unset(argv + 1, array_len(argv + 1)));
 	if (ft_strncmp(*argv, "pwd\0", 4) == 0)
 		exit (builtin_pwd());
 	if (ft_strncmp(*argv, "cd", 2) == 0)
