@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:31:47 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 02:17:05 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:10:59 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_arr(char **arr)
 {
 	for (int i = 0; arr[i] != NULL; i++)
-		printf("ARR [%d]: %s\n", i, arr[i]);	
+		printf("ARR [%d]: %s\n", i, arr[i]);
 }
 
 int	main(int argc, char **argv, char **envp)
