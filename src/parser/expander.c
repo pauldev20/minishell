@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 12:31:43 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 15:28:46 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ char	*get_new_str(char *str)
 		free(key);
 		if (envvar && (str[0] == '$' || str[0] == '\"' || str[0] == '\''))
 		{
-			// free(str);
+			free(str);
 			return (ft_strdup(envvar->value));
 		}
 		else if (envvar)
 		{
 			key = ft_strjoin(envvar->value, str);
-			// free(str);
+			free(str);
 			return (key);
 		}
 	}
