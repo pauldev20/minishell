@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:14:57 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 17:11:58 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:12:56 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,26 @@ int	get_here_doc_amount(char **arr)
 char	**get_here_doc_limiters(char **arr)
 {
 	int		i[2];
-	int		limiter_i;
 	char	*tmp;
 	int		here_doc_amount;
 	char	**limiter;
 	char	**tokens;
 
-	limiter_i = 0;
+	i[1] = 0;
 	i[0] = 0;
 	tokens = get_token_array(arr);
 	here_doc_amount = get_here_doc_amount(arr);
 	limiter = (char **)ft_calloc((here_doc_amount + 1), sizeof(char *));
 	while (tokens[i[0]] != NULL)
 	{
-		if (ft_strnstr(tokens[i], "DLESS", 5))
+		if (ft_strnstr(tokens[i[0]], "DLESS", 5))
 		{
-			tmp = ft_strdup(arr[i + 1]);
-			limiter[limiter_i] = ft_strjoin(tmp, "\n");
+			tmp = ft_strdup(arr[i[0] + 1]);
+			limiter[i[1]] = ft_strjoin(tmp, "\n");
 			free(tmp);
-			limiter_i++;
+			i[1]++;
 		}
-		i++;
+		i[0]++;
 	}
 	free_array(tokens);
 	return (limiter);
