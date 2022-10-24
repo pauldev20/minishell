@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 11:53:31 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 12:00:52 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,5 @@ char	*expand_vars(char *str)
 			return (rtn);
 		i[0]++;
 	}
-	if (str)
-		free(str);
 	return (chars[0]);
 }
