@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:39:42 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 16:48:09 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:13:37 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_cmd_table(t_ct *cmd_table)
 	free_array(cmd_table->out);
 	free_array(cmd_table->out_type);
 	free_array(cmd_table->here_docs);
+	printf("HERE\n");
 	if (cmd_table != NULL)
 		free(cmd_table);
 }
