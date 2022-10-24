@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 12:31:43 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 13:02:54 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*get_new_str(char *str)
 	t_env	*envvar;
 
 	key_len = 0;
+	envvar = NULL;
 	while (str[key_len] != '\0' && str[key_len] != '/' && str[key_len] != '$'
 		&& str[key_len] != '\"' && str[key_len] != '\'')
 		key_len++;
@@ -29,23 +30,14 @@ char	*get_new_str(char *str)
 		envvar = get_env_var(g_minishell.envp, key);
 		free(key);
 		if (envvar && (str[0] == '$' || str[0] == '\"' || str[0] == '\''))
-		{
-			// free(str);
 			return (ft_strdup(envvar->value));
-		}
 		else if (envvar)
-		{
-			key = ft_strjoin(envvar->value, str);
-			// free(str);
-			return (key);
-		}
+			return (ft_strjoin(envvar->value, str));
 	}
 	else
-	{
 		envvar = get_env_var(g_minishell.envp, str);
-		if (envvar)
-			return (ft_strdup(envvar->value));
-	}
+	if (envvar)
+		return (ft_strdup(envvar->value));
 	return (NULL);
 }
 

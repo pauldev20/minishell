@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 10:28:10 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:54:16 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ char		*expand_vars(char *str);
 char		*get_dollars(char *str);
 bool		has_only_dollars(char *str);
 bool		has_delimiter(char *str);
+
 // PROMT
 char		*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code);
 

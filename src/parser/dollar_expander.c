@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:08:56 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 17:09:27 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:39:40 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,20 @@ bool	has_only_dollars(char *str)
 
 char	*get_dollars(char *str)
 {
-	int		i;
 	int		counter;
 	char	*dollar_str;
+	char	*tmp;
 
-	i = 0;
 	counter = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '$')
+	while (*str != '\0')
+		if (*str++ == '$')
 			counter++;
-		i++;
-	}
 	dollar_str = ft_strdup("$");
-	i = 1;
-	while (i < counter)
+	while (counter-- > 1)
 	{
+		tmp = dollar_str;
 		dollar_str = ft_strjoin(dollar_str, "$");
-		i++;
+		free(tmp);
 	}
 	return (dollar_str);
 }
