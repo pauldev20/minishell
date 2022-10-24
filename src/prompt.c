@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 16:16:55 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:27:35 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ static char	*replace_pwd(t_env *home, t_env *pwd)
 	int		j;
 	char	*out;
 
-	if (!home)
-		return (pwd->value);
-	if (ft_strncmp(home->value, pwd->value, ft_strlen(home->value)) != 0)
+	if (!home
+		|| ft_strncmp(home->value, pwd->value, ft_strlen(home->value)) != 0)
 		return (ft_strdup(pwd->value));
 	j = 0;
 	out = (char *)malloc(sizeof(char) * ((ft_strlen(pwd->value)
@@ -39,7 +38,7 @@ static char	*replace_pwd(t_env *home, t_env *pwd)
 static char	*get_user(t_env *usr)
 {
 	if (!usr)
-		return (ft_strdup("\x1b[31guest"));
+		return (ft_strdup("\x1b[31mguest"));
 	return (ft_strjoin(BLUE, usr->value));
 }
 
