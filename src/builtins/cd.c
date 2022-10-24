@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 11:20:10 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/24 11:00:04 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:16:32 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_home_path(char *str)
 	char	*new_path_end;
 	char	*new_path_start;
 
-	if (str[0] == '~')
+	if (!str_is_equal(str, "~") && str[0] == '~')
 	{
 		env = get_env_var(g_minishell.envp, "HOME");
 		if (!env)
@@ -98,8 +98,6 @@ int	builtin_cd(char *path)
 		chdir_success = chdir(env->value);
 	else
 		chdir_success = chdir(path);
-	// if (path)
-	// 	free(path);
 	get_new_pwd();
 	if (chdir_success == -1)
 		ft_putstr_fd("\033[31mminishell: no such file or directory\n", 2);
