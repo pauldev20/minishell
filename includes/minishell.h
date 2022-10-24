@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 13:32:05 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 15:31:28 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:32:08 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char		*expand_vars(char *str);
 char		*get_dollars(char *str);
 bool		has_only_dollars(char *str);
 bool		has_delimiter(char *str);
+
 // PROMT
 char		*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code);
 

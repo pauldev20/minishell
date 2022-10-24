@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 15:28:46 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:32:55 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*get_new_str(char *str)
 	t_env	*envvar;
 
 	key_len = 0;
+	envvar = NULL;
 	while (str[key_len] != '\0' && str[key_len] != '/' && str[key_len] != '$'
 		&& str[key_len] != '\"' && str[key_len] != '\'')
 		key_len++;
@@ -41,11 +42,9 @@ char	*get_new_str(char *str)
 		}
 	}
 	else
-	{
 		envvar = get_env_var(g_minishell.envp, str);
-		if (envvar)
-			return (ft_strdup(envvar->value));
-	}
+	if (envvar)
+		return (ft_strdup(envvar->value));
 	return (NULL);
 }
 
