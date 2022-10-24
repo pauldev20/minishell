@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 12:08:12 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 15:53:19 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // cd not working: cd ~/Desktop - ✅
-// echo -nnnnn hihias asldjkasldjkasjde jklae -n -> echo -nnnn-n hihias asldjkasldjkasjde jklae -n
+// echo -nnnnn hihias asldjkasldjkasjde jklae -n -> echo -nnnn-n hihias asldjkasldjkasjde jklae -n - 🔮
 // export TEST = 3: no errors - ✅
-// errors if too many arguments??
 // env -i ./minishell: text compleatly red ? - 🔮
 // echo \i get not removed? - ✅
 
-// free cmd_array everything correctly on exit
+// free cmd_array everything correctly on exit 
 // bei unset und export leaks - 🔮
 // echo $? -> 2 memory leaks per call - 🔮
 // echo $USER & echo "$USER" leaks - 🔮
 // heredoc leaks extremly - 🔮(get_next_line)
-// cd memory leak
+// cd memory leak - ✅
 
-//get_arg_array heap-buffer-overflow -----------------
+//get_arg_array heap-buffer-overflow - ✅
 // heredoc crashes on ^D
+// get prompt
 // cd heap-buffer-overflow same error as heredoc
 
 static void	init_env(char **argv)
