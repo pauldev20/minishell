@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_init_cmds.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:25:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 03:17:55 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 13:49:29 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ char	**get_arg_array(char **args, char **tokens, int start, int stop)
 	int		i;
 
 	i = 0;
-	while (!str_is_equal(tokens[start], "WORD"))
+	while (tokens[start] &&!str_is_equal(tokens[start], "WORD"))
 		start++;
 	start++;
-	arg = ft_calloc((stop - start) + 1, sizeof(char *));
+	if (stop - start < 0)
+		i = 0;
+	else
+		i = stop - start;
+	arg = ft_calloc((i + 1), sizeof(char *));
+	i = 0;
 	while (start < stop)
 	{
 		if (str_is_equal(tokens[start], "WORD"))
@@ -64,6 +69,8 @@ t_ct	*init_cmd_table(t_ct *table, char **cmds, int st_st[2], int i)
 {
 	char	**tokens;
 
+	if (!cmds)
+		return (NULL);
 	tokens = get_token_array(cmds);
 	table->cmd_array[i] = get_cmd_array(cmds, tokens, st_st[0], st_st[1]);
 	table->arg_array[i] = get_arg_array(cmds, tokens, st_st[0], st_st[1]);
