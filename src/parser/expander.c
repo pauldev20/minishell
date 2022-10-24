@@ -6,7 +6,7 @@
 /*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:22:48 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 12:04:25 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 12:31:43 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ char	*get_new_str(char *str)
 		free(key);
 		if (envvar && (str[0] == '$' || str[0] == '\"' || str[0] == '\''))
 		{
-			free(str);
+			// free(str);
 			return (ft_strdup(envvar->value));
 		}
 		else if (envvar)
 		{
 			key = ft_strjoin(envvar->value, str);
-			free(str);
+			// free(str);
 			return (key);
 		}
 	}
@@ -51,21 +51,18 @@ char	*get_new_str(char *str)
 
 static char	*handle_expand(int (*i)[3], char *(*chars)[3], char *str)
 {
-	char	*tmp;
-
 	if (!(*i)[2] && str[(*i)[0]] == '$')
 	{
-		(*i)[0]++;
 		if (has_only_dollars(str))
 			return (get_dollars(str));
-		if (str[(*i)[0]] == '?')
+		if (str[(*i)[0]++ + 1] == '?')
 			return (ft_itoa(g_minishell.exit_code));
 		(*chars)[1] = get_new_str(str + (*i)[0]);
 		if ((*chars)[1])
 		{
-			tmp = (*chars)[0];
-			(*chars)[0] = ft_strjoin(tmp, (*chars)[1]);
-			free(tmp);
+			(*chars)[2] = (*chars)[0];
+			(*chars)[0] = ft_strjoin((*chars)[0], (*chars)[1]);
+			free((*chars)[2]);
 			free((*chars)[1]);
 		}
 		(*i)[0] += ft_word_len(str + (*i)[0]) - 1;

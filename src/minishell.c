@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 11:08:46 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:08:12 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 // echo $? -> 2 memory leaks per call - 🔮
 // echo $USER & echo "$USER" leaks - 🔮
 // heredoc leaks extremly - 🔮(get_next_line)
+// cd memory leak
 
 //get_arg_array heap-buffer-overflow -----------------
 // heredoc crashes on ^D
