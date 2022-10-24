@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 13:29:17 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/09/30 13:59:09 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:51:35 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,8 @@
 # endif
 
 char	*get_next_line(int fd);
+char	*gnl_substr(char const *s, unsigned int start, size_t len);
+char	*gnl_strjoin(char *s1, char *s2);
+char	*gnl_strchr(const char *str, int character);
 
 #endif

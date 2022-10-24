@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 15:08:55 by pgeeser           #+#    #+#             */
-/*   Updated: 2022/10/23 16:46:13 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 03:33:29 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,22 @@ char	*get_prompt(t_env *usr, t_env *pwd, t_env *home, int rtn_code)
 	char	*tmp;
 
 	if (!usr || !pwd || !home)
-		return (ft_strdup("\033[31mguest@minishell $ \033[0m"));
-	user = get_user(usr);
-	tmp = ft_strjoin(user, "@minishell ");
-	free(user);
-	front = ft_strjoin(tmp, GREEN);
-	free(tmp);
-	tmp = replace_pwd(home, pwd);
+		tmp = ft_strdup("\x1b[31mguest@minishell\x1b[0m");
+	else
+	{
+		user = get_user(usr);
+		tmp = ft_strjoin(user, "@minishell ");
+		free(user);
+		front = ft_strjoin(tmp, GREEN);
+		free(tmp);
+		tmp = replace_pwd(home, pwd);
+	}
 	if (rtn_code)
 		back = ft_strjoin(tmp, "\x1b[31m $ ");
 	else
-		back = ft_strjoin(tmp, " $ ");
+		back = ft_strjoin(tmp, "\x1b[92m $ ");
+	if (!usr || !pwd || !home)
+		front = ft_strdup("");
 	free(tmp);
 	tmp = ft_strjoin(front, back);
 	free(front);

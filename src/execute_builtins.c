@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 10:55:03 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/21 20:15:41 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:21:03 by pgeeser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ char	**catch_builtins(char **cmds, int *i, int *offset)
 				while (cmds[j] != NULL)
 					j++;
 				builtin_parser(cmds + (*i), j);
-				free(cmds[0]);
-				free(cmds);
+				free_array(cmds);
 				return (empty_arr());
 			}
 			*offset += 2;
