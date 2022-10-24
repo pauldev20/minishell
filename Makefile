@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/05 10:07:41 by mhedtman          #+#    #+#              #
-#    Updated: 2022/10/24 16:22:11 by pgeeser          ###   ########.fr        #
+#    Updated: 2022/10/24 16:34:31 by mhedtman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

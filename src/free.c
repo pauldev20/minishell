@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:39:42 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 14:03:36 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:48:09 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	free_cmd_table(t_ct *cmd_table)
 	free_array(cmd_table->cmd_array);
 	free_array(cmd_table->arg_array[0]);
 	free(cmd_table->arg_array);
+	printf("IN [%s] [%s] IN_TYPE\n", cmd_table->in[0], cmd_table->in_type[0]);
 	free_array(cmd_table->in);
-	free_array(cmd_table->in_type);
+	// free_array(cmd_table->in_type);
 	free_array(cmd_table->out);
 	free_array(cmd_table->out_type);
 	free_array(cmd_table->here_docs);
