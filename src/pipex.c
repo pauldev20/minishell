@@ -6,7 +6,7 @@
 /*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:45:24 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/22 14:36:23 by mhedtman         ###   ########.fr       */
+/*   Updated: 2022/10/24 14:05:58 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	execute(char *cmd, char **args, char **envp)
 	if (str_is_equal(cmd, "."))
 		print_error(3, NULL, 2);
 	cmd = delete_quotes(cmd);
-	path = find_path(cmd);
+	if (cmd)
+		path = find_path(cmd);
 	if (str_is_equal(cmd, "") || !cmd)
 		return (127);
 	if (!path)
