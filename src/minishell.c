@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgeeser <pgeeser@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mhedtman <mhedtman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 15:07:25 by mhedtman          #+#    #+#             */
-/*   Updated: 2022/10/24 03:35:47 by pgeeser          ###   ########.fr       */
+/*   Updated: 2022/10/24 10:30:38 by mhedtman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// cd not working: cd ~/Desktop
+// cd not working: cd ~/Desktop 🔮
 // echo -nnnnn hihias asldjkasldjkasjde jklae -n -> echo -nnnn-n hihias asldjkasldjkasjde jklae -n
-// export TEST = 3: no errors
+// export TEST = 3: no errors 🔮
 // errors if too many arguments??
 // env -i ./minishell: text compleatly red ? - 🔮
-// echo \i get not removed?
+// echo \i get not removed? 🔮
 
 // free cmd_array everything correctly on exit
 // bei unset und export leaks - 🔮
